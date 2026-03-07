@@ -17,7 +17,7 @@
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
             <a href="#" class="nav-logo">
-                <span class="logo-icon">&#9917;</span>
+                <img src="logo.png" alt="Active Goals Football" class="nav-logo-img" width="40" height="40">
                 <span class="logo-active">Active</span><span class="logo-goals">Goals</span>
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
@@ -395,6 +395,10 @@
                 <div class="contact-form-wrapper animate-on-scroll slide-right">
                     <form class="contact-form" id="contactForm">
                         <h3>Send a Quick Message</h3>
+                        <!-- Honeypot for spam protection -->
+                        <div style="position:absolute;left:-9999px;" aria-hidden="true">
+                            <input type="text" name="website" tabindex="-1" autocomplete="off">
+                        </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <input type="text" id="name" name="name" required placeholder="Your name">
@@ -433,15 +437,16 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <span class="logo-icon">&#9917;</span>
+                    <img src="logo.png" alt="Active Goals Football" class="footer-logo-img" width="50" height="50">
                     <span class="logo-active">Active</span><span class="logo-goals">Goals</span>
-                    <p>Getting kids off screens and onto the pitch.<br>Uniting communities through football in Luton.</p>
+                    <p id="cms-footer-desc">Getting kids off screens and onto the pitch.<br>Uniting communities through football in Luton.</p>
                 </div>
                 <div class="footer-links">
                     <a href="#about">About</a>
                     <a href="#timetable">Timetable</a>
                     <a href="#prices">Prices</a>
                     <a href="#contact">Contact</a>
+                    <a href="admin.html" class="footer-admin-link">Admin</a>
                 </div>
                 <div class="footer-contact">
                     <a href="tel:07455552786">07455 552786</a>
@@ -453,6 +458,33 @@
             </div>
         </div>
     </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script>
+    /* ========================================
+       FIREBASE CONFIG — PASTE YOUR CONFIG HERE
+       Get it from: Firebase Console > Project Settings > Your apps > Config
+       ======================================== */
+    const firebaseConfig = {
+        apiKey: "AIzaSyDXg7pH36i_HhRHUMEzQqaCFmbMEM1J_o8",
+        authDomain: "activegoals-football.firebaseapp.com",
+        projectId: "activegoals-football",
+        storageBucket: "activegoals-football.firebasestorage.app",
+        messagingSenderId: "372416427550",
+        appId: "1:372416427550:web:d0e753e3bf98a840f1200f"
+    };
+
+    // Initialize Firebase (only if configured)
+    let db = null;
+    if (firebaseConfig.apiKey) {
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+        } catch(e) { console.log('Firebase init skipped'); }
+    }
+    </script>
 
     <script>
         // Mobile nav toggle
@@ -506,14 +538,14 @@
         }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
         document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-        // Render timetable from schedule.js
-        function renderTimetable() {
+        // ============================================
+        // TIMETABLE — tries Firestore first, falls back to schedule.js
+        // ============================================
+        function renderTimetableFromData(scheduleData) {
             const grid = document.getElementById('timetableGrid');
-            if (!grid || typeof SCHEDULE === 'undefined') return;
-
+            if (!grid || !scheduleData || !scheduleData.length) return;
             const dayOrder = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-            const sorted = [...SCHEDULE].sort((a, b) => dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day));
-
+            const sorted = [...scheduleData].sort((a, b) => dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day));
             grid.innerHTML = sorted.map(s => {
                 const typeClass = s.type === 'park' ? 'tt-park' : s.type === 'venue' ? 'tt-venue' : 'tt-premium';
                 const typeLabel = s.type === 'park' ? 'Park Session' : s.type === 'venue' ? 'Venue Session' : 'Premium';
@@ -530,17 +562,203 @@
                     </div>
                 `;
             }).join('');
-
-            // Re-observe new elements
             grid.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        }
+
+        async function renderTimetable() {
+            // Try Firestore first
+            if (db) {
+                try {
+                    const snap = await db.collection('schedule').orderBy('order').get();
+                    if (!snap.empty) {
+                        const data = snap.docs.map(doc => doc.data());
+                        renderTimetableFromData(data);
+                        return;
+                    }
+                } catch(e) { /* fall through to schedule.js */ }
+            }
+            // Fallback to schedule.js
+            if (typeof SCHEDULE !== 'undefined') {
+                renderTimetableFromData(SCHEDULE);
+            }
         }
         renderTimetable();
 
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        // ============================================
+        // LOAD CMS CONTENT FROM FIRESTORE
+        // ============================================
+        async function loadCMSContent() {
+            if (!db) return;
+            try {
+                const snap = await db.collection('content').get();
+                const content = {};
+                snap.forEach(doc => { content[doc.id] = doc.data(); });
+                if (Object.keys(content).length === 0) return;
+
+                const el = (sel) => document.querySelector(sel);
+
+                // Hero
+                if (content.hero) {
+                    const h = content.hero;
+                    if (h.tag) { const t = el('.hero-tag'); if(t) t.textContent = h.tag; }
+                    if (h.headingLine1) {
+                        const heading = el('.hero h1');
+                        if (heading) heading.innerHTML = h.headingLine1 + '<br><span class="highlight">' + (h.headingHighlight || '') + '</span><br>' + (h.headingLine3 || '');
+                    }
+                    if (h.subtitle) { const s = el('.hero-subtitle'); if(s) s.textContent = h.subtitle; }
+                    if (h.phoneDisplay) {
+                        const btn = el('.hero-actions .btn-primary');
+                        if (btn) {
+                            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ' + h.phoneDisplay;
+                            btn.href = 'tel:' + (h.phone || '');
+                        }
+                    }
+                    if (h.offerText) { const o = el('.hero-offer'); if(o) o.innerHTML = h.offerText; }
+                }
+
+                // About
+                if (content.about) {
+                    const a = content.about;
+                    const aboutText = el('.about-text');
+                    if (aboutText) {
+                        if (a.sectionLabel) { const l = aboutText.querySelector('.section-label'); if(l) l.textContent = a.sectionLabel; }
+                        if (a.name) { const n = aboutText.querySelector('h2'); if(n) n.textContent = a.name; }
+                        if (a.role) { const r = aboutText.querySelector('.about-role'); if(r) r.textContent = a.role; }
+                        if (a.bio && a.bio.length) {
+                            const paras = aboutText.querySelectorAll('p:not(.about-role)');
+                            a.bio.forEach((text, i) => { if (paras[i]) paras[i].innerHTML = text; });
+                        }
+                        if (a.qualifications && a.qualifications.length) {
+                            const quals = aboutText.querySelectorAll('.qual-item span');
+                            a.qualifications.forEach((text, i) => { if (quals[i]) quals[i].textContent = text; });
+                        }
+                    }
+                }
+
+                // Timetable text
+                if (content.timetable) {
+                    const t = content.timetable;
+                    const sec = el('.timetable');
+                    if (sec) {
+                        if (t.sectionLabel) { const l = sec.querySelector('.section-label'); if(l) l.textContent = t.sectionLabel; }
+                        if (t.title) { const ti = sec.querySelector('.section-title'); if(ti) ti.textContent = t.title; }
+                        if (t.subtitle) { const s = sec.querySelector('.section-subtitle'); if(s) s.textContent = t.subtitle; }
+                    }
+                }
+
+                // Why Choose Us
+                if (content.why) {
+                    const w = content.why;
+                    const sec = el('.why');
+                    if (sec) {
+                        if (w.sectionLabel) { const l = sec.querySelector('.section-label'); if(l) l.textContent = w.sectionLabel; }
+                        if (w.title) { const ti = sec.querySelector('.section-title'); if(ti) ti.innerHTML = w.title; }
+                        if (w.subtitle) { const s = sec.querySelector('.section-subtitle'); if(s) s.textContent = w.subtitle; }
+                        if (w.cards) {
+                            const cards = sec.querySelectorAll('.why-card');
+                            w.cards.forEach((card, i) => {
+                                if (cards[i]) {
+                                    const h3 = cards[i].querySelector('h3');
+                                    const p = cards[i].querySelector('p');
+                                    if (h3 && card.title) h3.textContent = card.title;
+                                    if (p && card.description) p.textContent = card.description;
+                                }
+                            });
+                        }
+                    }
+                }
+
+                // Testimonial
+                if (content.testimonial) {
+                    const t = content.testimonial;
+                    const sec = el('.cta-content');
+                    if (sec) {
+                        if (t.quote) { const q = sec.querySelector('h2'); if(q) q.innerHTML = '&ldquo;' + t.quote + '&rdquo;'; }
+                        if (t.attribution) { const a = sec.querySelector('.cta-attribution'); if(a) a.innerHTML = '&mdash; ' + t.attribution; }
+                        if (t.reassurance) { const r = sec.querySelector('.cta-reassurance'); if(r) r.textContent = t.reassurance; }
+                    }
+                }
+
+                // Contact
+                if (content.contact) {
+                    const c = content.contact;
+                    const sec = el('.contact');
+                    if (sec) {
+                        if (c.sectionLabel) { const l = sec.querySelector('.section-label'); if(l) l.textContent = c.sectionLabel; }
+                        if (c.title) { const ti = sec.querySelector('.section-title'); if(ti) ti.textContent = c.title; }
+                        if (c.subtitle) { const s = sec.querySelector('.section-subtitle'); if(s) s.textContent = c.subtitle; }
+                        if (c.phoneDisplay) {
+                            const items = sec.querySelectorAll('.contact-item');
+                            if (items[0]) {
+                                const a = items[0].querySelector('a');
+                                if (a) { a.textContent = c.phoneDisplay; a.href = 'tel:' + (c.phone || ''); }
+                            }
+                        }
+                        if (c.email) {
+                            const items = sec.querySelectorAll('.contact-item');
+                            if (items[1]) {
+                                const a = items[1].querySelector('a');
+                                if (a) { a.textContent = c.email; a.href = 'mailto:' + c.email; }
+                            }
+                        }
+                    }
+                }
+
+                // Footer
+                if (content.footer) {
+                    const f = content.footer;
+                    const desc = el('#cms-footer-desc');
+                    if (desc && f.description) desc.innerHTML = f.description;
+                    if (f.phoneDisplay) {
+                        const fc = el('.footer-contact');
+                        if (fc) {
+                            const links = fc.querySelectorAll('a');
+                            if (links[0]) { links[0].textContent = f.phoneDisplay; links[0].href = 'tel:' + (f.phone || ''); }
+                            if (links[1] && f.email) { links[1].textContent = f.email; links[1].href = 'mailto:' + f.email; }
+                        }
+                    }
+                    if (f.copyright) { const c = el('.footer-bottom p'); if(c) c.innerHTML = f.copyright; }
+                }
+
+            } catch(e) {
+                console.log('CMS content load skipped:', e.message);
+            }
+        }
+        loadCMSContent();
+
+        // ============================================
+        // CONTACT FORM — saves to Firestore
+        // ============================================
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const name = new FormData(this).get('name');
-            this.innerHTML = '<div class="form-success"><svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2" width="48" height="48"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><h3>Thanks ' + name + '!</h3><p>We\'ve received your message and will get back to you shortly.</p><p>Or call us now: <a href="tel:07455552786">07455 552786</a></p></div>';
+            const form = this;
+            const data = new FormData(form);
+
+            // Honeypot check
+            if (data.get('website')) return;
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const name = data.get('name');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            try {
+                if (db) {
+                    await db.collection('messages').add({
+                        name: data.get('name') || '',
+                        phone: data.get('phone') || '',
+                        email: data.get('email') || '',
+                        session: data.get('session') || '',
+                        message: data.get('message') || '',
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        read: false
+                    });
+                }
+            } catch(err) {
+                console.log('Message save failed:', err);
+            }
+
+            form.innerHTML = '<div class="form-success"><svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2" width="48" height="48"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><h3>Thanks ' + name + '!</h3><p>We\'ve received your message and will get back to you shortly.</p><p>Or call us now: <a href="tel:07455552786">07455 552786</a></p></div>';
         });
     </script>
 </body>

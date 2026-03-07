@@ -3,365 +3,1234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Active Goals Football - Timetable Manager</title>
+    <title>Active Goals Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background: #f0f2f5;
-            color: #333;
-            min-height: 100vh;
-        }
-        .header {
-            background: #1b5e20;
-            color: white;
-            padding: 24px 32px;
-            text-align: center;
-        }
-        .header h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 6px;
-        }
-        .header p { opacity: 0.8; font-size: 0.9rem; }
-        .container {
-            max-width: 900px;
-            margin: 32px auto;
-            padding: 0 20px;
-        }
+        body { font-family: 'Open Sans', sans-serif; background: #f0f2f5; color: #333; min-height: 100vh; }
+        h1,h2,h3,h4 { font-family: 'Montserrat', sans-serif; }
 
-        /* Instructions */
-        .instructions {
-            background: #FFF8E1;
-            border: 2px solid #F5D060;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-        .instructions h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            color: #b8860b;
-        }
-        .instructions ol {
-            margin-left: 20px;
-            line-height: 2;
-            font-size: 0.95rem;
-        }
-
-        /* Session List */
-        .session-list {
-            margin-bottom: 24px;
-        }
-        .session-item {
-            background: white;
-            border-radius: 12px;
+        /* ===== LOGIN ===== */
+        #loginScreen {
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh; background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #1b5e20 100%);
             padding: 20px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+        }
+        .login-card {
+            background: white; border-radius: 16px; padding: 40px 32px;
+            width: 100%; max-width: 400px; text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .login-card img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 16px; }
+        .login-card h1 { font-size: 1.4rem; margin-bottom: 4px; color: #1b5e20; }
+        .login-card p { color: #666; font-size: 0.9rem; margin-bottom: 24px; }
+        .login-card input {
+            width: 100%; padding: 14px 16px; border: 2px solid #e5e7eb; border-radius: 10px;
+            font-size: 1rem; font-family: 'Open Sans', sans-serif; margin-bottom: 12px;
+        }
+        .login-card input:focus { outline: none; border-color: #2e7d32; }
+        .login-btn {
+            width: 100%; padding: 14px; background: #1b5e20; color: white; border: none;
+            border-radius: 10px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+            font-size: 1rem; cursor: pointer; margin-bottom: 12px;
+        }
+        .login-btn:hover { background: #145218; }
+        .login-error { color: #d32f2f; font-size: 0.85rem; min-height: 20px; }
+        .login-back { color: #999; font-size: 0.85rem; text-decoration: none; }
+        .login-back:hover { color: #666; }
+
+        /* ===== ADMIN DASHBOARD ===== */
+        #adminDashboard { display: none; }
+        .admin-topbar {
+            background: #1b5e20; color: white; padding: 14px 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 200;
+        }
+        .admin-topbar-left { display: flex; align-items: center; gap: 10px; }
+        .admin-topbar-left img { width: 32px; height: 32px; border-radius: 50%; }
+        .admin-topbar h1 { font-size: 1rem; }
+        .admin-topbar-right { display: flex; align-items: center; gap: 12px; }
+        .logout-btn {
+            background: rgba(255,255,255,0.15); color: white; border: none; padding: 8px 16px;
+            border-radius: 8px; font-family: 'Montserrat', sans-serif; font-weight: 600;
+            font-size: 0.8rem; cursor: pointer;
+        }
+        .logout-btn:hover { background: rgba(255,255,255,0.25); }
+
+        /* Tabs */
+        .admin-tabs {
+            display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch;
+            gap: 6px; padding: 12px 16px; background: white;
+            position: sticky; top: 52px; z-index: 100;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .admin-tabs::-webkit-scrollbar { display: none; }
+        .tab {
+            white-space: nowrap; padding: 8px 14px; border: none; background: #f0f2f5;
+            border-radius: 50px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+            font-size: 0.75rem; cursor: pointer; flex-shrink: 0; color: #555;
+        }
+        .tab.active { background: #1b5e20; color: white; }
+        .tab .badge {
+            background: #d32f2f; color: white; border-radius: 50%;
+            padding: 1px 6px; font-size: 0.65rem; margin-left: 4px;
+        }
+
+        /* Panels */
+        .panel { display: none; padding: 20px 16px; max-width: 700px; margin: 0 auto; }
+        .panel.active { display: block; }
+        .panel-title { font-size: 1.2rem; margin-bottom: 16px; color: #1b5e20; }
+
+        /* Form elements */
+        .field { margin-bottom: 16px; }
+        .field label {
+            display: block; font-family: 'Montserrat', sans-serif; font-weight: 700;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;
+            color: #666; margin-bottom: 4px;
+        }
+        .field input, .field textarea, .field select {
+            width: 100%; padding: 12px 14px; border: 2px solid #e5e7eb; border-radius: 10px;
+            font-family: 'Open Sans', sans-serif; font-size: 0.95rem; background: white;
+        }
+        .field input:focus, .field textarea:focus, .field select:focus {
+            outline: none; border-color: #2e7d32;
+        }
+        .field textarea { resize: vertical; min-height: 80px; }
+        .field-hint { font-size: 0.75rem; color: #999; margin-top: 2px; }
+
+        /* Repeating items */
+        .repeat-item {
+            background: white; border-radius: 12px; padding: 16px;
+            margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
             position: relative;
         }
-        .session-item .full-width {
-            grid-column: 1 / -1;
+        .repeat-item .field { margin-bottom: 10px; }
+        .repeat-item .field:last-child { margin-bottom: 0; }
+        .remove-btn {
+            position: absolute; top: 8px; right: 8px; background: #fee; border: none;
+            color: #d32f2f; font-size: 1.1rem; width: 28px; height: 28px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
-        .session-item label {
-            display: block;
+        .remove-btn:hover { background: #fcc; }
+        .add-btn {
+            width: 100%; padding: 12px; background: #e8f5e9; color: #2e7d32;
+            border: 2px dashed #4caf50; border-radius: 10px; font-family: 'Montserrat', sans-serif;
+            font-weight: 700; font-size: 0.85rem; cursor: pointer; margin-bottom: 16px;
+        }
+        .add-btn:hover { background: #c8e6c9; }
+
+        /* Save button */
+        .save-btn {
+            width: 100%; padding: 16px; background: #D4A017; color: white; border: none;
+            border-radius: 50px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+            font-size: 1rem; cursor: pointer; margin-bottom: 24px;
+        }
+        .save-btn:hover { background: #b8860b; }
+        .save-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+        .save-btn.saved { background: #4caf50; }
+        .save-btn.error { background: #d32f2f; }
+
+        /* Seed banner */
+        .seed-banner {
+            background: #FFF8E1; border: 2px solid #F5D060; border-radius: 12px;
+            padding: 20px; margin: 20px 16px; text-align: center; max-width: 700px; margin: 20px auto;
+        }
+        .seed-banner h3 { color: #b8860b; margin-bottom: 8px; font-size: 1rem; }
+        .seed-banner p { font-size: 0.85rem; margin-bottom: 12px; color: #666; }
+        .seed-btn {
+            padding: 12px 24px; background: #D4A017; color: white; border: none;
+            border-radius: 50px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+            font-size: 0.9rem; cursor: pointer;
+        }
+        .seed-btn:hover { background: #b8860b; }
+
+        /* Messages */
+        .msg-filters { display: flex; gap: 8px; margin-bottom: 16px; }
+        .msg-filter {
+            padding: 6px 14px; border: 2px solid #e5e7eb; background: white;
+            border-radius: 50px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
             font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #666;
-            margin-bottom: 4px;
         }
-        .session-item input,
-        .session-item select {
-            width: 100%;
-            padding: 10px 14px;
+        .msg-filter.active { background: #1b5e20; color: white; border-color: #1b5e20; }
+        .msg-card {
+            background: white; border-radius: 12px; padding: 16px;
+            margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            border-left: 4px solid #e5e7eb;
+        }
+        .msg-card.unread { border-left-color: #4caf50; background: #f8fff8; }
+        .msg-card-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px; }
+        .msg-name { font-weight: 700; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; }
+        .msg-time { font-size: 0.75rem; color: #999; }
+        .msg-meta { font-size: 0.8rem; color: #666; margin-bottom: 6px; }
+        .msg-meta span { margin-right: 12px; }
+        .msg-body { font-size: 0.9rem; line-height: 1.5; color: #444; margin-bottom: 10px; }
+        .msg-actions { display: flex; gap: 8px; }
+        .msg-action-btn {
+            padding: 6px 12px; border: 1px solid #ddd; background: white; border-radius: 6px;
+            font-size: 0.75rem; cursor: pointer; font-family: 'Open Sans', sans-serif;
+        }
+        .msg-action-btn:hover { background: #f5f5f5; }
+        .msg-action-btn.delete { color: #d32f2f; border-color: #fcc; }
+        .msg-action-btn.delete:hover { background: #fee; }
+        .msg-empty { text-align: center; padding: 40px; color: #999; }
+
+        /* Session grid in timetable editor */
+        .session-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        @media (max-width: 500px) { .session-grid { grid-template-columns: 1fr; } }
+
+        /* Tier editor */
+        .tier-section {
+            background: #f8f9fa; border-radius: 12px; padding: 16px; margin-bottom: 16px;
             border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1rem;
         }
-        .session-item input:focus,
-        .session-item select:focus {
-            outline: none;
-            border-color: #2e7d32;
-        }
-        .delete-btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: #fee;
-            border: none;
-            color: #d32f2f;
-            font-size: 1.2rem;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        .delete-btn:hover { background: #fcc; }
+        .tier-section h4 { color: #1b5e20; margin-bottom: 12px; }
 
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            padding: 14px 28px;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-            margin-bottom: 12px;
-        }
-        .btn-add {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border: 2px dashed #4caf50;
-        }
-        .btn-add:hover { background: #c8e6c9; }
-        .btn-save {
-            background: #D4A017;
-            color: white;
-            font-size: 1.1rem;
-            padding: 16px;
-        }
-        .btn-save:hover { background: #b8860b; }
-
-        /* Output */
-        .output-area {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            margin-bottom: 24px;
-            display: none;
-        }
-        .output-area.show { display: block; }
-        .output-area h3 {
-            font-family: 'Montserrat', sans-serif;
-            margin-bottom: 12px;
-            color: #1b5e20;
-        }
-        .output-area textarea {
-            width: 100%;
-            height: 200px;
-            padding: 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            resize: vertical;
-            margin-bottom: 12px;
-        }
-        .btn-copy {
-            background: #2e7d32;
-            color: white;
-        }
-        .btn-copy:hover { background: #1b5e20; }
-        .copied {
-            background: #4caf50 !important;
-        }
-
-        .preview {
-            background: white;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            margin-bottom: 24px;
-        }
-        .preview h3 {
-            font-family: 'Montserrat', sans-serif;
-            margin-bottom: 16px;
-            color: #1b5e20;
-        }
-        .preview-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 16px;
-            border-left: 4px solid #2e7d32;
-            margin-bottom: 8px;
-        }
-        .preview-card.venue { border-left-color: #1565c0; }
-        .preview-card.premium { border-left-color: #D4A017; }
-        .preview-card strong { font-family: 'Montserrat', sans-serif; }
-
-        @media (max-width: 600px) {
-            .session-item { grid-template-columns: 1fr; }
-            .container { padding: 0 12px; }
-        }
+        /* Sub-heading */
+        .section-divider { font-size: 0.85rem; font-weight: 700; color: #1b5e20; margin: 16px 0 8px; font-family: 'Montserrat', sans-serif; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>&#9917; Timetable Manager</h1>
-        <p>Add, edit, or remove sessions &mdash; then copy the code to update your website</p>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="loginScreen">
+    <div class="login-card">
+        <img src="logo.png" alt="Active Goals" onerror="this.style.display='none'">
+        <h1>Active Goals Admin</h1>
+        <p>Sign in to manage your website</p>
+        <input type="email" id="loginEmail" placeholder="Email address" autocomplete="email">
+        <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+        <button class="login-btn" onclick="login()">Sign In</button>
+        <div class="login-error" id="loginError"></div>
+        <a href="index.html" class="login-back">&larr; Back to website</a>
     </div>
+</div>
 
-    <div class="container">
-        <div class="instructions">
-            <h2>&#128161; How to update the timetable</h2>
-            <ol>
-                <li><strong>Edit the sessions below</strong> &mdash; add, change, or remove as needed</li>
-                <li>Click the big <strong>"Generate Schedule Code"</strong> button</li>
-                <li>Click <strong>"Copy to Clipboard"</strong></li>
-                <li>Open <strong>schedule.js</strong> on your computer and <strong>replace everything</strong> with what you copied</li>
-                <li><strong>Save the file</strong> &mdash; your website will update!</li>
-            </ol>
+<!-- ===== ADMIN DASHBOARD ===== -->
+<div id="adminDashboard">
+    <div class="admin-topbar">
+        <div class="admin-topbar-left">
+            <img src="logo.png" alt="" onerror="this.style.display='none'">
+            <h1>Admin Panel</h1>
         </div>
-
-        <div class="preview" id="preview">
-            <h3>&#128065; Live Preview</h3>
-            <div id="previewCards"></div>
-        </div>
-
-        <div id="sessionList" class="session-list"></div>
-
-        <button class="btn btn-add" onclick="addSession()">+ Add New Session</button>
-
-        <button class="btn btn-save" onclick="generateCode()">&#128190; Generate Schedule Code</button>
-
-        <div class="output-area" id="outputArea">
-            <h3>&#9989; Your schedule code is ready!</h3>
-            <textarea id="outputCode" readonly></textarea>
-            <button class="btn btn-copy" id="copyBtn" onclick="copyCode()">&#128203; Copy to Clipboard</button>
+        <div class="admin-topbar-right">
+            <button class="logout-btn" onclick="logout()">Logout</button>
         </div>
     </div>
 
-    <script>
-        let sessions = [
-            { day: "Monday", time: "4:30 PM - 6:00 PM", location: "Wardown Park", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome" },
-            { day: "Wednesday", time: "4:30 PM - 6:00 PM", location: "Wardown Park", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome" },
-            { day: "Saturday", time: "10:00 AM - 11:30 AM", location: "Wardown Park", type: "park", ageGroup: "All ages", note: "Family session - siblings welcome" },
-            { day: "Thursday", time: "5:00 PM - 6:30 PM", location: "5-a-side Pitch (TBC)", type: "venue", ageGroup: "Ages 7-14", note: "Structured coaching" }
-        ];
+    <!-- Seed banner (shown when Firestore has no content) -->
+    <div id="seedBanner" class="seed-banner" style="display:none;">
+        <h3>Welcome! Let's set up your content</h3>
+        <p>Click below to populate your website's editable content from the current site. This only needs to be done once.</p>
+        <button class="seed-btn" onclick="seedAllContent()">Initialize Content</button>
+    </div>
 
-        const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+    <div class="admin-tabs" id="adminTabs">
+        <button class="tab active" data-tab="messages">Messages <span class="badge" id="unreadBadge" style="display:none">0</span></button>
+        <button class="tab" data-tab="hero">Hero</button>
+        <button class="tab" data-tab="about">About</button>
+        <button class="tab" data-tab="timetable">Timetable</button>
+        <button class="tab" data-tab="prices">Prices</button>
+        <button class="tab" data-tab="why">Why Us</button>
+        <button class="tab" data-tab="testimonial">Testimonial</button>
+        <button class="tab" data-tab="contact">Contact</button>
+        <button class="tab" data-tab="footer">Footer</button>
+    </div>
 
-        function render() {
-            const list = document.getElementById('sessionList');
-            list.innerHTML = sessions.map((s, i) => `
-                <div class="session-item">
-                    <button class="delete-btn" onclick="removeSession(${i})" title="Remove this session">&times;</button>
-                    <div>
-                        <label>Day</label>
-                        <select onchange="updateSession(${i}, 'day', this.value)">
-                            ${days.map(d => `<option value="${d}" ${d === s.day ? 'selected' : ''}>${d}</option>`).join('')}
-                        </select>
-                    </div>
-                    <div>
-                        <label>Time</label>
-                        <input type="text" value="${s.time}" placeholder="e.g. 4:30 PM - 6:00 PM" onchange="updateSession(${i}, 'time', this.value)">
-                    </div>
-                    <div>
-                        <label>Location</label>
-                        <input type="text" value="${s.location}" placeholder="e.g. Wardown Park" onchange="updateSession(${i}, 'location', this.value)">
-                    </div>
-                    <div>
-                        <label>Session Type</label>
-                        <select onchange="updateSession(${i}, 'type', this.value)">
-                            <option value="park" ${s.type === 'park' ? 'selected' : ''}>Park Session</option>
-                            <option value="venue" ${s.type === 'venue' ? 'selected' : ''}>Venue Session</option>
-                            <option value="premium" ${s.type === 'premium' ? 'selected' : ''}>Premium / 1-to-1</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Age Group</label>
-                        <input type="text" value="${s.ageGroup}" placeholder="e.g. Ages 5-11" onchange="updateSession(${i}, 'ageGroup', this.value)">
-                    </div>
-                    <div>
-                        <label>Note (optional)</label>
-                        <input type="text" value="${s.note || ''}" placeholder="e.g. Drop-in welcome" onchange="updateSession(${i}, 'note', this.value)">
-                    </div>
+    <!-- ===== MESSAGES PANEL ===== -->
+    <div class="panel active" id="panel-messages">
+        <h2 class="panel-title">Messages</h2>
+        <div class="msg-filters">
+            <button class="msg-filter active" onclick="filterMessages('all', this)">All</button>
+            <button class="msg-filter" onclick="filterMessages('unread', this)">Unread</button>
+        </div>
+        <div id="messagesList"></div>
+    </div>
+
+    <!-- ===== HERO PANEL ===== -->
+    <div class="panel" id="panel-hero">
+        <h2 class="panel-title">Hero Section</h2>
+        <div class="field">
+            <label>Tag Line</label>
+            <input type="text" id="hero-tag" placeholder="FA Qualified • DBS Checked • Fully Insured">
+        </div>
+        <div class="field">
+            <label>Heading Line 1</label>
+            <input type="text" id="hero-headingLine1" placeholder="Get Your Child">
+        </div>
+        <div class="field">
+            <label>Heading Highlight (coloured text)</label>
+            <input type="text" id="hero-headingHighlight" placeholder="Off the Screen">
+        </div>
+        <div class="field">
+            <label>Heading Line 3</label>
+            <input type="text" id="hero-headingLine3" placeholder="& Onto the Pitch">
+        </div>
+        <div class="field">
+            <label>Subtitle</label>
+            <textarea id="hero-subtitle" rows="3" placeholder="Fun, safe, and affordable..."></textarea>
+        </div>
+        <div class="field">
+            <label>Phone Number (digits only)</label>
+            <input type="tel" id="hero-phone" placeholder="07455552786">
+        </div>
+        <div class="field">
+            <label>Phone Display Format</label>
+            <input type="text" id="hero-phoneDisplay" placeholder="07455 552786">
+        </div>
+        <div class="field">
+            <label>Offer Text</label>
+            <input type="text" id="hero-offerText" placeholder="🌟 First session FREE — come try it, no commitment">
+        </div>
+        <button class="save-btn" id="save-hero" onclick="saveSection('hero')">Save Hero</button>
+    </div>
+
+    <!-- ===== ABOUT PANEL ===== -->
+    <div class="panel" id="panel-about">
+        <h2 class="panel-title">About / Coach</h2>
+        <div class="field">
+            <label>Section Label</label>
+            <input type="text" id="about-sectionLabel" placeholder="Meet Your Coach">
+        </div>
+        <div class="field">
+            <label>Coach Name</label>
+            <input type="text" id="about-name" placeholder="Imran Ali">
+        </div>
+        <div class="field">
+            <label>Role</label>
+            <input type="text" id="about-role" placeholder="Founder & Head Coach">
+        </div>
+        <div class="section-divider">Bio Paragraphs</div>
+        <div id="about-bio-list"></div>
+        <button class="add-btn" onclick="addBioParagraph()">+ Add Paragraph</button>
+        <div class="section-divider">Qualifications</div>
+        <div id="about-quals-list"></div>
+        <button class="add-btn" onclick="addQualification()">+ Add Qualification</button>
+        <button class="save-btn" id="save-about" onclick="saveSection('about')">Save About</button>
+    </div>
+
+    <!-- ===== TIMETABLE PANEL ===== -->
+    <div class="panel" id="panel-timetable">
+        <h2 class="panel-title">Timetable</h2>
+        <div class="field">
+            <label>Section Label</label>
+            <input type="text" id="tt-sectionLabel" placeholder="When & Where">
+        </div>
+        <div class="field">
+            <label>Title</label>
+            <input type="text" id="tt-title" placeholder="Session Timetable">
+        </div>
+        <div class="field">
+            <label>Subtitle</label>
+            <input type="text" id="tt-subtitle" placeholder="Find a session near you...">
+        </div>
+        <div class="section-divider">Sessions</div>
+        <div id="tt-sessions-list"></div>
+        <button class="add-btn" onclick="addSession()">+ Add Session</button>
+        <button class="save-btn" id="save-timetable" onclick="saveSection('timetable')">Save Timetable</button>
+    </div>
+
+    <!-- ===== PRICES PANEL ===== -->
+    <div class="panel" id="panel-prices">
+        <h2 class="panel-title">Prices</h2>
+        <div class="field">
+            <label>Section Label</label>
+            <input type="text" id="prices-sectionLabel" placeholder="Transparent Pricing">
+        </div>
+        <div class="field">
+            <label>Title</label>
+            <input type="text" id="prices-title" placeholder="Simple, Honest Prices">
+        </div>
+        <div class="field">
+            <label>Subtitle</label>
+            <input type="text" id="prices-subtitle" placeholder="No hidden fees...">
+        </div>
+
+        <div class="section-divider">Park Sessions</div>
+        <div id="prices-park-list"></div>
+        <button class="add-btn" onclick="addPriceCard('park')">+ Add Park Price</button>
+
+        <div class="section-divider">Venue Sessions</div>
+        <div id="prices-venue-list"></div>
+        <button class="add-btn" onclick="addPriceCard('venue')">+ Add Venue Price</button>
+
+        <div class="section-divider">Premium Coaching</div>
+        <div id="prices-premium-list"></div>
+        <button class="add-btn" onclick="addPriceCard('premium')">+ Add Premium Price</button>
+
+        <div class="section-divider">Extras</div>
+        <div id="prices-extras-list"></div>
+        <button class="add-btn" onclick="addExtra()">+ Add Extra</button>
+
+        <button class="save-btn" id="save-prices" onclick="saveSection('prices')">Save Prices</button>
+    </div>
+
+    <!-- ===== WHY US PANEL ===== -->
+    <div class="panel" id="panel-why">
+        <h2 class="panel-title">Why Choose Us</h2>
+        <div class="field">
+            <label>Section Label</label>
+            <input type="text" id="why-sectionLabel" placeholder="Why Parents Choose Us">
+        </div>
+        <div class="field">
+            <label>Title</label>
+            <input type="text" id="why-title" placeholder="Your Child Deserves Better...">
+        </div>
+        <div class="field">
+            <label>Subtitle</label>
+            <textarea id="why-subtitle" rows="2" placeholder="We don't just teach football..."></textarea>
+        </div>
+        <div class="section-divider">Feature Cards</div>
+        <div id="why-cards-list"></div>
+        <button class="add-btn" onclick="addWhyCard()">+ Add Card</button>
+        <button class="save-btn" id="save-why" onclick="saveSection('why')">Save Why Us</button>
+    </div>
+
+    <!-- ===== TESTIMONIAL PANEL ===== -->
+    <div class="panel" id="panel-testimonial">
+        <h2 class="panel-title">Testimonial</h2>
+        <div class="field">
+            <label>Quote</label>
+            <textarea id="testimonial-quote" rows="4" placeholder="My son used to spend hours..."></textarea>
+        </div>
+        <div class="field">
+            <label>Attribution</label>
+            <input type="text" id="testimonial-attribution" placeholder="Parent Review">
+        </div>
+        <div class="field">
+            <label>CTA Button Text</label>
+            <input type="text" id="testimonial-ctaText" placeholder="Book Your Child's First Free Session">
+        </div>
+        <div class="field">
+            <label>Reassurance Text</label>
+            <input type="text" id="testimonial-reassurance" placeholder="No commitment required • Pay per session • All abilities welcome">
+        </div>
+        <button class="save-btn" id="save-testimonial" onclick="saveSection('testimonial')">Save Testimonial</button>
+    </div>
+
+    <!-- ===== CONTACT PANEL ===== -->
+    <div class="panel" id="panel-contact">
+        <h2 class="panel-title">Contact Info</h2>
+        <div class="field">
+            <label>Section Label</label>
+            <input type="text" id="contact-sectionLabel" placeholder="Get Started Today">
+        </div>
+        <div class="field">
+            <label>Title</label>
+            <input type="text" id="contact-title" placeholder="Book a Session">
+        </div>
+        <div class="field">
+            <label>Subtitle</label>
+            <input type="text" id="contact-subtitle" placeholder="Call, email, or send a message...">
+        </div>
+        <div class="field">
+            <label>Phone (digits only)</label>
+            <input type="tel" id="contact-phone" placeholder="07455552786">
+        </div>
+        <div class="field">
+            <label>Phone Display</label>
+            <input type="text" id="contact-phoneDisplay" placeholder="07455 552786">
+        </div>
+        <div class="field">
+            <label>Email</label>
+            <input type="email" id="contact-email" placeholder="activegoalsfootball@gmail.com">
+        </div>
+        <div class="field">
+            <label>Location</label>
+            <input type="text" id="contact-location" placeholder="Luton & surrounding areas">
+        </div>
+        <div class="field">
+            <label>Location Detail</label>
+            <input type="text" id="contact-locationDetail" placeholder="Wardown Park & local venues">
+        </div>
+        <button class="save-btn" id="save-contact" onclick="saveSection('contact')">Save Contact</button>
+    </div>
+
+    <!-- ===== FOOTER PANEL ===== -->
+    <div class="panel" id="panel-footer">
+        <h2 class="panel-title">Footer</h2>
+        <div class="field">
+            <label>Description</label>
+            <textarea id="footer-description" rows="3" placeholder="Getting kids off screens and onto the pitch..."></textarea>
+        </div>
+        <div class="field">
+            <label>Phone (digits)</label>
+            <input type="tel" id="footer-phone" placeholder="07455552786">
+        </div>
+        <div class="field">
+            <label>Phone Display</label>
+            <input type="text" id="footer-phoneDisplay" placeholder="07455 552786">
+        </div>
+        <div class="field">
+            <label>Email</label>
+            <input type="email" id="footer-email" placeholder="activegoalsfootball@gmail.com">
+        </div>
+        <div class="field">
+            <label>Copyright Text</label>
+            <input type="text" id="footer-copyright" placeholder="© 2026 Active Goals Football...">
+        </div>
+        <button class="save-btn" id="save-footer" onclick="saveSection('footer')">Save Footer</button>
+    </div>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script>
+/* ============================================================
+   FIREBASE CONFIG — PASTE YOUR CONFIG HERE
+   (Same config as in index.html)
+   Get it from: Firebase Console > Project Settings > Your apps
+   ============================================================ */
+const firebaseConfig = {
+    apiKey: "AIzaSyDXg7pH36i_HhRHUMEzQqaCFmbMEM1J_o8",
+    authDomain: "activegoals-football.firebaseapp.com",
+    projectId: "activegoals-football",
+    storageBucket: "activegoals-football.firebasestorage.app",
+    messagingSenderId: "372416427550",
+    appId: "1:372416427550:web:d0e753e3bf98a840f1200f"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// ============================================================
+// AUTH
+// ============================================================
+auth.onAuthStateChanged(user => {
+    if (user) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminDashboard').style.display = 'block';
+        loadAllContent();
+        loadMessages();
+    } else {
+        document.getElementById('loginScreen').style.display = 'flex';
+        document.getElementById('adminDashboard').style.display = 'none';
+    }
+});
+
+function login() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    document.getElementById('loginError').textContent = '';
+    auth.signInWithEmailAndPassword(email, password)
+        .catch(err => {
+            document.getElementById('loginError').textContent = 'Invalid email or password';
+        });
+}
+
+// Allow pressing Enter to login
+document.getElementById('loginPassword').addEventListener('keydown', e => {
+    if (e.key === 'Enter') login();
+});
+
+function logout() {
+    auth.signOut();
+}
+
+// ============================================================
+// TAB NAVIGATION
+// ============================================================
+document.getElementById('adminTabs').addEventListener('click', e => {
+    const btn = e.target.closest('.tab');
+    if (!btn) return;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+});
+
+// ============================================================
+// CONTENT DATA (in-memory)
+// ============================================================
+let contentData = {};
+let scheduleData = [];
+let messagesData = [];
+let msgFilter = 'all';
+
+// ============================================================
+// LOAD ALL CONTENT
+// ============================================================
+async function loadAllContent() {
+    try {
+        const snap = await db.collection('content').get();
+        if (snap.empty) {
+            document.getElementById('seedBanner').style.display = 'block';
+            return;
+        }
+        document.getElementById('seedBanner').style.display = 'none';
+        snap.forEach(doc => { contentData[doc.id] = doc.data(); });
+
+        populateHero();
+        populateAbout();
+        populateTimetableText();
+        populatePrices();
+        populateWhy();
+        populateTestimonial();
+        populateContact();
+        populateFooter();
+
+        // Load schedule
+        const schedSnap = await db.collection('schedule').orderBy('order').get();
+        scheduleData = schedSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderSessionsList();
+    } catch(e) {
+        console.error('Failed to load content:', e);
+    }
+}
+
+// ============================================================
+// POPULATE FORM FIELDS
+// ============================================================
+function val(id, value) {
+    const el = document.getElementById(id);
+    if (el && value !== undefined && value !== null) el.value = value;
+}
+
+function populateHero() {
+    const d = contentData.hero || {};
+    val('hero-tag', d.tag);
+    val('hero-headingLine1', d.headingLine1);
+    val('hero-headingHighlight', d.headingHighlight);
+    val('hero-headingLine3', d.headingLine3);
+    val('hero-subtitle', d.subtitle);
+    val('hero-phone', d.phone);
+    val('hero-phoneDisplay', d.phoneDisplay);
+    val('hero-offerText', d.offerText);
+}
+
+function populateAbout() {
+    const d = contentData.about || {};
+    val('about-sectionLabel', d.sectionLabel);
+    val('about-name', d.name);
+    val('about-role', d.role);
+    renderBioList(d.bio || []);
+    renderQualsList(d.qualifications || []);
+}
+
+function populateTimetableText() {
+    const d = contentData.timetable || {};
+    val('tt-sectionLabel', d.sectionLabel);
+    val('tt-title', d.title);
+    val('tt-subtitle', d.subtitle);
+}
+
+function populatePrices() {
+    const d = contentData.prices || {};
+    val('prices-sectionLabel', d.sectionLabel);
+    val('prices-title', d.title);
+    val('prices-subtitle', d.subtitle);
+    renderPriceCards('park', d.park || []);
+    renderPriceCards('venue', d.venue || []);
+    renderPriceCards('premium', d.premium || []);
+    renderExtras(d.extras || []);
+}
+
+function populateWhy() {
+    const d = contentData.why || {};
+    val('why-sectionLabel', d.sectionLabel);
+    val('why-title', d.title);
+    val('why-subtitle', d.subtitle);
+    renderWhyCards(d.cards || []);
+}
+
+function populateTestimonial() {
+    const d = contentData.testimonial || {};
+    val('testimonial-quote', d.quote);
+    val('testimonial-attribution', d.attribution);
+    val('testimonial-ctaText', d.ctaText);
+    val('testimonial-reassurance', d.reassurance);
+}
+
+function populateContact() {
+    const d = contentData.contact || {};
+    val('contact-sectionLabel', d.sectionLabel);
+    val('contact-title', d.title);
+    val('contact-subtitle', d.subtitle);
+    val('contact-phone', d.phone);
+    val('contact-phoneDisplay', d.phoneDisplay);
+    val('contact-email', d.email);
+    val('contact-location', d.location);
+    val('contact-locationDetail', d.locationDetail);
+}
+
+function populateFooter() {
+    const d = contentData.footer || {};
+    val('footer-description', d.description);
+    val('footer-phone', d.phone);
+    val('footer-phoneDisplay', d.phoneDisplay);
+    val('footer-email', d.email);
+    val('footer-copyright', d.copyright);
+}
+
+// ============================================================
+// REPEATING FIELD RENDERERS
+// ============================================================
+
+// --- Bio paragraphs ---
+let bioItems = [];
+function renderBioList(items) {
+    bioItems = items.length ? [...items] : [''];
+    const list = document.getElementById('about-bio-list');
+    list.innerHTML = bioItems.map((text, i) => `
+        <div class="repeat-item">
+            <button class="remove-btn" onclick="removeBio(${i})">&times;</button>
+            <div class="field">
+                <label>Paragraph ${i + 1}</label>
+                <textarea id="bio-${i}" rows="3" oninput="bioItems[${i}]=this.value">${text}</textarea>
+                <div class="field-hint">Use &lt;strong&gt;bold text&lt;/strong&gt; for emphasis</div>
+            </div>
+        </div>
+    `).join('');
+}
+function addBioParagraph() { bioItems.push(''); renderBioList(bioItems); }
+function removeBio(i) { bioItems.splice(i, 1); renderBioList(bioItems); }
+
+// --- Qualifications ---
+let qualItems = [];
+function renderQualsList(items) {
+    qualItems = items.length ? [...items] : [''];
+    const list = document.getElementById('about-quals-list');
+    list.innerHTML = qualItems.map((text, i) => `
+        <div class="repeat-item">
+            <button class="remove-btn" onclick="removeQual(${i})">&times;</button>
+            <div class="field">
+                <label>Qualification ${i + 1}</label>
+                <input type="text" id="qual-${i}" value="${text}" oninput="qualItems[${i}]=this.value">
+            </div>
+        </div>
+    `).join('');
+}
+function addQualification() { qualItems.push(''); renderQualsList(qualItems); }
+function removeQual(i) { qualItems.splice(i, 1); renderQualsList(qualItems); }
+
+// --- Sessions ---
+const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+function renderSessionsList() {
+    const list = document.getElementById('tt-sessions-list');
+    list.innerHTML = scheduleData.map((s, i) => `
+        <div class="repeat-item">
+            <button class="remove-btn" onclick="removeSession(${i})">&times;</button>
+            <div class="session-grid">
+                <div class="field">
+                    <label>Day</label>
+                    <select onchange="scheduleData[${i}].day=this.value">
+                        ${days.map(d => `<option ${d === s.day ? 'selected' : ''}>${d}</option>`).join('')}
+                    </select>
                 </div>
-            `).join('');
+                <div class="field">
+                    <label>Time</label>
+                    <input type="text" value="${s.time || ''}" placeholder="4:30 PM - 6:00 PM" oninput="scheduleData[${i}].time=this.value">
+                </div>
+                <div class="field">
+                    <label>Location</label>
+                    <input type="text" value="${s.location || ''}" placeholder="Wardown Park" oninput="scheduleData[${i}].location=this.value">
+                </div>
+                <div class="field">
+                    <label>Type</label>
+                    <select onchange="scheduleData[${i}].type=this.value">
+                        <option value="park" ${s.type==='park'?'selected':''}>Park</option>
+                        <option value="venue" ${s.type==='venue'?'selected':''}>Venue</option>
+                        <option value="premium" ${s.type==='premium'?'selected':''}>Premium</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Age Group</label>
+                    <input type="text" value="${s.ageGroup || ''}" placeholder="Ages 5-11" oninput="scheduleData[${i}].ageGroup=this.value">
+                </div>
+                <div class="field">
+                    <label>Note</label>
+                    <input type="text" value="${s.note || ''}" placeholder="Drop-in welcome" oninput="scheduleData[${i}].note=this.value">
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+function addSession() {
+    scheduleData.push({ day: 'Monday', time: '', location: '', type: 'park', ageGroup: 'Ages 5-11', note: '', order: scheduleData.length + 1 });
+    renderSessionsList();
+}
+function removeSession(i) {
+    if (confirm('Remove this session?')) {
+        scheduleData.splice(i, 1);
+        renderSessionsList();
+    }
+}
 
-            // Update preview
-            const preview = document.getElementById('previewCards');
-            const sorted = [...sessions].sort((a, b) => days.indexOf(a.day) - days.indexOf(b.day));
-            preview.innerHTML = sorted.map(s => {
-                const cls = s.type === 'venue' ? 'venue' : s.type === 'premium' ? 'premium' : '';
-                return `<div class="preview-card ${cls}">
-                    <strong>${s.day}</strong> &mdash; ${s.time}<br>
-                    ${s.location} &bull; ${s.ageGroup}${s.note ? ` &bull; <em>${s.note}</em>` : ''}
-                </div>`;
-            }).join('');
+// --- Price cards ---
+let priceCards = { park: [], venue: [], premium: [] };
+function renderPriceCards(tier, items) {
+    priceCards[tier] = items.length ? items.map(x => ({...x})) : [];
+    const list = document.getElementById('prices-' + tier + '-list');
+    list.innerHTML = priceCards[tier].map((c, i) => `
+        <div class="repeat-item">
+            <button class="remove-btn" onclick="removePriceCard('${tier}',${i})">&times;</button>
+            <div class="session-grid">
+                <div class="field">
+                    <label>Label</label>
+                    <input type="text" value="${c.label || ''}" oninput="priceCards['${tier}'][${i}].label=this.value">
+                </div>
+                <div class="field">
+                    <label>Price</label>
+                    <input type="text" value="${c.price || ''}" placeholder="£5" oninput="priceCards['${tier}'][${i}].price=this.value">
+                </div>
+                <div class="field">
+                    <label>Detail</label>
+                    <input type="text" value="${c.detail || ''}" placeholder="per session" oninput="priceCards['${tier}'][${i}].detail=this.value">
+                </div>
+                <div class="field">
+                    <label>Description</label>
+                    <input type="text" value="${c.description || ''}" oninput="priceCards['${tier}'][${i}].description=this.value">
+                </div>
+                <div class="field">
+                    <label>Popular Tag (leave empty for none)</label>
+                    <input type="text" value="${c.popularTag || ''}" placeholder="Best Value" oninput="priceCards['${tier}'][${i}].popularTag=this.value">
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+function addPriceCard(tier) {
+    priceCards[tier].push({ label: '', price: '', detail: '', description: '', popularTag: '' });
+    renderPriceCards(tier, priceCards[tier]);
+}
+function removePriceCard(tier, i) {
+    priceCards[tier].splice(i, 1);
+    renderPriceCards(tier, priceCards[tier]);
+}
+
+// --- Extras ---
+let extraItems = [];
+function renderExtras(items) {
+    extraItems = items.length ? items.map(x => ({...x})) : [];
+    const list = document.getElementById('prices-extras-list');
+    list.innerHTML = extraItems.map((e, i) => `
+        <div class="repeat-item">
+            <button class="remove-btn" onclick="removeExtra(${i})">&times;</button>
+            <div class="session-grid">
+                <div class="field">
+                    <label>Title</label>
+                    <input type="text" value="${e.title || ''}" oninput="extraItems[${i}].title=this.value">
+                </div>
+                <div class="field">
+                    <label>Description</label>
+                    <input type="text" value="${e.description || ''}" oninput="extraItems[${i}].description=this.value">
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+function addExtra() {
+    extraItems.push({ title: '', description: '' });
+    renderExtras(extraItems);
+}
+function removeExtra(i) {
+    extraItems.splice(i, 1);
+    renderExtras(extraItems);
+}
+
+// --- Why cards ---
+let whyCards = [];
+function renderWhyCards(items) {
+    whyCards = items.length ? items.map(x => ({...x})) : [];
+    const list = document.getElementById('why-cards-list');
+    list.innerHTML = whyCards.map((c, i) => `
+        <div class="repeat-item">
+            <button class="remove-btn" onclick="removeWhyCard(${i})">&times;</button>
+            <div class="field">
+                <label>Title</label>
+                <input type="text" value="${c.title || ''}" oninput="whyCards[${i}].title=this.value">
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea rows="3" oninput="whyCards[${i}].description=this.value">${c.description || ''}</textarea>
+            </div>
+        </div>
+    `).join('');
+}
+function addWhyCard() {
+    whyCards.push({ title: '', description: '' });
+    renderWhyCards(whyCards);
+}
+function removeWhyCard(i) {
+    whyCards.splice(i, 1);
+    renderWhyCards(whyCards);
+}
+
+// ============================================================
+// SAVE SECTIONS
+// ============================================================
+async function saveSection(section) {
+    const btn = document.getElementById('save-' + section);
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+    btn.className = 'save-btn';
+
+    try {
+        let data;
+        switch(section) {
+            case 'hero':
+                data = {
+                    tag: document.getElementById('hero-tag').value,
+                    headingLine1: document.getElementById('hero-headingLine1').value,
+                    headingHighlight: document.getElementById('hero-headingHighlight').value,
+                    headingLine3: document.getElementById('hero-headingLine3').value,
+                    subtitle: document.getElementById('hero-subtitle').value,
+                    phone: document.getElementById('hero-phone').value,
+                    phoneDisplay: document.getElementById('hero-phoneDisplay').value,
+                    offerText: document.getElementById('hero-offerText').value
+                };
+                await db.collection('content').doc('hero').set(data);
+                break;
+
+            case 'about':
+                data = {
+                    sectionLabel: document.getElementById('about-sectionLabel').value,
+                    name: document.getElementById('about-name').value,
+                    role: document.getElementById('about-role').value,
+                    bio: bioItems.filter(b => b.trim()),
+                    qualifications: qualItems.filter(q => q.trim())
+                };
+                await db.collection('content').doc('about').set(data);
+                break;
+
+            case 'timetable':
+                // Save timetable text
+                data = {
+                    sectionLabel: document.getElementById('tt-sectionLabel').value,
+                    title: document.getElementById('tt-title').value,
+                    subtitle: document.getElementById('tt-subtitle').value
+                };
+                await db.collection('content').doc('timetable').set(data);
+
+                // Save schedule sessions - delete old, write new
+                const oldSnap = await db.collection('schedule').get();
+                const batch = db.batch();
+                oldSnap.forEach(doc => batch.delete(doc.ref));
+                scheduleData.forEach((s, i) => {
+                    const ref = db.collection('schedule').doc();
+                    batch.set(ref, {
+                        day: s.day, time: s.time, location: s.location,
+                        type: s.type, ageGroup: s.ageGroup, note: s.note || '',
+                        order: i + 1
+                    });
+                });
+                await batch.commit();
+                break;
+
+            case 'prices':
+                data = {
+                    sectionLabel: document.getElementById('prices-sectionLabel').value,
+                    title: document.getElementById('prices-title').value,
+                    subtitle: document.getElementById('prices-subtitle').value,
+                    park: priceCards.park,
+                    venue: priceCards.venue,
+                    premium: priceCards.premium,
+                    extras: extraItems
+                };
+                await db.collection('content').doc('prices').set(data);
+                break;
+
+            case 'why':
+                data = {
+                    sectionLabel: document.getElementById('why-sectionLabel').value,
+                    title: document.getElementById('why-title').value,
+                    subtitle: document.getElementById('why-subtitle').value,
+                    cards: whyCards
+                };
+                await db.collection('content').doc('why').set(data);
+                break;
+
+            case 'testimonial':
+                data = {
+                    quote: document.getElementById('testimonial-quote').value,
+                    attribution: document.getElementById('testimonial-attribution').value,
+                    ctaText: document.getElementById('testimonial-ctaText').value,
+                    reassurance: document.getElementById('testimonial-reassurance').value
+                };
+                await db.collection('content').doc('testimonial').set(data);
+                break;
+
+            case 'contact':
+                data = {
+                    sectionLabel: document.getElementById('contact-sectionLabel').value,
+                    title: document.getElementById('contact-title').value,
+                    subtitle: document.getElementById('contact-subtitle').value,
+                    phone: document.getElementById('contact-phone').value,
+                    phoneDisplay: document.getElementById('contact-phoneDisplay').value,
+                    email: document.getElementById('contact-email').value,
+                    location: document.getElementById('contact-location').value,
+                    locationDetail: document.getElementById('contact-locationDetail').value
+                };
+                await db.collection('content').doc('contact').set(data);
+                break;
+
+            case 'footer':
+                data = {
+                    description: document.getElementById('footer-description').value,
+                    phone: document.getElementById('footer-phone').value,
+                    phoneDisplay: document.getElementById('footer-phoneDisplay').value,
+                    email: document.getElementById('footer-email').value,
+                    copyright: document.getElementById('footer-copyright').value
+                };
+                await db.collection('content').doc('footer').set(data);
+                break;
         }
 
-        function updateSession(index, field, value) {
-            sessions[index][field] = value;
-            render();
-        }
+        btn.textContent = 'Saved!';
+        btn.classList.add('saved');
+        setTimeout(() => {
+            btn.textContent = 'Save ' + section.charAt(0).toUpperCase() + section.slice(1);
+            btn.className = 'save-btn';
+            btn.disabled = false;
+        }, 2000);
 
-        function addSession() {
-            sessions.push({
-                day: "Monday",
-                time: "",
-                location: "",
-                type: "park",
-                ageGroup: "Ages 5-11",
-                note: ""
-            });
-            render();
-            // Scroll to new item
-            setTimeout(() => {
-                const items = document.querySelectorAll('.session-item');
-                items[items.length - 1].scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-        }
+    } catch(e) {
+        console.error('Save failed:', e);
+        btn.textContent = 'Error - try again';
+        btn.classList.add('error');
+        setTimeout(() => {
+            btn.textContent = 'Save ' + section.charAt(0).toUpperCase() + section.slice(1);
+            btn.className = 'save-btn';
+            btn.disabled = false;
+        }, 2000);
+    }
+}
 
-        function removeSession(index) {
-            if (confirm('Remove this session?')) {
-                sessions.splice(index, 1);
-                render();
+// ============================================================
+// MESSAGES
+// ============================================================
+function loadMessages() {
+    db.collection('messages')
+        .orderBy('timestamp', 'desc')
+        .onSnapshot(snap => {
+            messagesData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderMessages();
+            const unread = messagesData.filter(m => !m.read).length;
+            const badge = document.getElementById('unreadBadge');
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = 'inline';
+            } else {
+                badge.style.display = 'none';
             }
-        }
+        });
+}
 
-        function generateCode() {
-            const lines = sessions.map(s => {
-                return `    {\n        day: "${s.day}",\n        time: "${s.time}",\n        location: "${s.location}",\n        type: "${s.type}",\n        ageGroup: "${s.ageGroup}",\n        note: "${s.note || ''}"\n    }`;
-            });
+function renderMessages() {
+    const list = document.getElementById('messagesList');
+    const filtered = msgFilter === 'unread' ? messagesData.filter(m => !m.read) : messagesData;
 
-            const code = `/*\n * ACTIVE GOALS FOOTBALL - SESSION TIMETABLE\n * Last updated: ${new Date().toLocaleDateString('en-GB')}\n *\n * To update: Open admin.html, make changes, copy new code here.\n */\n\nconst SCHEDULE = [\n${lines.join(',\n')}\n];\n`;
+    if (!filtered.length) {
+        list.innerHTML = '<div class="msg-empty">No messages yet</div>';
+        return;
+    }
 
-            document.getElementById('outputCode').value = code;
-            document.getElementById('outputArea').classList.add('show');
-            document.getElementById('outputArea').scrollIntoView({ behavior: 'smooth' });
-        }
+    list.innerHTML = filtered.map(m => {
+        const time = m.timestamp ? timeAgo(m.timestamp.toDate()) : 'Just now';
+        const sessionLabels = {
+            park: 'Park Sessions', venue: 'Venue Sessions', '1to1': '1-to-1 Coaching',
+            'small-group': 'Small Group', 'holiday-camp': 'Holiday Camp', masterclass: 'Skills Masterclass'
+        };
+        return `
+            <div class="msg-card ${m.read ? '' : 'unread'}">
+                <div class="msg-card-header">
+                    <span class="msg-name">${escHtml(m.name || 'No name')}</span>
+                    <span class="msg-time">${time}</span>
+                </div>
+                <div class="msg-meta">
+                    ${m.phone ? `<span>📱 ${escHtml(m.phone)}</span>` : ''}
+                    ${m.email ? `<span>📧 ${escHtml(m.email)}</span>` : ''}
+                    ${m.session ? `<span>⚽ ${sessionLabels[m.session] || m.session}</span>` : ''}
+                </div>
+                ${m.message ? `<div class="msg-body">${escHtml(m.message)}</div>` : ''}
+                <div class="msg-actions">
+                    <button class="msg-action-btn" onclick="toggleRead('${m.id}', ${m.read})">
+                        ${m.read ? 'Mark unread' : 'Mark read'}
+                    </button>
+                    <button class="msg-action-btn delete" onclick="deleteMessage('${m.id}')">Delete</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
 
-        function copyCode() {
-            const textarea = document.getElementById('outputCode');
-            textarea.select();
-            document.execCommand('copy');
+function filterMessages(filter, btn) {
+    msgFilter = filter;
+    document.querySelectorAll('.msg-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMessages();
+}
 
-            const btn = document.getElementById('copyBtn');
-            btn.classList.add('copied');
-            btn.innerHTML = '&#10003; Copied!';
-            setTimeout(() => {
-                btn.classList.remove('copied');
-                btn.innerHTML = '&#128203; Copy to Clipboard';
-            }, 2000);
-        }
+function toggleRead(id, currentRead) {
+    db.collection('messages').doc(id).update({ read: !currentRead });
+}
 
-        // Initial render
-        render();
-    </script>
+function deleteMessage(id) {
+    if (confirm('Delete this message permanently?')) {
+        db.collection('messages').doc(id).delete();
+    }
+}
+
+function timeAgo(date) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    if (seconds < 60) return 'Just now';
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return minutes + ' min ago';
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return hours + 'h ago';
+    const daysDiff = Math.floor(hours / 24);
+    if (daysDiff < 7) return daysDiff + 'd ago';
+    return date.toLocaleDateString('en-GB');
+}
+
+function escHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
+// ============================================================
+// SEED CONTENT (one-time initialization)
+// ============================================================
+async function seedAllContent() {
+    const btn = document.querySelector('.seed-btn');
+    btn.disabled = true;
+    btn.textContent = 'Initializing...';
+
+    try {
+        const batch = db.batch();
+
+        batch.set(db.collection('content').doc('hero'), {
+            tag: "FA Qualified \u2022 DBS Checked \u2022 Fully Insured",
+            headingLine1: "Get Your Child",
+            headingHighlight: "Off the Screen",
+            headingLine3: "& Onto the Pitch",
+            subtitle: "Fun, safe, and affordable football coaching in Luton. Sessions from just \u00a35. No contracts, no pressure \u2014 just football.",
+            phone: "07455552786",
+            phoneDisplay: "07455 552786",
+            offerText: "\ud83c\udf1f First session FREE \u2014 come try it, no commitment"
+        });
+
+        batch.set(db.collection('content').doc('about'), {
+            sectionLabel: "Meet Your Coach",
+            name: "Imran Ali",
+            role: "Founder & Head Coach",
+            bio: [
+                "Welcome to Active Goals Football! I'm Imran, a passionate and dedicated football coach on a mission to <strong>get kids off screens, out on the pitch, and falling in love with the beautiful game</strong>.",
+                "I believe football has the power to <strong>unite communities</strong> and bring people together. Whether your child is a complete beginner or an aspiring player, I tailor every session to build skills, confidence, and a genuine love for the sport.",
+                "My coaching philosophy is simple: <strong>make it fun, make it active, and watch players grow</strong>."
+            ],
+            qualifications: [
+                "FA Introduction to Coaching Football",
+                "Enhanced DBS Checked",
+                "First Aid Certified",
+                "Public Liability Insurance",
+                "Risk Assessment & Emergency Procedures",
+                "Safeguarding Policy & Procedures"
+            ]
+        });
+
+        batch.set(db.collection('content').doc('timetable'), {
+            sectionLabel: "When & Where",
+            title: "Session Timetable",
+            subtitle: "Find a session near you. Drop-ins welcome \u2014 just turn up and play!"
+        });
+
+        batch.set(db.collection('content').doc('prices'), {
+            sectionLabel: "Transparent Pricing",
+            title: "Simple, Honest Prices",
+            subtitle: "No hidden fees. No contracts. Pay per session or save with a block booking.",
+            park: [
+                { label: "Drop-in", price: "\u00a35", detail: "per session", description: "Pay on the day. Just turn up!", popularTag: "" },
+                { label: "Sibling Discount", price: "\u00a34", detail: "each (2+ siblings)", description: "Bring the whole family", popularTag: "" },
+                { label: "Block of 6", price: "\u00a325", detail: "\u00a34.17 per session", description: "Commit & save", popularTag: "Save \u00a35" },
+                { label: "Block of 10", price: "\u00a340", detail: "\u00a34 per session", description: "For loyal families", popularTag: "Best Value" }
+            ],
+            venue: [
+                { label: "Drop-in", price: "\u00a38", detail: "per session", description: "Pay on the day", popularTag: "" },
+                { label: "Block of 6", price: "\u00a342", detail: "\u00a37 per session", description: "Small saving for commitment", popularTag: "" },
+                { label: "Block of 10", price: "\u00a365", detail: "\u00a36.50 per session", description: "Best rate for regulars", popularTag: "Best Value" }
+            ],
+            premium: [
+                { label: "1-to-1 Coaching", price: "\u00a325", detail: "per hour", description: "Full individual focus", popularTag: "" },
+                { label: "Small Group (2-3 kids)", price: "\u00a312", detail: "each per hour", description: "Perfect for friends & siblings", popularTag: "" },
+                { label: "Skills Masterclass", price: "\u00a310", detail: "per child", description: "Themed sessions e.g. shooting clinic", popularTag: "" }
+            ],
+            extras: [
+                { title: "\ud83c\udf1f First Session FREE", description: "Come try us out \u2014 no commitment needed" },
+                { title: "\ud83d\ude4b Refer a Friend", description: "Both get \u00a31 off your next session" },
+                { title: "\u2600\ufe0f Holiday Camps", description: "Half-term & summer \u2014 \u00a310-15 per day" },
+                { title: "\ud83d\udcb3 Monthly Payments", description: "Pay block bookings monthly by bank transfer" }
+            ]
+        });
+
+        batch.set(db.collection('content').doc('why'), {
+            sectionLabel: "Why Parents Choose Us",
+            title: "Your Child Deserves Better<br>Than Another Hour on a Screen",
+            subtitle: "We don't just teach football \u2014 we build confident, active, and socially connected young people.",
+            cards: [
+                { title: "Screen Time \u2192 Active Time", description: "Swap the tablet for a football. Our sessions get children moving, laughing, and loving being outdoors. Parents tell us their kids can't wait for the next session." },
+                { title: "Real Friendships", description: "Football brings children together. Your child will make genuine friendships, learn teamwork, and feel part of a community \u2014 something no app can replace." },
+                { title: "Confidence That Lasts", description: "Every session is designed to celebrate small wins. Watch your child's confidence soar \u2014 not just on the pitch, but in the classroom and beyond." },
+                { title: "Safety You Can Trust", description: "Full compliance folder including public liability insurance, risk assessments, emergency procedures, and safeguarding policies. Your child's safety is our top priority." }
+            ]
+        });
+
+        batch.set(db.collection('content').doc('testimonial'), {
+            quote: "My son used to spend hours on his iPad. Since starting with Imran, he's outside every day practising. His confidence has completely changed.",
+            attribution: "Parent Review",
+            ctaText: "Book Your Child's First Free Session",
+            reassurance: "No commitment required \u2022 Pay per session \u2022 All abilities welcome"
+        });
+
+        batch.set(db.collection('content').doc('contact'), {
+            sectionLabel: "Get Started Today",
+            title: "Book a Session",
+            subtitle: "Call, email, or send a message \u2014 we'll get back to you within the hour",
+            phone: "07455552786",
+            phoneDisplay: "07455 552786",
+            email: "activegoalsfootball@gmail.com",
+            location: "Luton & surrounding areas",
+            locationDetail: "Wardown Park & local venues"
+        });
+
+        batch.set(db.collection('content').doc('footer'), {
+            description: "Getting kids off screens and onto the pitch.<br>Uniting communities through football in Luton.",
+            phone: "07455552786",
+            phoneDisplay: "07455 552786",
+            email: "activegoalsfootball@gmail.com",
+            copyright: "\u00a9 2026 Active Goals Football. All rights reserved. | FA Qualified | DBS Checked | Fully Insured"
+        });
+
+        await batch.commit();
+
+        // Seed schedule
+        const schedBatch = db.batch();
+        const defaultSchedule = [
+            { day: "Monday", time: "4:30 PM - 6:00 PM", location: "Wardown Park", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome", order: 1 },
+            { day: "Wednesday", time: "4:30 PM - 6:00 PM", location: "Wardown Park", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome", order: 2 },
+            { day: "Thursday", time: "5:00 PM - 6:30 PM", location: "5-a-side Pitch (TBC)", type: "venue", ageGroup: "Ages 7-14", note: "Structured coaching", order: 3 },
+            { day: "Saturday", time: "10:00 AM - 11:30 AM", location: "Wardown Park", type: "park", ageGroup: "All ages", note: "Family session - siblings welcome", order: 4 }
+        ];
+        defaultSchedule.forEach(s => {
+            schedBatch.set(db.collection('schedule').doc(), s);
+        });
+        await schedBatch.commit();
+
+        alert('Content initialized! Loading your editor...');
+        location.reload();
+
+    } catch(e) {
+        console.error('Seed failed:', e);
+        btn.textContent = 'Error - try again';
+        btn.disabled = false;
+    }
+}
+</script>
 </body>
 </html>

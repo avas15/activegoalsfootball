@@ -109,6 +109,8 @@ img { max-width: 100%; display: block; }
     gap: 8px;
 }
 .logo-icon { font-size: 1.6rem; }
+.nav-logo-img { border-radius: 50%; object-fit: cover; }
+.footer-logo-img { border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 6px; }
 .logo-active { color: var(--green-dark); }
 .logo-goals { color: var(--gold); }
 .navbar:not(.scrolled) .logo-active,
@@ -945,6 +947,8 @@ img { max-width: 100%; display: block; }
     transition: var(--transition);
 }
 .footer-links a:hover { opacity: 1; color: var(--gold); }
+.footer-admin-link { opacity: 0.2 !important; font-size: 0.7rem !important; }
+.footer-admin-link:hover { opacity: 0.5 !important; }
 .footer-contact {
     display: flex;
     flex-direction: column;
