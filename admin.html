@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Goals Football - Timetable Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            min-height: 100vh;
+        }
+        .header {
+            background: #1b5e20;
+            color: white;
+            padding: 24px 32px;
+            text-align: center;
+        }
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+        }
+        .header p { opacity: 0.8; font-size: 0.9rem; }
+        .container {
+            max-width: 900px;
+            margin: 32px auto;
+            padding: 0 20px;
+        }
+
+        /* Instructions */
+        .instructions {
+            background: #FFF8E1;
+            border: 2px solid #F5D060;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        .instructions h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #b8860b;
+        }
+        .instructions ol {
+            margin-left: 20px;
+            line-height: 2;
+            font-size: 0.95rem;
+        }
+
+        /* Session List */
+        .session-list {
+            margin-bottom: 24px;
+        }
+        .session-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            position: relative;
+        }
+        .session-item .full-width {
+            grid-column: 1 / -1;
+        }
+        .session-item label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        .session-item input,
+        .session-item select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+        }
+        .session-item input:focus,
+        .session-item select:focus {
+            outline: none;
+            border-color: #2e7d32;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #fee;
+            border: none;
+            color: #d32f2f;
+            font-size: 1.2rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .delete-btn:hover { background: #fcc; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 14px 28px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        .btn-add {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px dashed #4caf50;
+        }
+        .btn-add:hover { background: #c8e6c9; }
+        .btn-save {
+            background: #D4A017;
+            color: white;
+            font-size: 1.1rem;
+            padding: 16px;
+        }
+        .btn-save:hover { background: #b8860b; }
+
+        /* Output */
+        .output-area {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 24px;
+            display: none;
+        }
+        .output-area.show { display: block; }
+        .output-area h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 12px;
+            color: #1b5e20;
+        }
+        .output-area textarea {
+            width: 100%;
+            height: 200px;
+            padding: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            resize: vertical;
+            margin-bottom: 12px;
+        }
+        .btn-copy {
+            background: #2e7d32;
+            color: white;
+        }
+        .btn-copy:hover { background: #1b5e20; }
+        .copied {
+            background: #4caf50 !important;
+        }
+
+        .preview {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 24px;
+        }
+        .preview h3 {
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 16px;
+            color: #1b5e20;
+        }
+        .preview-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 16px;
+            border-left: 4px solid #2e7d32;
+            margin-bottom: 8px;
+        }
+        .preview-card.venue { border-left-color: #1565c0; }
+        .preview-card.premium { border-left-color: #D4A017; }
+        .preview-card strong { font-family: 'Montserrat', sans-serif; }
+
+        @media (max-width: 600px) {
+            .session-item { grid-template-columns: 1fr; }
+            .container { padding: 0 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>&#9917; Timetable Manager</h1>
+        <p>Add, edit, or remove sessions &mdash; then copy the code to update your website</p>
+    </div>
+
+    <div class="container">
+        <div class="instructions">
+            <h2>&#128161; How to update the timetable</h2>
+            <ol>
+                <li><strong>Edit the sessions below</strong> &mdash; add, change, or remove as needed</li>
+                <li>Click the big <strong>"Generate Schedule Code"</strong> button</li>
+                <li>Click <strong>"Copy to Clipboard"</strong></li>
+                <li>Open <strong>schedule.js</strong> on your computer and <strong>replace everything</strong> with what you copied</li>
+                <li><strong>Save the file</strong> &mdash; your website will update!</li>
+            </ol>
+        </div>
+
+        <div class="preview" id="preview">
+            <h3>&#128065; Live Preview</h3>
+            <div id="previewCards"></div>
+        </div>
+
+        <div id="sessionList" class="session-list"></div>
+
+        <button class="btn btn-add" onclick="addSession()">+ Add New Session</button>
+
+        <button class="btn btn-save" onclick="generateCode()">&#128190; Generate Schedule Code</button>
+
+        <div class="output-area" id="outputArea">
+            <h3>&#9989; Your schedule code is ready!</h3>
+            <textarea id="outputCode" readonly></textarea>
+            <button class="btn btn-copy" id="copyBtn" onclick="copyCode()">&#128203; Copy to Clipboard</button>
+        </div>
+    </div>
+
+    <script>
+        let sessions = [
+            { day: "Monday", time: "4:30 PM - 6:00 PM", location: "Wardown Park", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome" },
+            { day: "Wednesday", time: "4:30 PM - 6:00 PM", location: "Wardown Park", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome" },
+            { day: "Saturday", time: "10:00 AM - 11:30 AM", location: "Wardown Park", type: "park", ageGroup: "All ages", note: "Family session - siblings welcome" },
+            { day: "Thursday", time: "5:00 PM - 6:30 PM", location: "5-a-side Pitch (TBC)", type: "venue", ageGroup: "Ages 7-14", note: "Structured coaching" }
+        ];
+
+        const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+
+        function render() {
+            const list = document.getElementById('sessionList');
+            list.innerHTML = sessions.map((s, i) => `
+                <div class="session-item">
+                    <button class="delete-btn" onclick="removeSession(${i})" title="Remove this session">&times;</button>
+                    <div>
+                        <label>Day</label>
+                        <select onchange="updateSession(${i}, 'day', this.value)">
+                            ${days.map(d => `<option value="${d}" ${d === s.day ? 'selected' : ''}>${d}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div>
+                        <label>Time</label>
+                        <input type="text" value="${s.time}" placeholder="e.g. 4:30 PM - 6:00 PM" onchange="updateSession(${i}, 'time', this.value)">
+                    </div>
+                    <div>
+                        <label>Location</label>
+                        <input type="text" value="${s.location}" placeholder="e.g. Wardown Park" onchange="updateSession(${i}, 'location', this.value)">
+                    </div>
+                    <div>
+                        <label>Session Type</label>
+                        <select onchange="updateSession(${i}, 'type', this.value)">
+                            <option value="park" ${s.type === 'park' ? 'selected' : ''}>Park Session</option>
+                            <option value="venue" ${s.type === 'venue' ? 'selected' : ''}>Venue Session</option>
+                            <option value="premium" ${s.type === 'premium' ? 'selected' : ''}>Premium / 1-to-1</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Age Group</label>
+                        <input type="text" value="${s.ageGroup}" placeholder="e.g. Ages 5-11" onchange="updateSession(${i}, 'ageGroup', this.value)">
+                    </div>
+                    <div>
+                        <label>Note (optional)</label>
+                        <input type="text" value="${s.note || ''}" placeholder="e.g. Drop-in welcome" onchange="updateSession(${i}, 'note', this.value)">
+                    </div>
+                </div>
+            `).join('');
+
+            // Update preview
+            const preview = document.getElementById('previewCards');
+            const sorted = [...sessions].sort((a, b) => days.indexOf(a.day) - days.indexOf(b.day));
+            preview.innerHTML = sorted.map(s => {
+                const cls = s.type === 'venue' ? 'venue' : s.type === 'premium' ? 'premium' : '';
+                return `<div class="preview-card ${cls}">
+                    <strong>${s.day}</strong> &mdash; ${s.time}<br>
+                    ${s.location} &bull; ${s.ageGroup}${s.note ? ` &bull; <em>${s.note}</em>` : ''}
+                </div>`;
+            }).join('');
+        }
+
+        function updateSession(index, field, value) {
+            sessions[index][field] = value;
+            render();
+        }
+
+        function addSession() {
+            sessions.push({
+                day: "Monday",
+                time: "",
+                location: "",
+                type: "park",
+                ageGroup: "Ages 5-11",
+                note: ""
+            });
+            render();
+            // Scroll to new item
+            setTimeout(() => {
+                const items = document.querySelectorAll('.session-item');
+                items[items.length - 1].scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        function removeSession(index) {
+            if (confirm('Remove this session?')) {
+                sessions.splice(index, 1);
+                render();
+            }
+        }
+
+        function generateCode() {
+            const lines = sessions.map(s => {
+                return `    {\n        day: "${s.day}",\n        time: "${s.time}",\n        location: "${s.location}",\n        type: "${s.type}",\n        ageGroup: "${s.ageGroup}",\n        note: "${s.note || ''}"\n    }`;
+            });
+
+            const code = `/*\n * ACTIVE GOALS FOOTBALL - SESSION TIMETABLE\n * Last updated: ${new Date().toLocaleDateString('en-GB')}\n *\n * To update: Open admin.html, make changes, copy new code here.\n */\n\nconst SCHEDULE = [\n${lines.join(',\n')}\n];\n`;
+
+            document.getElementById('outputCode').value = code;
+            document.getElementById('outputArea').classList.add('show');
+            document.getElementById('outputArea').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyCode() {
+            const textarea = document.getElementById('outputCode');
+            textarea.select();
+            document.execCommand('copy');
+
+            const btn = document.getElementById('copyBtn');
+            btn.classList.add('copied');
+            btn.innerHTML = '&#10003; Copied!';
+            setTimeout(() => {
+                btn.classList.remove('copied');
+                btn.innerHTML = '&#128203; Copy to Clipboard';
+            }, 2000);
+        }
+
+        // Initial render
+        render();
+    </script>
+</body>
+</html>

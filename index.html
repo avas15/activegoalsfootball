@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Active Goals Football | Professional Football Coaching</title>
-    <meta name="description" content="Professional football coaching by FA qualified coach Imran Ali. Getting kids off screens and uniting communities through football. 1-to-1 sessions, group training, holiday camps and birthday parties.">
+    <title>Active Goals Football | Football Coaching in Luton</title>
+    <meta name="description" content="Affordable football coaching in Luton by FA qualified coach Imran Ali. Getting kids off screens and uniting communities through football. Park sessions from just &pound;5.">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="schedule.js"></script>
 </head>
 <body>
 
@@ -16,7 +17,8 @@
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
             <a href="#" class="nav-logo">
-                <span class="logo-active">Active</span><span class="logo-goals">Goals</span> <span class="logo-football">Football</span>
+                <span class="logo-icon">&#9917;</span>
+                <span class="logo-active">Active</span><span class="logo-goals">Goals</span>
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
                 <span></span>
@@ -25,35 +27,72 @@
             </button>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#sessions" class="nav-link">Sessions</a></li>
+                <li><a href="#timetable" class="nav-link">Timetable</a></li>
                 <li><a href="#prices" class="nav-link">Prices</a></li>
+                <li><a href="#why" class="nav-link">Why Us</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="#contact" class="nav-link nav-cta">Book Now</a></li>
+                <li><a href="tel:07455552786" class="nav-link nav-cta">Call Now</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <header class="hero" id="hero">
-        <div class="hero-overlay"></div>
+        <div class="hero-bg"></div>
         <div class="container hero-content">
-            <h1>Develop Your Game.<br>Reach Your <span class="highlight">Goals</span>.</h1>
-            <p class="hero-subtitle">Professional football coaching for all ages and abilities</p>
-            <div class="hero-badges">
-                <span class="badge">FA Qualified Coach</span>
-                <span class="badge">DBS Checked</span>
-                <span class="badge">First Aid Certified</span>
+            <div class="hero-text">
+                <div class="hero-tag fade-in">FA Qualified &bull; DBS Checked &bull; Fully Insured</div>
+                <h1 class="fade-in fade-delay-1">Get Your Child<br><span class="highlight">Off the Screen</span><br>& Onto the Pitch</h1>
+                <p class="hero-subtitle fade-in fade-delay-2">Fun, safe, and affordable football coaching in Luton. Sessions from just &pound;5. No contracts, no pressure &mdash; just football.</p>
+                <div class="hero-actions fade-in fade-delay-3">
+                    <a href="tel:07455552786" class="btn btn-primary btn-large">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        07455 552786
+                    </a>
+                    <a href="#prices" class="btn btn-outline btn-large">View Prices</a>
+                </div>
+                <p class="hero-offer fade-in fade-delay-3">&#127775; <strong>First session FREE</strong> &mdash; come try it, no commitment</p>
             </div>
-            <a href="#contact" class="btn btn-primary btn-large">Book a Session</a>
+            <div class="hero-trust fade-in fade-delay-3">
+                <div class="trust-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Safeguarding<br>Procedures</span>
+                </div>
+                <div class="trust-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    <span>Public Liability<br>Insurance</span>
+                </div>
+                <div class="trust-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Enhanced<br>DBS Checked</span>
+                </div>
+            </div>
         </div>
     </header>
+
+    <!-- Social Proof Banner -->
+    <section class="proof-banner">
+        <div class="container proof-grid">
+            <div class="proof-item animate-on-scroll">
+                <span class="proof-number" data-count="5">0</span><span class="proof-plus">&#9733;</span>
+                <span class="proof-label">Parent Rated</span>
+            </div>
+            <div class="proof-item animate-on-scroll">
+                <span class="proof-number" data-count="100">0</span><span class="proof-plus">%</span>
+                <span class="proof-label">Fully Compliant</span>
+            </div>
+            <div class="proof-item animate-on-scroll">
+                <span class="proof-number" data-count="0">0</span><span class="proof-plus"></span>
+                <span class="proof-label proof-label-special">Screen Time Needed</span>
+            </div>
+        </div>
+    </section>
 
     <!-- About Section -->
     <section class="section about" id="about">
         <div class="container">
-            <h2 class="section-title">About Your Coach</h2>
             <div class="about-grid">
-                <div class="about-image">
+                <div class="about-image animate-on-scroll slide-left">
                     <div class="about-image-placeholder">
                         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="50" cy="35" r="20" fill="#2e7d32"/>
@@ -61,31 +100,41 @@
                         </svg>
                         <p>Coach Photo</p>
                     </div>
+                    <div class="about-badge">
+                        <span>FA Qualified</span>
+                    </div>
                 </div>
-                <div class="about-text">
-                    <h3>Imran Ali</h3>
+                <div class="about-text animate-on-scroll slide-right">
+                    <div class="section-label">Meet Your Coach</div>
+                    <h2>Imran Ali</h2>
                     <p class="about-role">Founder & Head Coach</p>
-                    <p>Welcome to Active Goals Football! I'm Imran, a passionate and dedicated football coach on a mission to get kids off screens, out on the pitch, and falling in love with the beautiful game.</p>
-                    <p>I hold the <strong>FA Introduction to Coaching Football</strong> certificate from FA Education, am fully <strong>DBS checked</strong>, and <strong>First Aid certified</strong>, ensuring a safe and professional environment for every session.</p>
-                    <p>I believe football has the power to unite communities and bring people together. Whether you're a beginner taking your first touch or an aspiring player looking to sharpen your technique, I tailor every session to build skills, confidence, and a genuine love for the sport. My coaching philosophy is simple: make it fun, make it active, and watch players grow.</p>
+                    <p>Welcome to Active Goals Football! I'm Imran, a passionate and dedicated football coach on a mission to <strong>get kids off screens, out on the pitch, and falling in love with the beautiful game</strong>.</p>
+                    <p>I believe football has the power to <strong>unite communities</strong> and bring people together. Whether your child is a complete beginner or an aspiring player, I tailor every session to build skills, confidence, and a genuine love for the sport.</p>
+                    <p>My coaching philosophy is simple: <strong>make it fun, make it active, and watch players grow</strong>.</p>
                     <div class="about-qualifications">
                         <div class="qual-item">
-                            <div class="qual-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            </div>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                             <span>FA Introduction to Coaching Football</span>
                         </div>
                         <div class="qual-item">
-                            <div class="qual-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            </div>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                             <span>Enhanced DBS Checked</span>
                         </div>
                         <div class="qual-item">
-                            <div class="qual-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>
-                            </div>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>
                             <span>First Aid Certified</span>
+                        </div>
+                        <div class="qual-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M3 3h18v18H3z"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>
+                            <span>Public Liability Insurance</span>
+                        </div>
+                        <div class="qual-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                            <span>Risk Assessment &amp; Emergency Procedures</span>
+                        </div>
+                        <div class="qual-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <span>Safeguarding Policy &amp; Procedures</span>
                         </div>
                     </div>
                 </div>
@@ -93,77 +142,18 @@
         </div>
     </section>
 
-    <!-- Sessions Section -->
-    <section class="section sessions" id="sessions">
+    <!-- Timetable Section -->
+    <section class="section timetable" id="timetable">
         <div class="container">
-            <h2 class="section-title">What We Offer</h2>
-            <p class="section-subtitle">Coaching sessions designed to suit every player</p>
-            <div class="sessions-grid">
-                <div class="session-card">
-                    <div class="session-icon">
-                        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="20" r="12" fill="#2e7d32"/><rect x="20" y="36" width="24" height="24" rx="4" fill="#1b5e20"/></svg>
-                    </div>
-                    <h3>1-to-1 Coaching</h3>
-                    <p>Personalised individual training sessions focused entirely on your development. Perfect for players wanting to fast-track their improvement with tailored drills and expert feedback.</p>
-                    <ul class="session-features">
-                        <li>Bespoke training plan</li>
-                        <li>Technical skill development</li>
-                        <li>Position-specific coaching</li>
-                        <li>Detailed progress feedback</li>
-                    </ul>
-                </div>
-                <div class="session-card">
-                    <div class="session-icon">
-                        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="20" r="10" fill="#2e7d32"/><circle cx="42" cy="20" r="10" fill="#1b5e20"/><rect x="10" y="34" width="44" height="24" rx="4" fill="#2e7d32"/></svg>
-                    </div>
-                    <h3>Small Group Sessions</h3>
-                    <p>Train with 2-4 players in a focused small group environment. Great for friends who want to improve together while still getting plenty of individual attention.</p>
-                    <ul class="session-features">
-                        <li>2-4 players per group</li>
-                        <li>Competitive skill challenges</li>
-                        <li>Team play development</li>
-                        <li>Social and fun atmosphere</li>
-                    </ul>
-                </div>
-                <div class="session-card">
-                    <div class="session-icon">
-                        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="18" r="8" fill="#2e7d32"/><circle cx="32" cy="14" r="8" fill="#1b5e20"/><circle cx="48" cy="18" r="8" fill="#2e7d32"/><rect x="6" y="30" width="52" height="28" rx="4" fill="#1b5e20"/></svg>
-                    </div>
-                    <h3>Group Training</h3>
-                    <p>Sessions for 5-8 players focusing on team skills, match play, and game awareness. An affordable way to train regularly and develop all-round footballing ability.</p>
-                    <ul class="session-features">
-                        <li>5-8 players per session</li>
-                        <li>Match-based scenarios</li>
-                        <li>Tactical awareness</li>
-                        <li>Great value coaching</li>
-                    </ul>
-                </div>
-                <div class="session-card">
-                    <div class="session-icon">
-                        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="48" height="48" rx="6" fill="#2e7d32"/><text x="32" y="42" text-anchor="middle" fill="white" font-size="24" font-weight="bold">HC</text></svg>
-                    </div>
-                    <h3>Holiday Camps</h3>
-                    <p>Action-packed football camps during school holidays. Half-day and full-day options available to keep kids active, engaged, and improving their game.</p>
-                    <ul class="session-features">
-                        <li>Half-day & full-day options</li>
-                        <li>Skills, games & tournaments</li>
-                        <li>Suitable for all abilities</li>
-                        <li>Fun, safe environment</li>
-                    </ul>
-                </div>
-                <div class="session-card">
-                    <div class="session-icon">
-                        <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="24" fill="#2e7d32"/><text x="32" y="40" text-anchor="middle" fill="white" font-size="20" font-weight="bold">BP</text></svg>
-                    </div>
-                    <h3>Birthday Parties</h3>
-                    <p>Make their special day unforgettable with a football-themed birthday party! Professional coaching, fun games, and mini tournaments for up to 15 children.</p>
-                    <ul class="session-features">
-                        <li>Up to 15 children</li>
-                        <li>2 hours of football fun</li>
-                        <li>Games & mini tournaments</li>
-                        <li>Medals for all players</li>
-                    </ul>
-                </div>
+            <div class="section-label center">When &amp; Where</div>
+            <h2 class="section-title">Session Timetable</h2>
+            <p class="section-subtitle">Find a session near you. Drop-ins welcome &mdash; just turn up and play!</p>
+            <div id="timetableGrid" class="timetable-grid">
+                <!-- Populated by JavaScript from schedule.js -->
+            </div>
+            <div class="timetable-note animate-on-scroll">
+                <p>&#128197; Timetable may change during school holidays. Follow us on social media for updates.</p>
+                <p>&#127775; <strong>First session is FREE</strong> &mdash; just turn up or <a href="#contact">message us</a> first!</p>
             </div>
         </div>
     </section>
@@ -171,116 +161,223 @@
     <!-- Prices Section -->
     <section class="section prices" id="prices">
         <div class="container">
-            <h2 class="section-title">Price List</h2>
-            <p class="section-subtitle">Affordable coaching for everyone</p>
-            <div class="price-table-wrapper">
-                <table class="price-table">
-                    <thead>
-                        <tr>
-                            <th>Session Type</th>
-                            <th>Duration</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-label="Session">
-                                <strong>1-to-1 Coaching</strong>
-                                <span class="price-note">Individual session</span>
-                            </td>
-                            <td data-label="Duration">1 hour</td>
-                            <td data-label="Price" class="price-amount">&pound;30</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Session">
-                                <strong>Pairs Session</strong>
-                                <span class="price-note">2 players</span>
-                            </td>
-                            <td data-label="Duration">1 hour</td>
-                            <td data-label="Price" class="price-amount">&pound;20 <span class="per">per player</span></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Session">
-                                <strong>Small Group</strong>
-                                <span class="price-note">3-4 players</span>
-                            </td>
-                            <td data-label="Duration">1 hour</td>
-                            <td data-label="Price" class="price-amount">&pound;15 <span class="per">per player</span></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Session">
-                                <strong>Group Session</strong>
-                                <span class="price-note">5-8 players</span>
-                            </td>
-                            <td data-label="Duration">1 hour</td>
-                            <td data-label="Price" class="price-amount">&pound;8 <span class="per">per player</span></td>
-                        </tr>
-                        <tr class="highlight-row">
-                            <td data-label="Session">
-                                <strong>Holiday Camp (Half Day)</strong>
-                                <span class="price-note">Morning or afternoon</span>
-                            </td>
-                            <td data-label="Duration">3 hours</td>
-                            <td data-label="Price" class="price-amount">&pound;15 <span class="per">per child</span></td>
-                        </tr>
-                        <tr class="highlight-row">
-                            <td data-label="Session">
-                                <strong>Holiday Camp (Full Day)</strong>
-                                <span class="price-note">Full day camp</span>
-                            </td>
-                            <td data-label="Duration">6 hours</td>
-                            <td data-label="Price" class="price-amount">&pound;25 <span class="per">per child</span></td>
-                        </tr>
-                        <tr>
-                            <td data-label="Session">
-                                <strong>Birthday Party Package</strong>
-                                <span class="price-note">Up to 15 children</span>
-                            </td>
-                            <td data-label="Duration">2 hours</td>
-                            <td data-label="Price" class="price-amount">&pound;100</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="section-label center">Transparent Pricing</div>
+            <h2 class="section-title">Simple, Honest Prices</h2>
+            <p class="section-subtitle">No hidden fees. No contracts. Pay per session or save with a block booking.</p>
+
+            <!-- Tier 1 - Park -->
+            <div class="price-tier animate-on-scroll">
+                <div class="tier-header tier-park">
+                    <div class="tier-icon">&#127795;</div>
+                    <div>
+                        <h3>Park Sessions</h3>
+                        <p>Wardown Park &amp; local parks</p>
+                    </div>
+                </div>
+                <div class="tier-cards">
+                    <div class="tier-card">
+                        <div class="tier-card-label">Drop-in</div>
+                        <div class="tier-card-price">&pound;5</div>
+                        <div class="tier-card-detail">per session</div>
+                        <p>Pay on the day. Just turn up!</p>
+                    </div>
+                    <div class="tier-card">
+                        <div class="tier-card-label">Sibling Discount</div>
+                        <div class="tier-card-price">&pound;4</div>
+                        <div class="tier-card-detail">each (2+ siblings)</div>
+                        <p>Bring the whole family</p>
+                    </div>
+                    <div class="tier-card popular-tier">
+                        <div class="popular-tag">Save &pound;5</div>
+                        <div class="tier-card-label">Block of 6</div>
+                        <div class="tier-card-price">&pound;25</div>
+                        <div class="tier-card-detail">&pound;4.17 per session</div>
+                        <p>Commit &amp; save</p>
+                    </div>
+                    <div class="tier-card popular-tier">
+                        <div class="popular-tag">Best Value</div>
+                        <div class="tier-card-label">Block of 10</div>
+                        <div class="tier-card-price">&pound;40</div>
+                        <div class="tier-card-detail">&pound;4 per session</div>
+                        <p>For loyal families</p>
+                    </div>
+                </div>
             </div>
-            <div class="price-notes">
-                <p>All sessions include equipment. Players just need to bring boots, shin pads, and water.</p>
-                <p>Block booking discounts available &mdash; <a href="#contact">get in touch</a> for details.</p>
+
+            <!-- Tier 2 - Venue -->
+            <div class="price-tier animate-on-scroll">
+                <div class="tier-header tier-venue">
+                    <div class="tier-icon">&#127942;</div>
+                    <div>
+                        <h3>Venue Sessions</h3>
+                        <p>Hired 5-a-side pitch &bull; Better surface, more structure</p>
+                    </div>
+                </div>
+                <div class="tier-cards">
+                    <div class="tier-card">
+                        <div class="tier-card-label">Drop-in</div>
+                        <div class="tier-card-price">&pound;8</div>
+                        <div class="tier-card-detail">per session</div>
+                        <p>Pay on the day</p>
+                    </div>
+                    <div class="tier-card">
+                        <div class="tier-card-label">Block of 6</div>
+                        <div class="tier-card-price">&pound;42</div>
+                        <div class="tier-card-detail">&pound;7 per session</div>
+                        <p>Small saving for commitment</p>
+                    </div>
+                    <div class="tier-card popular-tier">
+                        <div class="popular-tag">Best Value</div>
+                        <div class="tier-card-label">Block of 10</div>
+                        <div class="tier-card-price">&pound;65</div>
+                        <div class="tier-card-detail">&pound;6.50 per session</div>
+                        <p>Best rate for regulars</p>
+                    </div>
+                </div>
             </div>
+
+            <!-- Tier 3 - Premium -->
+            <div class="price-tier animate-on-scroll">
+                <div class="tier-header tier-premium">
+                    <div class="tier-icon">&#11088;</div>
+                    <div>
+                        <h3>Premium Coaching</h3>
+                        <p>1-to-1 &amp; small group &bull; Personalised skill development</p>
+                    </div>
+                </div>
+                <div class="tier-cards">
+                    <div class="tier-card">
+                        <div class="tier-card-label">1-to-1 Coaching</div>
+                        <div class="tier-card-price">&pound;25</div>
+                        <div class="tier-card-detail">per hour</div>
+                        <p>Full individual focus</p>
+                    </div>
+                    <div class="tier-card">
+                        <div class="tier-card-label">Small Group (2-3 kids)</div>
+                        <div class="tier-card-price">&pound;12</div>
+                        <div class="tier-card-detail">each per hour</div>
+                        <p>Perfect for friends &amp; siblings</p>
+                    </div>
+                    <div class="tier-card">
+                        <div class="tier-card-label">Skills Masterclass</div>
+                        <div class="tier-card-price">&pound;10</div>
+                        <div class="tier-card-detail">per child</div>
+                        <p>Themed sessions e.g. shooting clinic</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extras -->
+            <div class="price-extras animate-on-scroll">
+                <div class="price-extra">
+                    <h4>&#127775; First Session FREE</h4>
+                    <p>Come try us out &mdash; no commitment needed</p>
+                </div>
+                <div class="price-extra">
+                    <h4>&#128587; Refer a Friend</h4>
+                    <p>Both get &pound;1 off your next session</p>
+                </div>
+                <div class="price-extra">
+                    <h4>&#9728;&#65039; Holiday Camps</h4>
+                    <p>Half-term &amp; summer &mdash; &pound;10-15 per day</p>
+                </div>
+                <div class="price-extra">
+                    <h4>&#128179; Monthly Payments</h4>
+                    <p>Pay block bookings monthly by bank transfer</p>
+                </div>
+            </div>
+
+            <div class="price-notes animate-on-scroll">
+                <p>All sessions include equipment. Players just need boots, shin pads, and water.</p>
+                <p><strong>Block booking discounts</strong> help families save money and give Imran income security &mdash; everyone wins.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="section why" id="why">
+        <div class="container">
+            <div class="section-label center">Why Parents Choose Us</div>
+            <h2 class="section-title">Your Child Deserves Better<br>Than Another Hour on a Screen</h2>
+            <p class="section-subtitle">We don't just teach football &mdash; we build confident, active, and socially connected young people.</p>
+            <div class="why-grid">
+                <div class="why-card animate-on-scroll">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#D4A017" stroke-width="3"/><path d="M24 14v10l7 7" stroke="#D4A017" stroke-width="3" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Screen Time &#8594; Active Time</h3>
+                    <p>Swap the tablet for a football. Our sessions get children moving, laughing, and loving being outdoors. Parents tell us their kids can't wait for the next session.</p>
+                </div>
+                <div class="why-card animate-on-scroll">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><circle cx="16" cy="20" r="8" stroke="#D4A017" stroke-width="3"/><circle cx="32" cy="20" r="8" stroke="#D4A017" stroke-width="3"/><path d="M8 38c0-4.4 3.6-8 8-8h16c4.4 0 8 3.6 8 8" stroke="#D4A017" stroke-width="3"/></svg>
+                    </div>
+                    <h3>Real Friendships</h3>
+                    <p>Football brings children together. Your child will make genuine friendships, learn teamwork, and feel part of a community &mdash; something no app can replace.</p>
+                </div>
+                <div class="why-card animate-on-scroll">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><path d="M24 4l6 12 13.2 1.9-9.6 9.3 2.3 13.1L24 34l-11.9 6.3 2.3-13.1-9.6-9.3L18 16z" stroke="#D4A017" stroke-width="3" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>Confidence That Lasts</h3>
+                    <p>Every session is designed to celebrate small wins. Watch your child's confidence soar &mdash; not just on the pitch, but in the classroom and beyond.</p>
+                </div>
+                <div class="why-card animate-on-scroll">
+                    <div class="why-icon">
+                        <svg viewBox="0 0 48 48" fill="none"><path d="M24 44s16-8 16-20V10L24 4 8 10v14c0 12 16 20 16 20z" stroke="#D4A017" stroke-width="3"/><path d="M16 24l6 6 10-10" stroke="#D4A017" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>Safety You Can Trust</h3>
+                    <p>Full compliance folder including public liability insurance, risk assessments, emergency procedures, and safeguarding policies. Your child's safety is our top priority.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial / CTA Section -->
+    <section class="section cta-section">
+        <div class="container cta-content animate-on-scroll">
+            <h2>&ldquo;My son used to spend hours on his iPad. Since starting with Imran, he's outside every day practising. His confidence has completely changed.&rdquo;</h2>
+            <p class="cta-attribution">&mdash; Parent Review</p>
+            <a href="tel:07455552786" class="btn btn-primary btn-large">Book Your Child's First Free Session</a>
+            <p class="cta-reassurance">No commitment required &bull; Pay per session &bull; All abilities welcome</p>
         </div>
     </section>
 
     <!-- Contact Section -->
     <section class="section contact" id="contact">
         <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <p class="section-subtitle">Ready to start your football journey? Let's talk!</p>
+            <div class="section-label center">Get Started Today</div>
+            <h2 class="section-title">Book a Session</h2>
+            <p class="section-subtitle">Call, email, or send a message &mdash; we'll get back to you within the hour</p>
             <div class="contact-grid">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <div class="contact-info animate-on-scroll slide-left">
+                    <div class="contact-card">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            </div>
+                            <div>
+                                <h4>Call or Text</h4>
+                                <p><a href="tel:07455552786">07455 552786</a></p>
+                            </div>
                         </div>
-                        <div>
-                            <h4>Phone</h4>
-                            <p><a href="tel:07XXXXXXXXX">07XXX XXXXXX</a></p>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </div>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:activegoalsfootball@gmail.com">activegoalsfootball@gmail.com</a></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                        </div>
-                        <div>
-                            <h4>Email</h4>
-                            <p><a href="mailto:info@activegoalsfootball.co.uk">info@activegoalsfootball.co.uk</a></p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        </div>
-                        <div>
-                            <h4>Location</h4>
-                            <p>Covering [Your Area]<br>and surrounding areas</p>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </div>
+                            <div>
+                                <h4>Location</h4>
+                                <p>Luton &amp; surrounding areas<br>Wardown Park &amp; local venues</p>
+                            </div>
                         </div>
                     </div>
                     <div class="contact-socials">
@@ -295,37 +392,36 @@
                         </a>
                     </div>
                 </div>
-                <div class="contact-form-wrapper">
+                <div class="contact-form-wrapper animate-on-scroll slide-right">
                     <form class="contact-form" id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your name">
+                        <h3>Send a Quick Message</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" required placeholder="Your name">
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" id="phone" name="phone" placeholder="Phone number">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="Your email">
+                            <input type="email" id="email" name="email" required placeholder="Email address">
                         </div>
                         <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="tel" id="phone" name="phone" placeholder="Your phone number">
-                        </div>
-                        <div class="form-group">
-                            <label for="session">Session Interest</label>
                             <select id="session" name="session">
-                                <option value="">Select a session type</option>
-                                <option value="1to1">1-to-1 Coaching</option>
-                                <option value="pairs">Pairs Session</option>
-                                <option value="small-group">Small Group (3-4)</option>
-                                <option value="group">Group Session (5-8)</option>
+                                <option value="">What are you interested in?</option>
+                                <option value="park">Park Sessions (from &pound;5)</option>
+                                <option value="venue">Venue Sessions (from &pound;8)</option>
+                                <option value="1to1">1-to-1 Coaching (&pound;25/hr)</option>
+                                <option value="small-group">Small Group 2-3 (&pound;12 each)</option>
                                 <option value="holiday-camp">Holiday Camp</option>
-                                <option value="birthday">Birthday Party</option>
+                                <option value="masterclass">Skills Masterclass</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="4" placeholder="Tell us about your goals..."></textarea>
+                            <textarea id="message" name="message" rows="3" placeholder="Tell us about your child and what you're looking for..."></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                        <p class="form-note">We typically respond within 1 hour</p>
                     </form>
                 </div>
             </div>
@@ -337,18 +433,23 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <span class="logo-active">Active</span><span class="logo-goals">Goals</span> <span class="logo-football">Football</span>
-                    <p>Professional football coaching for all ages and abilities.</p>
+                    <span class="logo-icon">&#9917;</span>
+                    <span class="logo-active">Active</span><span class="logo-goals">Goals</span>
+                    <p>Getting kids off screens and onto the pitch.<br>Uniting communities through football in Luton.</p>
                 </div>
                 <div class="footer-links">
                     <a href="#about">About</a>
-                    <a href="#sessions">Sessions</a>
+                    <a href="#timetable">Timetable</a>
                     <a href="#prices">Prices</a>
                     <a href="#contact">Contact</a>
                 </div>
+                <div class="footer-contact">
+                    <a href="tel:07455552786">07455 552786</a>
+                    <a href="mailto:activegoalsfootball@gmail.com">activegoalsfootball@gmail.com</a>
+                </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Active Goals Football. All rights reserved.</p>
+                <p>&copy; 2026 Active Goals Football. All rights reserved. | FA Qualified | DBS Checked | Fully Insured</p>
             </div>
         </div>
     </footer>
@@ -357,13 +458,10 @@
         // Mobile nav toggle
         const navToggle = document.getElementById('navToggle');
         const navMenu = document.getElementById('navMenu');
-
         navToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
         });
-
-        // Close menu on link click
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
@@ -373,12 +471,7 @@
 
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
         });
 
         // Smooth scroll
@@ -387,20 +480,67 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    const offset = 80;
-                    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
                     window.scrollTo({ top, behavior: 'smooth' });
                 }
             });
         });
 
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    entry.target.querySelectorAll('[data-count]').forEach(counter => {
+                        const target = parseInt(counter.getAttribute('data-count'));
+                        let current = 0;
+                        const increment = Math.max(1, Math.ceil(target / 40));
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) { current = target; clearInterval(timer); }
+                            counter.textContent = current;
+                        }, 30);
+                    });
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+        // Render timetable from schedule.js
+        function renderTimetable() {
+            const grid = document.getElementById('timetableGrid');
+            if (!grid || typeof SCHEDULE === 'undefined') return;
+
+            const dayOrder = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+            const sorted = [...SCHEDULE].sort((a, b) => dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day));
+
+            grid.innerHTML = sorted.map(s => {
+                const typeClass = s.type === 'park' ? 'tt-park' : s.type === 'venue' ? 'tt-venue' : 'tt-premium';
+                const typeLabel = s.type === 'park' ? 'Park Session' : s.type === 'venue' ? 'Venue Session' : 'Premium';
+                return `
+                    <div class="tt-card ${typeClass} animate-on-scroll">
+                        <div class="tt-day">${s.day}</div>
+                        <div class="tt-time">${s.time}</div>
+                        <div class="tt-location">${s.location}</div>
+                        <div class="tt-meta">
+                            <span class="tt-type">${typeLabel}</span>
+                            <span class="tt-age">${s.ageGroup}</span>
+                        </div>
+                        ${s.note ? `<div class="tt-note">${s.note}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            // Re-observe new elements
+            grid.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        }
+        renderTimetable();
+
         // Form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const formData = new FormData(this);
-            const name = formData.get('name');
-            alert(`Thanks ${name}! Your message has been received. We'll get back to you soon.`);
-            this.reset();
+            const name = new FormData(this).get('name');
+            this.innerHTML = '<div class="form-success"><svg viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2" width="48" height="48"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><h3>Thanks ' + name + '!</h3><p>We\'ve received your message and will get back to you shortly.</p><p>Or call us now: <a href="tel:07455552786">07455 552786</a></p></div>';
         });
     </script>
 </body>
