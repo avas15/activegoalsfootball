@@ -459,6 +459,12 @@ img { max-width: 100%; display: block; }
 .qual-item svg { color: var(--green-main); flex-shrink: 0; }
 .qual-item span { font-weight: 600; font-size: 0.85rem; color: var(--dark-grey); }
 
+.about-grid-reverse {
+    grid-template-columns: 1fr 320px;
+}
+.about-grid-reverse .about-text { order: 1; }
+.about-grid-reverse .about-image { order: 2; }
+
 /* ===== WHY SECTION ===== */
 .why { background: var(--light-grey); }
 .why-grid {
@@ -970,6 +976,9 @@ img { max-width: 100%; display: block; }
 /* ===== RESPONSIVE ===== */
 @media (max-width: 968px) {
     .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-grid-reverse { grid-template-columns: 1fr; }
+    .about-grid-reverse .about-text { order: 1; }
+    .about-grid-reverse .about-image { order: 2; }
     .about-image-placeholder { max-width: 300px; margin: 0 auto; }
     .about-qualifications { grid-template-columns: 1fr; }
     .contact-grid { grid-template-columns: 1fr; gap: 32px; }
