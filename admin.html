@@ -189,6 +189,42 @@
 
         /* Sub-heading */
         .section-divider { font-size: 0.85rem; font-weight: 700; color: #1b5e20; margin: 16px 0 8px; font-family: 'Montserrat', sans-serif; }
+
+        /* Photo upload */
+        .photo-upload-section { margin-bottom: 20px; }
+        .photo-upload-area {
+            display: flex; gap: 16px; align-items: flex-start;
+            background: white; border-radius: 12px; padding: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .photo-preview {
+            width: 120px; height: 150px; flex-shrink: 0;
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            border-radius: 12px; border: 2px dashed #4caf50;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .photo-preview svg { width: 50px; opacity: 0.4; }
+        .photo-upload-controls { flex: 1; }
+        .photo-upload-hint { font-size: 0.85rem; color: #666; margin-bottom: 10px; line-height: 1.4; }
+        .remove-btn-text {
+            background: #fee; color: #d32f2f; border: 1px solid #fcc; padding: 8px 16px;
+            border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .remove-btn-text:hover { background: #fcc; }
+        .photo-progress {
+            height: 6px; background: #e5e7eb; border-radius: 3px;
+            margin-top: 10px; overflow: hidden;
+        }
+        .photo-progress-bar {
+            height: 100%; background: #4caf50; border-radius: 3px;
+            width: 0%; transition: width 0.3s;
+        }
+        @media (max-width: 500px) {
+            .photo-upload-area { flex-direction: column; align-items: center; }
+            .photo-preview { width: 100%; max-width: 160px; }
+        }
     </style>
 </head>
 <body>
@@ -236,6 +272,36 @@
         <button class="tab" data-tab="testimonial">Testimonial</button>
         <button class="tab" data-tab="contact">Contact</button>
         <button class="tab" data-tab="footer">Footer</button>
+        <button class="tab" data-tab="branding">Branding</button>
+    </div>
+
+    <!-- ===== BRANDING PANEL ===== -->
+    <div class="panel" id="panel-branding">
+        <h2 class="panel-title">Branding</h2>
+
+        <!-- Logo Upload -->
+        <div class="photo-upload-section">
+            <label style="display:block; font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.5px; color:#666; margin-bottom:8px;">Company Logo</label>
+            <div class="photo-upload-area" id="logoUploadArea">
+                <div class="photo-preview logo-preview" id="logoPreview">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" id="logoPlaceholderSvg">
+                        <rect x="20" y="25" width="60" height="50" rx="8" fill="#2e7d32" opacity="0.3"/>
+                        <text x="50" y="55" text-anchor="middle" fill="#2e7d32" font-size="12" font-weight="bold">LOGO</text>
+                    </svg>
+                    <img id="logoPreviewImg" src="" alt="Company logo" style="display:none; width:100%; height:100%; object-fit:contain; border-radius:12px; padding:8px;">
+                </div>
+                <div class="photo-upload-controls">
+                    <p class="photo-upload-hint" id="logoHint">No logo uploaded yet. Upload your logo to replace the text across the website.</p>
+                    <input type="file" id="logoFileInput" accept="image/*" style="display:none" onchange="handleLogoSelect(event)">
+                    <button class="add-btn" onclick="document.getElementById('logoFileInput').click()" id="logoSelectBtn">Choose Logo</button>
+                    <button class="save-btn" id="logoUploadBtn" onclick="uploadLogo()" style="display:none; margin-top:8px;">Upload Logo</button>
+                    <button class="remove-btn-text" id="logoRemoveBtn" onclick="removeLogo()" style="display:none; margin-top:8px;">Remove Logo</button>
+                    <div class="photo-progress" id="logoProgress" style="display:none;">
+                        <div class="photo-progress-bar" id="logoProgressBar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ===== MESSAGES PANEL ===== -->
@@ -289,6 +355,31 @@
     <!-- ===== ABOUT PANEL ===== -->
     <div class="panel" id="panel-about">
         <h2 class="panel-title">About / Coach</h2>
+
+        <!-- Coach Photo Upload -->
+        <div class="photo-upload-section">
+            <label style="display:block; font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.5px; color:#666; margin-bottom:8px;">Coach Photo</label>
+            <div class="photo-upload-area" id="photoUploadArea">
+                <div class="photo-preview" id="photoPreview">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" id="photoPlaceholderSvg">
+                        <circle cx="50" cy="35" r="20" fill="#2e7d32"/>
+                        <ellipse cx="50" cy="80" rx="30" ry="20" fill="#2e7d32"/>
+                    </svg>
+                    <img id="photoPreviewImg" src="" alt="Coach photo" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:12px;">
+                </div>
+                <div class="photo-upload-controls">
+                    <p class="photo-upload-hint" id="photoHint">No photo uploaded yet. Add a photo to replace the placeholder on your website.</p>
+                    <input type="file" id="photoFileInput" accept="image/*" style="display:none" onchange="handlePhotoSelect(event)">
+                    <button class="add-btn" onclick="document.getElementById('photoFileInput').click()" id="photoSelectBtn">Choose Photo</button>
+                    <button class="save-btn" id="photoUploadBtn" onclick="uploadCoachPhoto()" style="display:none; margin-top:8px;">Upload Photo</button>
+                    <button class="remove-btn-text" id="photoRemoveBtn" onclick="removeCoachPhoto()" style="display:none; margin-top:8px;">Remove Photo</button>
+                    <div class="photo-progress" id="photoProgress" style="display:none;">
+                        <div class="photo-progress-bar" id="photoProgressBar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="field">
             <label>Section Label</label>
             <input type="text" id="about-sectionLabel" placeholder="Meet Your Coach">
@@ -478,6 +569,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 
 <script>
 /* ============================================================
@@ -497,6 +589,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 // ============================================================
 // AUTH
@@ -507,6 +600,7 @@ auth.onAuthStateChanged(user => {
         document.getElementById('adminDashboard').style.display = 'block';
         loadAllContent();
         loadMessages();
+        loadLogo();
     } else {
         document.getElementById('loginScreen').style.display = 'flex';
         document.getElementById('adminDashboard').style.display = 'none';
@@ -610,6 +704,225 @@ function populateAbout() {
     val('about-role', d.role);
     renderBioList(d.bio || []);
     renderQualsList(d.qualifications || []);
+    loadCoachPhoto(d.photoURL);
+}
+
+// ============================================================
+// COACH PHOTO UPLOAD
+// ============================================================
+let selectedPhotoFile = null;
+
+function loadCoachPhoto(url) {
+    if (url) {
+        document.getElementById('photoPreviewImg').src = url;
+        document.getElementById('photoPreviewImg').style.display = 'block';
+        document.getElementById('photoPlaceholderSvg').style.display = 'none';
+        document.getElementById('photoHint').textContent = 'Photo uploaded. You can change or remove it.';
+        document.getElementById('photoRemoveBtn').style.display = 'inline-block';
+        document.getElementById('photoSelectBtn').textContent = 'Change Photo';
+    }
+}
+
+function handlePhotoSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+        alert('Please select an image file.');
+        return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+        alert('Photo must be under 5MB.');
+        return;
+    }
+    selectedPhotoFile = file;
+    const reader = new FileReader();
+    reader.onload = e => {
+        document.getElementById('photoPreviewImg').src = e.target.result;
+        document.getElementById('photoPreviewImg').style.display = 'block';
+        document.getElementById('photoPlaceholderSvg').style.display = 'none';
+        document.getElementById('photoHint').textContent = file.name + ' selected. Click upload to save.';
+        document.getElementById('photoUploadBtn').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+async function uploadCoachPhoto() {
+    if (!selectedPhotoFile) return;
+    const btn = document.getElementById('photoUploadBtn');
+    const progress = document.getElementById('photoProgress');
+    const progressBar = document.getElementById('photoProgressBar');
+    btn.disabled = true;
+    btn.textContent = 'Uploading...';
+    progress.style.display = 'block';
+
+    try {
+        const ext = selectedPhotoFile.name.split('.').pop();
+        const ref = storage.ref('coach-photo/coach.' + ext);
+        const task = ref.put(selectedPhotoFile);
+
+        task.on('state_changed',
+            snap => {
+                const pct = (snap.bytesTransferred / snap.totalBytes) * 100;
+                progressBar.style.width = pct + '%';
+            },
+            err => {
+                console.error('Upload failed:', err);
+                btn.textContent = 'Upload failed - try again';
+                btn.disabled = false;
+                progress.style.display = 'none';
+            },
+            async () => {
+                const url = await ref.getDownloadURL();
+                await db.collection('content').doc('about').set({ photoURL: url }, { merge: true });
+                btn.textContent = 'Uploaded!';
+                btn.style.display = 'none';
+                progress.style.display = 'none';
+                document.getElementById('photoHint').textContent = 'Photo uploaded. You can change or remove it.';
+                document.getElementById('photoRemoveBtn').style.display = 'inline-block';
+                document.getElementById('photoSelectBtn').textContent = 'Change Photo';
+                selectedPhotoFile = null;
+                setTimeout(() => { btn.disabled = false; }, 1000);
+            }
+        );
+    } catch(e) {
+        console.error('Upload error:', e);
+        btn.textContent = 'Error - try again';
+        btn.disabled = false;
+        progress.style.display = 'none';
+    }
+}
+
+async function removeCoachPhoto() {
+    if (!confirm('Remove the coach photo?')) return;
+    try {
+        // Delete from Storage - try common extensions
+        for (const ext of ['jpg', 'jpeg', 'png', 'webp', 'gif']) {
+            try { await storage.ref('coach-photo/coach.' + ext).delete(); } catch(e) {}
+        }
+        // Remove URL from Firestore
+        await db.collection('content').doc('about').update({
+            photoURL: firebase.firestore.FieldValue.delete()
+        });
+        document.getElementById('photoPreviewImg').src = '';
+        document.getElementById('photoPreviewImg').style.display = 'none';
+        document.getElementById('photoPlaceholderSvg').style.display = 'block';
+        document.getElementById('photoHint').textContent = 'No photo uploaded yet. Add a photo to replace the placeholder on your website.';
+        document.getElementById('photoRemoveBtn').style.display = 'none';
+        document.getElementById('photoSelectBtn').textContent = 'Choose Photo';
+    } catch(e) {
+        console.error('Remove failed:', e);
+        alert('Failed to remove photo. Please try again.');
+    }
+}
+
+// ============================================================
+// LOGO UPLOAD
+// ============================================================
+let selectedLogoFile = null;
+
+function loadLogo() {
+    db.collection('content').doc('branding').get().then(doc => {
+        if (doc.exists && doc.data().logoURL) {
+            const url = doc.data().logoURL;
+            document.getElementById('logoPreviewImg').src = url;
+            document.getElementById('logoPreviewImg').style.display = 'block';
+            document.getElementById('logoPlaceholderSvg').style.display = 'none';
+            document.getElementById('logoHint').textContent = 'Logo uploaded. You can change or remove it.';
+            document.getElementById('logoRemoveBtn').style.display = 'inline-block';
+            document.getElementById('logoSelectBtn').textContent = 'Change Logo';
+            // Also update the admin page logos
+            document.querySelectorAll('.admin-topbar-left img, .login-card img').forEach(img => {
+                img.src = url;
+                img.style.display = '';
+            });
+        }
+    }).catch(() => {});
+}
+
+function handleLogoSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { alert('Please select an image file.'); return; }
+    if (file.size > 5 * 1024 * 1024) { alert('Logo must be under 5MB.'); return; }
+    selectedLogoFile = file;
+    const reader = new FileReader();
+    reader.onload = e => {
+        document.getElementById('logoPreviewImg').src = e.target.result;
+        document.getElementById('logoPreviewImg').style.display = 'block';
+        document.getElementById('logoPlaceholderSvg').style.display = 'none';
+        document.getElementById('logoHint').textContent = file.name + ' selected. Click upload to save.';
+        document.getElementById('logoUploadBtn').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+async function uploadLogo() {
+    if (!selectedLogoFile) return;
+    const btn = document.getElementById('logoUploadBtn');
+    const progress = document.getElementById('logoProgress');
+    const progressBar = document.getElementById('logoProgressBar');
+    btn.disabled = true;
+    btn.textContent = 'Uploading...';
+    progress.style.display = 'block';
+
+    try {
+        const ext = selectedLogoFile.name.split('.').pop();
+        const ref = storage.ref('logo/logo.' + ext);
+        const task = ref.put(selectedLogoFile);
+
+        task.on('state_changed',
+            snap => { progressBar.style.width = (snap.bytesTransferred / snap.totalBytes) * 100 + '%'; },
+            err => {
+                console.error('Upload failed:', err);
+                btn.textContent = 'Upload failed - try again';
+                btn.disabled = false;
+                progress.style.display = 'none';
+            },
+            async () => {
+                const url = await ref.getDownloadURL();
+                await db.collection('content').doc('branding').set({ logoURL: url }, { merge: true });
+                btn.textContent = 'Uploaded!';
+                btn.style.display = 'none';
+                progress.style.display = 'none';
+                document.getElementById('logoHint').textContent = 'Logo uploaded. You can change or remove it.';
+                document.getElementById('logoRemoveBtn').style.display = 'inline-block';
+                document.getElementById('logoSelectBtn').textContent = 'Change Logo';
+                // Update admin logos immediately
+                document.querySelectorAll('.admin-topbar-left img, .login-card img').forEach(img => {
+                    img.src = url;
+                    img.style.display = '';
+                });
+                selectedLogoFile = null;
+                setTimeout(() => { btn.disabled = false; }, 1000);
+            }
+        );
+    } catch(e) {
+        console.error('Upload error:', e);
+        btn.textContent = 'Error - try again';
+        btn.disabled = false;
+        progress.style.display = 'none';
+    }
+}
+
+async function removeLogo() {
+    if (!confirm('Remove the logo?')) return;
+    try {
+        for (const ext of ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg']) {
+            try { await storage.ref('logo/logo.' + ext).delete(); } catch(e) {}
+        }
+        await db.collection('content').doc('branding').update({
+            logoURL: firebase.firestore.FieldValue.delete()
+        });
+        document.getElementById('logoPreviewImg').src = '';
+        document.getElementById('logoPreviewImg').style.display = 'none';
+        document.getElementById('logoPlaceholderSvg').style.display = 'block';
+        document.getElementById('logoHint').textContent = 'No logo uploaded yet. Upload your logo to replace the text across the website.';
+        document.getElementById('logoRemoveBtn').style.display = 'none';
+        document.getElementById('logoSelectBtn').textContent = 'Choose Logo';
+    } catch(e) {
+        console.error('Remove failed:', e);
+        alert('Failed to remove logo. Please try again.');
+    }
 }
 
 function populateTimetableText() {
