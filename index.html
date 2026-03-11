@@ -17,7 +17,7 @@
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
             <a href="#" class="nav-logo">
-                <img src="logo.png" alt="Active Goals Football" class="nav-logo-img" width="40" height="40">
+                <img src="logo.png" alt="Active Goals Football" class="nav-logo-img" width="50" height="50">
                 <span class="logo-active">Active</span><span class="logo-goals">Goals</span>
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
@@ -82,7 +82,7 @@
         <div class="container proof-grid">
             <div class="proof-item animate-on-scroll">
                 <span class="proof-plus">&#9917;</span>
-                <span class="proof-label" id="cms-proof1" style="font-family:var(--font-heading); font-size:1rem; font-weight:700; opacity:1; color:var(--gold-light);">FA Qualified Coach</span>
+                <span class="proof-label proof-label-special" id="cms-proof1">FA Qualified Coach</span>
             </div>
             <div class="proof-item animate-on-scroll">
                 <span class="proof-number" id="cms-proof2-num" data-count="100">0</span><span class="proof-plus">%</span>
@@ -217,21 +217,14 @@
                 </div>
             </div>
 
-            <!-- Extras -->
-            <div class="price-extras animate-on-scroll">
-                <div class="price-extra">
-                    <h4>&#127775; First Session FREE</h4>
-                    <p>Come try us out &mdash; no commitment needed</p>
-                </div>
-                <div class="price-extra">
-                    <h4>&#128587; Refer a Friend</h4>
-                    <p>Both get &pound;1 off your next session</p>
-                </div>
+            <!-- First Session Free Banner -->
+            <div class="free-session-banner animate-on-scroll" id="cms-free-banner">
+                <h3>&#127775; First Session FREE &mdash; Come Try Us Out, No Commitment Needed</h3>
             </div>
 
-            <div class="price-notes animate-on-scroll">
-                <p>All sessions include equipment. Players just need boots, shin pads, and water.</p>
-                <p>Every child is welcome. No trials, no pressure &mdash; just football, fun and confidence building.</p>
+            <div class="price-notes-big animate-on-scroll" id="cms-price-notes">
+                <p id="cms-price-note1">All sessions include equipment. Players just need boots, shin pads, and water.</p>
+                <p id="cms-price-note2"><strong>Every child is welcome. No trials, no pressure &mdash; just football, fun and confidence building.</strong></p>
             </div>
         </div>
     </section>
@@ -280,7 +273,7 @@
         <div class="container cta-content animate-on-scroll">
             <h2>&ldquo;Behind every great player is a coach who believed in them.&rdquo;</h2>
             <p class="cta-attribution">&mdash; Pel&eacute;</p>
-            <a href="tel:07455552786" class="btn btn-primary btn-large">Book Your Child's First Free Session</a>
+            <a href="tel:07455552786" class="btn btn-primary btn-large" id="cms-cta-btn">Book Your Child's First Free Session</a>
             <p class="cta-reassurance">No commitment required &bull; Pay per session &bull; All abilities welcome</p>
         </div>
     </section>
@@ -620,6 +613,14 @@
                     }
                 }
 
+                // Prices notes
+                if (content.prices) {
+                    const pr = content.prices;
+                    if (pr.freeBannerText) { const fb = el('#cms-free-banner h3'); if(fb) fb.innerHTML = pr.freeBannerText; }
+                    if (pr.noteEquipment) { const n = el('#cms-price-note1'); if(n) n.textContent = pr.noteEquipment; }
+                    if (pr.noteWelcome) { const n = el('#cms-price-note2'); if(n) n.innerHTML = '<strong>' + pr.noteWelcome + '</strong>'; }
+                }
+
                 // Testimonial
                 if (content.testimonial) {
                     const t = content.testimonial;
@@ -627,6 +628,7 @@
                     if (sec) {
                         if (t.quote) { const q = sec.querySelector('h2'); if(q) q.innerHTML = '&ldquo;' + t.quote + '&rdquo;'; }
                         if (t.attribution) { const a = sec.querySelector('.cta-attribution'); if(a) a.innerHTML = '&mdash; ' + t.attribution; }
+                        if (t.ctaText) { const b = el('#cms-cta-btn'); if(b) b.textContent = t.ctaText; }
                         if (t.reassurance) { const r = sec.querySelector('.cta-reassurance'); if(r) r.textContent = t.reassurance; }
                     }
                 }

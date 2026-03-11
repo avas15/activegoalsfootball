@@ -395,6 +395,20 @@
         <div id="prices-extras-list"></div>
         <button class="add-btn" onclick="addExtra()">+ Add Extra</button>
 
+        <div class="section-divider">Banner &amp; Notes</div>
+        <div class="field">
+            <label>Free Session Banner Text</label>
+            <input type="text" id="prices-freeBannerText" placeholder="🌟 First Session FREE — Come Try Us Out, No Commitment Needed">
+        </div>
+        <div class="field">
+            <label>Equipment Note</label>
+            <input type="text" id="prices-noteEquipment" placeholder="All sessions include equipment. Players just need boots, shin pads, and water.">
+        </div>
+        <div class="field">
+            <label>Welcome Message</label>
+            <input type="text" id="prices-noteWelcome" placeholder="Every child is welcome. No trials, no pressure — just football, fun and confidence building.">
+        </div>
+
         <button class="save-btn" id="save-prices" onclick="saveSection('prices')">Save Prices</button>
     </div>
 
@@ -683,6 +697,9 @@ function populatePrices() {
     val('prices-sectionLabel', d.sectionLabel);
     val('prices-title', d.title);
     val('prices-subtitle', d.subtitle);
+    val('prices-freeBannerText', d.freeBannerText);
+    val('prices-noteEquipment', d.noteEquipment);
+    val('prices-noteWelcome', d.noteWelcome);
     renderPriceCards('park', d.park || []);
     renderExtras(d.extras || []);
 }
@@ -998,7 +1015,10 @@ async function saveSection(section) {
                     title: document.getElementById('prices-title').value,
                     subtitle: document.getElementById('prices-subtitle').value,
                     park: priceCards.park,
-                    extras: extraItems
+                    extras: extraItems,
+                    freeBannerText: document.getElementById('prices-freeBannerText').value,
+                    noteEquipment: document.getElementById('prices-noteEquipment').value,
+                    noteWelcome: document.getElementById('prices-noteWelcome').value
                 };
                 await db.collection('content').doc('prices').set(data);
                 break;
