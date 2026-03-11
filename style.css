@@ -226,7 +226,7 @@ img { max-width: 100%; display: block; }
     margin-top: -8px;
     margin-bottom: 24px;
 }
-.hero-text { max-width: 700px; }
+.hero-text { max-width: 50%; }
 .hero-tag {
     display: inline-block;
     font-family: var(--font-heading);
@@ -1039,6 +1039,7 @@ img { max-width: 100%; display: block; }
     .section { padding: 70px 0; }
     .hero-image { clip-path: polygon(60% 0, 100% 0, 100% 100%, 75% 100%); }
     .hero-content { padding: 110px 20px 60px; }
+    .hero-text { max-width: 55%; }
     .hero-trust { gap: 20px; }
     .sessions-grid { grid-template-columns: 1fr; }
     .price-cards { grid-template-columns: 1fr; }
@@ -1053,6 +1054,7 @@ img { max-width: 100%; display: block; }
 @media (max-width: 480px) {
     .hero h1 { font-size: 2rem; }
     .hero-image { display: none; }
+    .hero-text { max-width: 100%; }
     .hero-actions { flex-direction: column; }
     .hero-actions .btn { width: 100%; }
     .hero-trust { flex-direction: column; gap: 14px; }
