@@ -190,6 +190,59 @@
         /* Sub-heading */
         .section-divider { font-size: 0.85rem; font-weight: 700; color: #1b5e20; margin: 16px 0 8px; font-family: 'Montserrat', sans-serif; }
 
+        /* Image Position Cropper */
+        .cropper-wrapper {
+            background: white; border-radius: 12px; padding: 16px;
+            margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .cropper-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #111;
+            cursor: grab;
+            touch-action: none;
+            user-select: none;
+        }
+        .cropper-container:active { cursor: grabbing; }
+        .cropper-container img {
+            display: block;
+            width: 100%;
+            pointer-events: none;
+        }
+        .cropper-viewport {
+            position: absolute;
+            border: 3px solid #D4A017;
+            border-radius: 4px;
+            box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
+        .cropper-crosshair {
+            position: absolute;
+            inset: 0;
+        }
+        .cropper-crosshair::before, .cropper-crosshair::after {
+            content: '';
+            position: absolute;
+            background: rgba(212,160,23,0.4);
+        }
+        .cropper-crosshair::before {
+            width: 1px; height: 100%; left: 50%; top: 0;
+        }
+        .cropper-crosshair::after {
+            height: 1px; width: 100%; top: 50%; left: 0;
+        }
+        .cropper-info {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 10px; font-size: 0.8rem; color: #666;
+        }
+        .cropper-coords {
+            font-family: monospace; background: #f0f2f5; padding: 4px 10px;
+            border-radius: 6px; font-size: 0.8rem;
+        }
+        .cropper-hint { font-size: 0.75rem; color: #999; margin-top: 6px; }
+
     </style>
 </head>
 <body>
@@ -252,6 +305,21 @@
     <!-- ===== HERO PANEL ===== -->
     <div class="panel" id="panel-hero">
         <h2 class="panel-title">Hero Section</h2>
+        <div class="section-divider">Image Position</div>
+        <div class="cropper-wrapper">
+            <p class="cropper-hint">Drag the image to choose what's visible in the hero section.</p>
+            <div class="cropper-container" id="cropperContainer">
+                <img src="coachin.png" alt="Hero image" id="cropperImage">
+                <div class="cropper-viewport" id="cropperViewport">
+                    <div class="cropper-crosshair"></div>
+                </div>
+            </div>
+            <div class="cropper-info">
+                <span>Position: <span class="cropper-coords" id="cropperCoords">20% 30%</span></span>
+                <button class="save-btn" style="width:auto;padding:8px 20px;margin:0;font-size:0.8rem" onclick="resetCropperPosition()">Reset</button>
+            </div>
+        </div>
+        <div class="section-divider">Text Content</div>
         <div class="field">
             <label>Trust Badges</label>
             <input type="text" id="hero-trustBadges" placeholder="FA TRAINED • DBS CHECKED • FULLY INSURED">
@@ -674,6 +742,10 @@ function populateHero() {
     val('hero-proof3Label', d.proof3Label);
     val('hero-phone', d.phone);
     val('hero-phoneDisplay', d.phoneDisplay);
+    // Load image position into cropper
+    if (d.imagePositionX !== undefined) cropperPosX = d.imagePositionX;
+    if (d.imagePositionY !== undefined) cropperPosY = d.imagePositionY;
+    initCropper();
 }
 
 function populateAbout() {
@@ -969,7 +1041,9 @@ async function saveSection(section) {
                     proof3Number: parseInt(document.getElementById('hero-proof3Number').value) || 0,
                     proof3Label: document.getElementById('hero-proof3Label').value,
                     phone: document.getElementById('hero-phone').value,
-                    phoneDisplay: document.getElementById('hero-phoneDisplay').value
+                    phoneDisplay: document.getElementById('hero-phoneDisplay').value,
+                    imagePositionX: Math.round(cropperPosX),
+                    imagePositionY: Math.round(cropperPosY)
                 };
                 await db.collection('content').doc('hero').set(data);
                 break;
@@ -1192,6 +1266,115 @@ function escHtml(str) {
     div.textContent = str;
     return div.innerHTML;
 }
+
+// ============================================================
+// IMAGE POSITION CROPPER
+// ============================================================
+let cropperPosX = 20, cropperPosY = 30;
+
+function initCropper() {
+    const container = document.getElementById('cropperContainer');
+    const img = document.getElementById('cropperImage');
+    const viewport = document.getElementById('cropperViewport');
+    if (!container || !img || !viewport) return;
+
+    let isDragging = false;
+    let startX, startY, startPosX, startPosY;
+
+    function updateViewport() {
+        // Viewport represents ~40% width x 60% height visible area (matching hero clip-path)
+        const vpW = 0.4;
+        const vpH = 0.6;
+        const contW = container.offsetWidth;
+        const contH = container.offsetHeight;
+
+        const vpPxW = contW * vpW;
+        const vpPxH = contH * vpH;
+
+        // Position viewport based on cropperPosX/Y percentages
+        const maxLeft = contW - vpPxW;
+        const maxTop = contH - vpPxH;
+        const left = (cropperPosX / 100) * maxLeft;
+        const top = (cropperPosY / 100) * maxTop;
+
+        viewport.style.width = vpPxW + 'px';
+        viewport.style.height = vpPxH + 'px';
+        viewport.style.left = left + 'px';
+        viewport.style.top = top + 'px';
+
+        document.getElementById('cropperCoords').textContent =
+            Math.round(cropperPosX) + '% ' + Math.round(cropperPosY) + '%';
+    }
+
+    function onPointerDown(e) {
+        isDragging = true;
+        startX = e.clientX || (e.touches && e.touches[0].clientX);
+        startY = e.clientY || (e.touches && e.touches[0].clientY);
+        startPosX = cropperPosX;
+        startPosY = cropperPosY;
+        container.setPointerCapture(e.pointerId);
+    }
+
+    function onPointerMove(e) {
+        if (!isDragging) return;
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        const dx = clientX - startX;
+        const dy = clientY - startY;
+
+        const contW = container.offsetWidth;
+        const contH = container.offsetHeight;
+        const vpW = contW * 0.4;
+        const vpH = contH * 0.6;
+        const maxLeft = contW - vpW;
+        const maxTop = contH - vpH;
+
+        cropperPosX = Math.max(0, Math.min(100, startPosX + (dx / maxLeft) * 100));
+        cropperPosY = Math.max(0, Math.min(100, startPosY + (dy / maxTop) * 100));
+
+        updateViewport();
+    }
+
+    function onPointerUp() {
+        isDragging = false;
+    }
+
+    container.addEventListener('pointerdown', onPointerDown);
+    container.addEventListener('pointermove', onPointerMove);
+    container.addEventListener('pointerup', onPointerUp);
+    container.addEventListener('pointercancel', onPointerUp);
+
+    // Initial render after image loads
+    if (img.complete) {
+        updateViewport();
+    } else {
+        img.addEventListener('load', updateViewport);
+    }
+    window.addEventListener('resize', updateViewport);
+}
+
+function resetCropperPosition() {
+    cropperPosX = 20;
+    cropperPosY = 30;
+    const container = document.getElementById('cropperContainer');
+    if (container) container.dispatchEvent(new Event('pointermove'));
+    // Force viewport update
+    const viewport = document.getElementById('cropperViewport');
+    if (viewport) {
+        const contW = container.offsetWidth;
+        const contH = container.offsetHeight;
+        const vpW = contW * 0.4;
+        const vpH = contH * 0.6;
+        const maxLeft = contW - vpW;
+        const maxTop = contH - vpH;
+        viewport.style.left = (20 / 100) * maxLeft + 'px';
+        viewport.style.top = (30 / 100) * maxTop + 'px';
+        document.getElementById('cropperCoords').textContent = '20% 30%';
+    }
+}
+
+// Initialize cropper when DOM is ready
+document.addEventListener('DOMContentLoaded', initCropper);
 
 // ============================================================
 // SEED CONTENT (one-time initialization)

@@ -39,7 +39,8 @@
     <!-- Hero Section -->
     <header class="hero" id="hero">
         <div class="hero-image">
-            <img src="coachin.png" alt="Kids playing football at a coaching session" loading="eager">
+            <img src="boo.png" alt="Kids playing football at a coaching session" loading="eager">
+
         </div>
         <div class="hero-bg"></div>
         <div class="container hero-content">
@@ -559,6 +560,11 @@
                     if (h.proof2Label) { const p = el('#cms-proof2'); if(p) p.textContent = h.proof2Label; }
                     if (h.proof3Number !== undefined) { const p = el('#cms-proof3-num'); if(p) p.setAttribute('data-count', h.proof3Number); }
                     if (h.proof3Label) { const p = el('#cms-proof3'); if(p) p.textContent = h.proof3Label; }
+                    // Apply hero image position from admin
+                    if (h.imagePositionX !== undefined || h.imagePositionY !== undefined) {
+                        const img = el('.hero-image img');
+                        if (img) img.style.objectPosition = (h.imagePositionX ?? 20) + '% ' + (h.imagePositionY ?? 30) + '%';
+                    }
                 }
 
                 // About
