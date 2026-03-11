@@ -253,12 +253,16 @@
     <div class="panel" id="panel-hero">
         <h2 class="panel-title">Hero Section</h2>
         <div class="field">
-            <label>Tag Line</label>
-            <input type="text" id="hero-tag" placeholder="FA Qualified • DBS Checked • Fully Insured">
+            <label>Trust Badges</label>
+            <input type="text" id="hero-trustBadges" placeholder="FA TRAINED • DBS CHECKED • FULLY INSURED">
+        </div>
+        <div class="field">
+            <label>Tagline</label>
+            <input type="text" id="hero-tagline" placeholder="Less Screentime. More Football. Active Goals Start Here.">
         </div>
         <div class="field">
             <label>Heading Line 1</label>
-            <input type="text" id="hero-headingLine1" placeholder="Get Your Child">
+            <input type="text" id="hero-headingLine1" placeholder="Get Your Child Active">
         </div>
         <div class="field">
             <label>Heading Highlight (coloured text)</label>
@@ -270,8 +274,47 @@
         </div>
         <div class="field">
             <label>Subtitle</label>
-            <textarea id="hero-subtitle" rows="3" placeholder="Fun, safe, and affordable..."></textarea>
+            <textarea id="hero-subtitle" rows="3" placeholder="Fun, safe and structured football coaching in Luton..."></textarea>
         </div>
+        <div class="section-divider">Buttons</div>
+        <div class="field">
+            <label>Button 1 Text</label>
+            <input type="text" id="hero-btn1Text" placeholder="Get In Touch">
+        </div>
+        <div class="field">
+            <label>Button 2 Text</label>
+            <input type="text" id="hero-btn2Text" placeholder="Register Your Child">
+        </div>
+        <div class="field">
+            <label>Registration Form URL</label>
+            <input type="url" id="hero-btn2Url" placeholder="https://docs.google.com/forms/...">
+        </div>
+        <div class="field">
+            <label>Offer Text</label>
+            <input type="text" id="hero-offerText" placeholder="🌟 First session FREE — every child is welcome, no trials, no pressure">
+        </div>
+        <div class="section-divider">Proof Banner</div>
+        <div class="field">
+            <label>Proof Item 1 Label</label>
+            <input type="text" id="hero-proof1Label" placeholder="FA Qualified Coach">
+        </div>
+        <div class="field">
+            <label>Proof Item 2 Number</label>
+            <input type="number" id="hero-proof2Number" placeholder="100">
+        </div>
+        <div class="field">
+            <label>Proof Item 2 Label</label>
+            <input type="text" id="hero-proof2Label" placeholder="Fully Compliant">
+        </div>
+        <div class="field">
+            <label>Proof Item 3 Number</label>
+            <input type="number" id="hero-proof3Number" placeholder="0">
+        </div>
+        <div class="field">
+            <label>Proof Item 3 Label</label>
+            <input type="text" id="hero-proof3Label" placeholder="Screen Time Needed">
+        </div>
+        <div class="section-divider">Phone</div>
         <div class="field">
             <label>Phone Number (digits only)</label>
             <input type="tel" id="hero-phone" placeholder="07455552786">
@@ -279,10 +322,6 @@
         <div class="field">
             <label>Phone Display Format</label>
             <input type="text" id="hero-phoneDisplay" placeholder="07455 552786">
-        </div>
-        <div class="field">
-            <label>Offer Text</label>
-            <input type="text" id="hero-offerText" placeholder="🌟 First session FREE — come try it, no commitment">
         </div>
         <button class="save-btn" id="save-hero" onclick="saveSection('hero')">Save Hero</button>
     </div>
@@ -348,17 +387,9 @@
             <input type="text" id="prices-subtitle" placeholder="No hidden fees...">
         </div>
 
-        <div class="section-divider">Park Sessions</div>
+        <div class="section-divider">Price Cards</div>
         <div id="prices-park-list"></div>
-        <button class="add-btn" onclick="addPriceCard('park')">+ Add Park Price</button>
-
-        <div class="section-divider">Venue Sessions</div>
-        <div id="prices-venue-list"></div>
-        <button class="add-btn" onclick="addPriceCard('venue')">+ Add Venue Price</button>
-
-        <div class="section-divider">Premium Coaching</div>
-        <div id="prices-premium-list"></div>
-        <button class="add-btn" onclick="addPriceCard('premium')">+ Add Premium Price</button>
+        <button class="add-btn" onclick="addPriceCard('park')">+ Add Price Card</button>
 
         <div class="section-divider">Extras</div>
         <div id="prices-extras-list"></div>
@@ -444,6 +475,24 @@
         <div class="field">
             <label>Location Detail</label>
             <input type="text" id="contact-locationDetail" placeholder="Wardown Park & local venues">
+        </div>
+        <div class="section-divider">Social Media</div>
+        <div class="field">
+            <label>Instagram URL</label>
+            <input type="url" id="contact-instagram" placeholder="https://www.instagram.com/activegoalsfootball">
+        </div>
+        <div class="field">
+            <label>Facebook URL</label>
+            <input type="url" id="contact-facebook" placeholder="https://www.facebook.com/ActiveGoalsFootball">
+        </div>
+        <div class="field">
+            <label>TikTok URL</label>
+            <input type="url" id="contact-tiktok" placeholder="https://www.tiktok.com/@activegoalsfootball">
+        </div>
+        <div class="section-divider">Registration</div>
+        <div class="field">
+            <label>Registration Form URL</label>
+            <input type="url" id="contact-registrationUrl" placeholder="https://docs.google.com/forms/...">
         </div>
         <button class="save-btn" id="save-contact" onclick="saveSection('contact')">Save Contact</button>
     </div>
@@ -594,14 +643,23 @@ function val(id, value) {
 
 function populateHero() {
     const d = contentData.hero || {};
-    val('hero-tag', d.tag);
+    val('hero-trustBadges', d.trustBadges);
+    val('hero-tagline', d.tagline);
     val('hero-headingLine1', d.headingLine1);
     val('hero-headingHighlight', d.headingHighlight);
     val('hero-headingLine3', d.headingLine3);
     val('hero-subtitle', d.subtitle);
+    val('hero-btn1Text', d.btn1Text);
+    val('hero-btn2Text', d.btn2Text);
+    val('hero-btn2Url', d.btn2Url);
+    val('hero-offerText', d.offerText);
+    val('hero-proof1Label', d.proof1Label);
+    val('hero-proof2Number', d.proof2Number);
+    val('hero-proof2Label', d.proof2Label);
+    val('hero-proof3Number', d.proof3Number);
+    val('hero-proof3Label', d.proof3Label);
     val('hero-phone', d.phone);
     val('hero-phoneDisplay', d.phoneDisplay);
-    val('hero-offerText', d.offerText);
 }
 
 function populateAbout() {
@@ -626,8 +684,6 @@ function populatePrices() {
     val('prices-title', d.title);
     val('prices-subtitle', d.subtitle);
     renderPriceCards('park', d.park || []);
-    renderPriceCards('venue', d.venue || []);
-    renderPriceCards('premium', d.premium || []);
     renderExtras(d.extras || []);
 }
 
@@ -657,6 +713,10 @@ function populateContact() {
     val('contact-email', d.email);
     val('contact-location', d.location);
     val('contact-locationDetail', d.locationDetail);
+    val('contact-instagram', d.instagram);
+    val('contact-facebook', d.facebook);
+    val('contact-tiktok', d.tiktok);
+    val('contact-registrationUrl', d.registrationUrl);
 }
 
 function populateFooter() {
@@ -876,14 +936,23 @@ async function saveSection(section) {
         switch(section) {
             case 'hero':
                 data = {
-                    tag: document.getElementById('hero-tag').value,
+                    trustBadges: document.getElementById('hero-trustBadges').value,
+                    tagline: document.getElementById('hero-tagline').value,
                     headingLine1: document.getElementById('hero-headingLine1').value,
                     headingHighlight: document.getElementById('hero-headingHighlight').value,
                     headingLine3: document.getElementById('hero-headingLine3').value,
                     subtitle: document.getElementById('hero-subtitle').value,
+                    btn1Text: document.getElementById('hero-btn1Text').value,
+                    btn2Text: document.getElementById('hero-btn2Text').value,
+                    btn2Url: document.getElementById('hero-btn2Url').value,
+                    offerText: document.getElementById('hero-offerText').value,
+                    proof1Label: document.getElementById('hero-proof1Label').value,
+                    proof2Number: parseInt(document.getElementById('hero-proof2Number').value) || 0,
+                    proof2Label: document.getElementById('hero-proof2Label').value,
+                    proof3Number: parseInt(document.getElementById('hero-proof3Number').value) || 0,
+                    proof3Label: document.getElementById('hero-proof3Label').value,
                     phone: document.getElementById('hero-phone').value,
-                    phoneDisplay: document.getElementById('hero-phoneDisplay').value,
-                    offerText: document.getElementById('hero-offerText').value
+                    phoneDisplay: document.getElementById('hero-phoneDisplay').value
                 };
                 await db.collection('content').doc('hero').set(data);
                 break;
@@ -929,8 +998,6 @@ async function saveSection(section) {
                     title: document.getElementById('prices-title').value,
                     subtitle: document.getElementById('prices-subtitle').value,
                     park: priceCards.park,
-                    venue: priceCards.venue,
-                    premium: priceCards.premium,
                     extras: extraItems
                 };
                 await db.collection('content').doc('prices').set(data);
@@ -965,7 +1032,11 @@ async function saveSection(section) {
                     phoneDisplay: document.getElementById('contact-phoneDisplay').value,
                     email: document.getElementById('contact-email').value,
                     location: document.getElementById('contact-location').value,
-                    locationDetail: document.getElementById('contact-locationDetail').value
+                    locationDetail: document.getElementById('contact-locationDetail').value,
+                    instagram: document.getElementById('contact-instagram').value,
+                    facebook: document.getElementById('contact-facebook').value,
+                    tiktok: document.getElementById('contact-tiktok').value,
+                    registrationUrl: document.getElementById('contact-registrationUrl').value
                 };
                 await db.collection('content').doc('contact').set(data);
                 break;
@@ -992,13 +1063,20 @@ async function saveSection(section) {
 
     } catch(e) {
         console.error('Save failed:', e);
-        btn.textContent = 'Error - try again';
+        let errorMsg = 'Error - try again';
+        if (e.code === 'permission-denied') {
+            errorMsg = 'Permission denied - update Firestore rules';
+            alert('Save failed: Firestore security rules are blocking writes.\n\nTo fix this:\n1. Go to Firebase Console > Firestore Database > Rules\n2. Update the rules to allow authenticated writes:\n\nrules_version = \'2\';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /{document=**} {\n      allow read: if true;\n      allow write: if request.auth != null;\n    }\n  }\n}');
+        } else {
+            alert('Save failed: ' + e.message);
+        }
+        btn.textContent = errorMsg;
         btn.classList.add('error');
         setTimeout(() => {
             btn.textContent = 'Save ' + section.charAt(0).toUpperCase() + section.slice(1);
             btn.className = 'save-btn';
             btn.disabled = false;
-        }, 2000);
+        }, 3000);
     }
 }
 
@@ -1034,8 +1112,8 @@ function renderMessages() {
     list.innerHTML = filtered.map(m => {
         const time = m.timestamp ? timeAgo(m.timestamp.toDate()) : 'Just now';
         const sessionLabels = {
-            park: 'Park Sessions', venue: 'Venue Sessions', '1to1': '1-to-1 Coaching',
-            'small-group': 'Small Group', 'holiday-camp': 'Holiday Camp', masterclass: 'Skills Masterclass'
+            park: 'Park Sessions (£5)', sibling: 'Sibling Offer (£8 for 2)',
+            general: 'General Enquiry'
         };
         return `
             <div class="msg-card ${m.read ? '' : 'unread'}">
@@ -1107,14 +1185,23 @@ async function seedAllContent() {
         const batch = db.batch();
 
         batch.set(db.collection('content').doc('hero'), {
-            tag: "FA Qualified \u2022 DBS Checked \u2022 Fully Insured",
-            headingLine1: "Get Your Child",
+            trustBadges: "FA TRAINED \u2022 DBS CHECKED \u2022 FULLY INSURED",
+            tagline: "Less Screentime. More Football. Active Goals Start Here.",
+            headingLine1: "Get Your Child Active",
             headingHighlight: "Off the Screen",
             headingLine3: "& Onto the Pitch",
-            subtitle: "Fun, safe, and affordable football coaching in Luton. Sessions from just \u00a35. No contracts, no pressure \u2014 just football.",
+            subtitle: "Fun, safe and structured football coaching in Luton. Small group sessions from just \u00a35. No Contracts \u2014 Just Football.",
+            btn1Text: "Get In Touch",
+            btn2Text: "Register Your Child",
+            btn2Url: "https://docs.google.com/forms/d/e/1FAIpQLSctnibtnB_Trjqt1nLDvKodqDGojRXAle5e8wKnyQ5R9obGbw/viewform?usp=header",
+            offerText: "\ud83c\udf1f First session FREE \u2014 every child is welcome, no trials, no pressure",
+            proof1Label: "FA Qualified Coach",
+            proof2Number: 100,
+            proof2Label: "Fully Compliant",
+            proof3Number: 0,
+            proof3Label: "Screen Time Needed",
             phone: "07455552786",
-            phoneDisplay: "07455 552786",
-            offerText: "\ud83c\udf1f First session FREE \u2014 come try it, no commitment"
+            phoneDisplay: "07455 552786"
         });
 
         batch.set(db.collection('content').doc('about'), {
@@ -1145,28 +1232,16 @@ async function seedAllContent() {
         batch.set(db.collection('content').doc('prices'), {
             sectionLabel: "Transparent Pricing",
             title: "Simple, Honest Prices",
-            subtitle: "No hidden fees. No contracts. Pay per session or save with a block booking.",
+            subtitle: "No hidden fees. No contracts. Just pay per session.",
             park: [
                 { label: "Drop-in", price: "\u00a35", detail: "per session", description: "Pay on the day. Just turn up!", popularTag: "" },
-                { label: "Sibling Discount", price: "\u00a34", detail: "each (2+ siblings)", description: "Bring the whole family", popularTag: "" },
-                { label: "Block of 6", price: "\u00a325", detail: "\u00a34.17 per session", description: "Commit & save", popularTag: "Save \u00a35" },
-                { label: "Block of 10", price: "\u00a340", detail: "\u00a34 per session", description: "For loyal families", popularTag: "Best Value" }
+                { label: "2 Siblings", price: "\u00a38", detail: "for 2 siblings at the same session", description: "Bring the family \u2014 save together", popularTag: "Sibling Offer" }
             ],
-            venue: [
-                { label: "Drop-in", price: "\u00a38", detail: "per session", description: "Pay on the day", popularTag: "" },
-                { label: "Block of 6", price: "\u00a342", detail: "\u00a37 per session", description: "Small saving for commitment", popularTag: "" },
-                { label: "Block of 10", price: "\u00a365", detail: "\u00a36.50 per session", description: "Best rate for regulars", popularTag: "Best Value" }
-            ],
-            premium: [
-                { label: "1-to-1 Coaching", price: "\u00a325", detail: "per hour", description: "Full individual focus", popularTag: "" },
-                { label: "Small Group (2-3 kids)", price: "\u00a312", detail: "each per hour", description: "Perfect for friends & siblings", popularTag: "" },
-                { label: "Skills Masterclass", price: "\u00a310", detail: "per child", description: "Themed sessions e.g. shooting clinic", popularTag: "" }
-            ],
+            venue: [],
+            premium: [],
             extras: [
                 { title: "\ud83c\udf1f First Session FREE", description: "Come try us out \u2014 no commitment needed" },
-                { title: "\ud83d\ude4b Refer a Friend", description: "Both get \u00a31 off your next session" },
-                { title: "\u2600\ufe0f Holiday Camps", description: "Half-term & summer \u2014 \u00a310-15 per day" },
-                { title: "\ud83d\udcb3 Monthly Payments", description: "Pay block bookings monthly by bank transfer" }
+                { title: "\ud83d\ude4b Refer a Friend", description: "Both get \u00a31 off your next session" }
             ]
         });
 
@@ -1183,8 +1258,8 @@ async function seedAllContent() {
         });
 
         batch.set(db.collection('content').doc('testimonial'), {
-            quote: "My son used to spend hours on his iPad. Since starting with Imran, he's outside every day practising. His confidence has completely changed.",
-            attribution: "Parent Review",
+            quote: "Behind every great player is a coach who believed in them.",
+            attribution: "Pelé",
             ctaText: "Book Your Child's First Free Session",
             reassurance: "No commitment required \u2022 Pay per session \u2022 All abilities welcome"
         });
@@ -1192,12 +1267,16 @@ async function seedAllContent() {
         batch.set(db.collection('content').doc('contact'), {
             sectionLabel: "Get Started Today",
             title: "Book a Session",
-            subtitle: "Call, email, or send a message \u2014 we'll get back to you within the hour",
+            subtitle: "Register your child, call, email, or send a message \u2014 we'll get back to you within the hour",
             phone: "07455552786",
             phoneDisplay: "07455 552786",
             email: "activegoalsfootball@gmail.com",
-            location: "Luton & surrounding areas",
-            locationDetail: "Wardown Park & local venues"
+            location: "Local parks in Luton",
+            locationDetail: "Session location confirmed with parents before each session",
+            instagram: "https://www.instagram.com/activegoalsfootball",
+            facebook: "https://www.facebook.com/ActiveGoalsFootball",
+            tiktok: "https://www.tiktok.com/@activegoalsfootball",
+            registrationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSctnibtnB_Trjqt1nLDvKodqDGojRXAle5e8wKnyQ5R9obGbw/viewform?usp=header"
         });
 
         batch.set(db.collection('content').doc('footer'), {
@@ -1213,10 +1292,9 @@ async function seedAllContent() {
         // Seed schedule
         const schedBatch = db.batch();
         const defaultSchedule = [
-            { day: "Monday", time: "4:30 PM - 6:00 PM", location: "Wardown Park", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome", order: 1 },
-            { day: "Wednesday", time: "4:30 PM - 6:00 PM", location: "Wardown Park", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome", order: 2 },
-            { day: "Thursday", time: "5:00 PM - 6:30 PM", location: "5-a-side Pitch (TBC)", type: "venue", ageGroup: "Ages 7-14", note: "Structured coaching", order: 3 },
-            { day: "Saturday", time: "10:00 AM - 11:30 AM", location: "Wardown Park", type: "park", ageGroup: "All ages", note: "Family session - siblings welcome", order: 4 }
+            { day: "Monday", time: "4:30 PM - 6:00 PM", location: "Local park in Luton (confirmed with parents)", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome - \u00a35 per session", order: 1 },
+            { day: "Wednesday", time: "4:30 PM - 6:00 PM", location: "Local park in Luton (confirmed with parents)", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome - \u00a35 per session", order: 2 },
+            { day: "Saturday", time: "10:00 AM - 11:30 AM", location: "Local park in Luton (confirmed with parents)", type: "park", ageGroup: "All ages", note: "Family session - siblings welcome - \u00a35 per session", order: 3 }
         ];
         defaultSchedule.forEach(s => {
             schedBatch.set(db.collection('schedule').doc(), s);

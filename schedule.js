@@ -18,33 +18,25 @@ const SCHEDULE = [
     {
         day: "Monday",
         time: "4:30 PM - 6:00 PM",
-        location: "Wardown Park",
+        location: "Local park in Luton (confirmed with parents)",
         type: "park",
         ageGroup: "Ages 5-11",
-        note: "Drop-in welcome"
+        note: "Drop-in welcome - £5 per session"
     },
     {
         day: "Wednesday",
         time: "4:30 PM - 6:00 PM",
-        location: "Wardown Park",
+        location: "Local park in Luton (confirmed with parents)",
         type: "park",
         ageGroup: "Ages 5-11",
-        note: "Drop-in welcome"
+        note: "Drop-in welcome - £5 per session"
     },
     {
         day: "Saturday",
         time: "10:00 AM - 11:30 AM",
-        location: "Wardown Park",
+        location: "Local park in Luton (confirmed with parents)",
         type: "park",
         ageGroup: "All ages",
-        note: "Family session - siblings welcome"
-    },
-    {
-        day: "Thursday",
-        time: "5:00 PM - 6:30 PM",
-        location: "5-a-side Pitch (TBC)",
-        type: "venue",
-        ageGroup: "Ages 7-14",
-        note: "Structured coaching"
+        note: "Family session - siblings welcome - £5 per session"
     }
 ];

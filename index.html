@@ -38,20 +38,27 @@
 
     <!-- Hero Section -->
     <header class="hero" id="hero">
+        <div class="hero-image">
+            <img src="io.png" alt="Kids playing football at a coaching session" loading="eager">
+        </div>
         <div class="hero-bg"></div>
         <div class="container hero-content">
             <div class="hero-text">
-                <div class="hero-tag fade-in">FA Qualified &bull; DBS Checked &bull; Fully Insured</div>
+                <div class="hero-tag fade-in" id="cms-hero-trust">FA Trained &bull; DBS Checked &bull; Fully Insured</div>
+                <p class="hero-tagline fade-in" id="cms-hero-tagline">Less Screentime. More Football. Active Goals Start Here.</p>
                 <h1 class="fade-in fade-delay-1">Get Your Child<br><span class="highlight">Off the Screen</span><br>& Onto the Pitch</h1>
-                <p class="hero-subtitle fade-in fade-delay-2">Fun, safe, and affordable football coaching in Luton. Sessions from just &pound;5. No contracts, no pressure &mdash; just football.</p>
+                <p class="hero-subtitle fade-in fade-delay-2">Fun, safe and structured football coaching in Luton. Small group sessions from just &pound;5. No Contracts &mdash; Just Football.</p>
                 <div class="hero-actions fade-in fade-delay-3">
-                    <a href="tel:07455552786" class="btn btn-primary btn-large">
+                    <a href="#contact" class="btn btn-primary btn-large" id="cms-hero-btn1">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        07455 552786
+                        <span>Get In Touch</span>
                     </a>
-                    <a href="#prices" class="btn btn-outline btn-large">View Prices</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSctnibtnB_Trjqt1nLDvKodqDGojRXAle5e8wKnyQ5R9obGbw/viewform?usp=header" target="_blank" class="btn btn-outline btn-large" id="cms-hero-btn2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                        <span>Register Your Child</span>
+                    </a>
                 </div>
-                <p class="hero-offer fade-in fade-delay-3">&#127775; <strong>First session FREE</strong> &mdash; come try it, no commitment</p>
+                <p class="hero-offer fade-in fade-delay-3" id="cms-hero-offer">&#127775; <strong>First session FREE</strong> &mdash; every child is welcome, no trials, no pressure</p>
             </div>
             <div class="hero-trust fade-in fade-delay-3">
                 <div class="trust-item">
@@ -74,16 +81,16 @@
     <section class="proof-banner">
         <div class="container proof-grid">
             <div class="proof-item animate-on-scroll">
-                <span class="proof-number" data-count="5">0</span><span class="proof-plus">&#9733;</span>
-                <span class="proof-label">Parent Rated</span>
+                <span class="proof-plus">&#9917;</span>
+                <span class="proof-label" id="cms-proof1" style="font-family:var(--font-heading); font-size:1rem; font-weight:700; opacity:1; color:var(--gold-light);">FA Qualified Coach</span>
             </div>
             <div class="proof-item animate-on-scroll">
-                <span class="proof-number" data-count="100">0</span><span class="proof-plus">%</span>
-                <span class="proof-label">Fully Compliant</span>
+                <span class="proof-number" id="cms-proof2-num" data-count="100">0</span><span class="proof-plus">%</span>
+                <span class="proof-label" id="cms-proof2">Fully Compliant</span>
             </div>
             <div class="proof-item animate-on-scroll">
-                <span class="proof-number" data-count="0">0</span><span class="proof-plus"></span>
-                <span class="proof-label proof-label-special">Screen Time Needed</span>
+                <span class="proof-number" id="cms-proof3-num" data-count="0">0</span><span class="proof-plus"></span>
+                <span class="proof-label proof-label-special" id="cms-proof3">Screen Time Needed</span>
             </div>
         </div>
     </section>
@@ -104,8 +111,8 @@
                 </div>
                 <div class="about-text animate-on-scroll slide-right">
                     <h2>Imran Ali</h2>
-                    <p class="about-role">Founder & Head Coach</p>
-                    <p>Welcome to Active Goals Football! I'm Imran, a passionate and dedicated football coach on a mission to <strong>get kids off screens, out on the pitch, and falling in love with the beautiful game</strong>.</p>
+                    <p class="about-role">Founder &amp; Head Coach &mdash; Active Goals Football</p>
+                    <p>Welcome to Active Goals Football! I'm Imran, a passionate and dedicated football coach on a mission to <strong>get kids off screens, out on the pitch, and falling in love with the beautiful game</strong>. Every child is welcome here &mdash; no trials, no pressure, just football, fun and confidence building.</p>
                     <p>I believe football has the power to <strong>unite communities</strong> and bring people together. Whether your child is a complete beginner or an aspiring player, I tailor every session to build skills, confidence, and a genuine love for the sport.</p>
                     <p>My coaching philosophy is simple: <strong>make it fun, make it active, and watch players grow</strong>.</p>
                     <div class="about-qualifications">
@@ -166,7 +173,7 @@
         <div class="container">
             <div class="section-label center">When &amp; Where</div>
             <h2 class="section-title">Session Timetable</h2>
-            <p class="section-subtitle">Find a session near you. Drop-ins welcome &mdash; just turn up and play!</p>
+            <p class="section-subtitle">Local parks in Luton. Session location confirmed with parents before each session. Drop-ins welcome!</p>
             <div id="timetableGrid" class="timetable-grid">
                 <!-- Populated by JavaScript from schedule.js -->
             </div>
@@ -182,15 +189,15 @@
         <div class="container">
             <div class="section-label center">Transparent Pricing</div>
             <h2 class="section-title">Simple, Honest Prices</h2>
-            <p class="section-subtitle">No hidden fees. No contracts. Pay per session or save with a block booking.</p>
+            <p class="section-subtitle">No hidden fees. No contracts. Just pay per session.</p>
 
-            <!-- Tier 1 - Park -->
+            <!-- Park Sessions -->
             <div class="price-tier animate-on-scroll">
                 <div class="tier-header tier-park">
                     <div class="tier-icon">&#127795;</div>
                     <div>
                         <h3>Park Sessions</h3>
-                        <p>Wardown Park &amp; local parks</p>
+                        <p>Local parks in Luton &bull; Session location confirmed with parents before each session</p>
                     </div>
                 </div>
                 <div class="tier-cards">
@@ -200,88 +207,12 @@
                         <div class="tier-card-detail">per session</div>
                         <p>Pay on the day. Just turn up!</p>
                     </div>
-                    <div class="tier-card">
-                        <div class="tier-card-label">Sibling Discount</div>
-                        <div class="tier-card-price">&pound;4</div>
-                        <div class="tier-card-detail">each (2+ siblings)</div>
-                        <p>Bring the whole family</p>
-                    </div>
                     <div class="tier-card popular-tier">
-                        <div class="popular-tag">Save &pound;5</div>
-                        <div class="tier-card-label">Block of 6</div>
-                        <div class="tier-card-price">&pound;25</div>
-                        <div class="tier-card-detail">&pound;4.17 per session</div>
-                        <p>Commit &amp; save</p>
-                    </div>
-                    <div class="tier-card popular-tier">
-                        <div class="popular-tag">Best Value</div>
-                        <div class="tier-card-label">Block of 10</div>
-                        <div class="tier-card-price">&pound;40</div>
-                        <div class="tier-card-detail">&pound;4 per session</div>
-                        <p>For loyal families</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tier 2 - Venue -->
-            <div class="price-tier animate-on-scroll">
-                <div class="tier-header tier-venue">
-                    <div class="tier-icon">&#127942;</div>
-                    <div>
-                        <h3>Venue Sessions</h3>
-                        <p>Hired 5-a-side pitch &bull; Better surface, more structure</p>
-                    </div>
-                </div>
-                <div class="tier-cards">
-                    <div class="tier-card">
-                        <div class="tier-card-label">Drop-in</div>
+                        <div class="popular-tag">Sibling Offer</div>
+                        <div class="tier-card-label">2 Siblings</div>
                         <div class="tier-card-price">&pound;8</div>
-                        <div class="tier-card-detail">per session</div>
-                        <p>Pay on the day</p>
-                    </div>
-                    <div class="tier-card">
-                        <div class="tier-card-label">Block of 6</div>
-                        <div class="tier-card-price">&pound;42</div>
-                        <div class="tier-card-detail">&pound;7 per session</div>
-                        <p>Small saving for commitment</p>
-                    </div>
-                    <div class="tier-card popular-tier">
-                        <div class="popular-tag">Best Value</div>
-                        <div class="tier-card-label">Block of 10</div>
-                        <div class="tier-card-price">&pound;65</div>
-                        <div class="tier-card-detail">&pound;6.50 per session</div>
-                        <p>Best rate for regulars</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tier 3 - Premium -->
-            <div class="price-tier animate-on-scroll">
-                <div class="tier-header tier-premium">
-                    <div class="tier-icon">&#11088;</div>
-                    <div>
-                        <h3>Premium Coaching</h3>
-                        <p>1-to-1 &amp; small group &bull; Personalised skill development</p>
-                    </div>
-                </div>
-                <div class="tier-cards">
-                    <div class="tier-card">
-                        <div class="tier-card-label">1-to-1 Coaching</div>
-                        <div class="tier-card-price">&pound;25</div>
-                        <div class="tier-card-detail">per hour</div>
-                        <p>Full individual focus</p>
-                    </div>
-                    <div class="tier-card">
-                        <div class="tier-card-label">Small Group (2-3 kids)</div>
-                        <div class="tier-card-price">&pound;12</div>
-                        <div class="tier-card-detail">each per hour</div>
-                        <p>Perfect for friends &amp; siblings</p>
-                    </div>
-                    <div class="tier-card">
-                        <div class="tier-card-label">Skills Masterclass</div>
-                        <div class="tier-card-price">&pound;10</div>
-                        <div class="tier-card-detail">per child</div>
-                        <p>Themed sessions e.g. shooting clinic</p>
+                        <div class="tier-card-detail">for 2 siblings at the same session</div>
+                        <p>Bring the family &mdash; save together</p>
                     </div>
                 </div>
             </div>
@@ -296,19 +227,11 @@
                     <h4>&#128587; Refer a Friend</h4>
                     <p>Both get &pound;1 off your next session</p>
                 </div>
-                <div class="price-extra">
-                    <h4>&#9728;&#65039; Holiday Camps</h4>
-                    <p>Half-term &amp; summer &mdash; &pound;10-15 per day</p>
-                </div>
-                <div class="price-extra">
-                    <h4>&#128179; Monthly Payments</h4>
-                    <p>Pay block bookings monthly by bank transfer</p>
-                </div>
             </div>
 
             <div class="price-notes animate-on-scroll">
                 <p>All sessions include equipment. Players just need boots, shin pads, and water.</p>
-                <p><strong>Block booking discounts</strong> help families save money and give Imran income security &mdash; everyone wins.</p>
+                <p>Every child is welcome. No trials, no pressure &mdash; just football, fun and confidence building.</p>
             </div>
         </div>
     </section>
@@ -355,8 +278,8 @@
     <!-- Testimonial / CTA Section -->
     <section class="section cta-section">
         <div class="container cta-content animate-on-scroll">
-            <h2>&ldquo;My son used to spend hours on his iPad. Since starting with Imran, he's outside every day practising. His confidence has completely changed.&rdquo;</h2>
-            <p class="cta-attribution">&mdash; Parent Review</p>
+            <h2>&ldquo;Behind every great player is a coach who believed in them.&rdquo;</h2>
+            <p class="cta-attribution">&mdash; Pel&eacute;</p>
             <a href="tel:07455552786" class="btn btn-primary btn-large">Book Your Child's First Free Session</a>
             <p class="cta-reassurance">No commitment required &bull; Pay per session &bull; All abilities welcome</p>
         </div>
@@ -367,9 +290,13 @@
         <div class="container">
             <div class="section-label center">Get Started Today</div>
             <h2 class="section-title">Book a Session</h2>
-            <p class="section-subtitle">Call, email, or send a message &mdash; we'll get back to you within the hour</p>
+            <p class="section-subtitle">Register your child, call, email, or send a message &mdash; we'll get back to you within the hour</p>
             <div class="contact-grid">
                 <div class="contact-info animate-on-scroll slide-left">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSctnibtnB_Trjqt1nLDvKodqDGojRXAle5e8wKnyQ5R9obGbw/viewform?usp=header" target="_blank" class="btn btn-primary btn-large btn-full" id="cms-reg-btn" style="margin-bottom: 20px; font-size: 1.05rem;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                        Player Registration Form
+                    </a>
                     <div class="contact-card">
                         <div class="contact-item">
                             <div class="contact-icon">
@@ -395,18 +322,18 @@
                             </div>
                             <div>
                                 <h4>Location</h4>
-                                <p>Luton &amp; surrounding areas<br>Wardown Park &amp; local venues</p>
+                                <p>Local parks in Luton<br>Session location confirmed with parents before each session</p>
                             </div>
                         </div>
                     </div>
                     <div class="contact-socials">
-                        <a href="#" class="social-link" aria-label="Instagram">
+                        <a href="#" class="social-link" id="cms-social-ig" aria-label="Instagram">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                         </a>
-                        <a href="#" class="social-link" aria-label="Facebook">
+                        <a href="#" class="social-link" id="cms-social-fb" aria-label="Facebook">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                         </a>
-                        <a href="#" class="social-link" aria-label="TikTok">
+                        <a href="#" class="social-link" id="cms-social-tt" aria-label="TikTok">
                             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.92a8.27 8.27 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.33z"/></svg>
                         </a>
                     </div>
@@ -432,12 +359,9 @@
                         <div class="form-group">
                             <select id="session" name="session">
                                 <option value="">What are you interested in?</option>
-                                <option value="park">Park Sessions (from &pound;5)</option>
-                                <option value="venue">Venue Sessions (from &pound;8)</option>
-                                <option value="1to1">1-to-1 Coaching (&pound;25/hr)</option>
-                                <option value="small-group">Small Group 2-3 (&pound;12 each)</option>
-                                <option value="holiday-camp">Holiday Camp</option>
-                                <option value="masterclass">Skills Masterclass</option>
+                                <option value="park">Park Sessions (&pound;5 drop-in)</option>
+                                <option value="sibling">Sibling Offer (&pound;8 for 2)</option>
+                                <option value="general">General Enquiry</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -625,20 +549,23 @@
                 // Hero
                 if (content.hero) {
                     const h = content.hero;
-                    if (h.tag) { const t = el('.hero-tag'); if(t) t.textContent = h.tag; }
+                    if (h.trustBadges) { const t = el('#cms-hero-trust'); if(t) t.textContent = h.trustBadges; }
+                    if (h.tagline) { const t = el('#cms-hero-tagline'); if(t) t.textContent = h.tagline; }
                     if (h.headingLine1) {
                         const heading = el('.hero h1');
                         if (heading) heading.innerHTML = h.headingLine1 + '<br><span class="highlight">' + (h.headingHighlight || '') + '</span><br>' + (h.headingLine3 || '');
                     }
                     if (h.subtitle) { const s = el('.hero-subtitle'); if(s) s.textContent = h.subtitle; }
-                    if (h.phoneDisplay) {
-                        const btn = el('.hero-actions .btn-primary');
-                        if (btn) {
-                            btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> ' + h.phoneDisplay;
-                            btn.href = 'tel:' + (h.phone || '');
-                        }
-                    }
-                    if (h.offerText) { const o = el('.hero-offer'); if(o) o.innerHTML = h.offerText; }
+                    if (h.btn1Text) { const b = el('#cms-hero-btn1 span'); if(b) b.textContent = h.btn1Text; }
+                    if (h.btn2Text) { const b = el('#cms-hero-btn2 span'); if(b) b.textContent = h.btn2Text; }
+                    if (h.btn2Url) { const b = el('#cms-hero-btn2'); if(b) b.href = h.btn2Url; }
+                    if (h.offerText) { const o = el('#cms-hero-offer'); if(o) o.innerHTML = h.offerText; }
+                    // Proof banner
+                    if (h.proof1Label) { const p = el('#cms-proof1'); if(p) p.textContent = h.proof1Label; }
+                    if (h.proof2Number !== undefined) { const p = el('#cms-proof2-num'); if(p) p.setAttribute('data-count', h.proof2Number); }
+                    if (h.proof2Label) { const p = el('#cms-proof2'); if(p) p.textContent = h.proof2Label; }
+                    if (h.proof3Number !== undefined) { const p = el('#cms-proof3-num'); if(p) p.setAttribute('data-count', h.proof3Number); }
+                    if (h.proof3Label) { const p = el('#cms-proof3'); if(p) p.textContent = h.proof3Label; }
                 }
 
                 // About
@@ -726,6 +653,22 @@
                                 if (a) { a.textContent = c.email; a.href = 'mailto:' + c.email; }
                             }
                         }
+                        if (c.location) {
+                            const items = sec.querySelectorAll('.contact-item');
+                            if (items[2]) {
+                                const p = items[2].querySelector('p');
+                                if (p) p.innerHTML = c.location + (c.locationDetail ? '<br>' + c.locationDetail : '');
+                            }
+                        }
+                        // Social links
+                        if (c.instagram) { const a = el('#cms-social-ig'); if(a) a.href = c.instagram; }
+                        if (c.facebook) { const a = el('#cms-social-fb'); if(a) a.href = c.facebook; }
+                        if (c.tiktok) { const a = el('#cms-social-tt'); if(a) a.href = c.tiktok; }
+                        // Registration form URL
+                        if (c.registrationUrl) {
+                            const rb = el('#cms-reg-btn'); if(rb) rb.href = c.registrationUrl;
+                            const hb = el('#cms-hero-btn2'); if(hb) hb.href = c.registrationUrl;
+                        }
                     }
                 }
 
@@ -786,8 +729,8 @@
 
                 // Send email notification
                 const sessionLabels = {
-                    park: 'Park Sessions', venue: 'Venue Sessions', '1to1': '1-to-1 Coaching',
-                    'small-group': 'Small Group', 'holiday-camp': 'Holiday Camp', masterclass: 'Skills Masterclass'
+                    park: 'Park Sessions (£5)', sibling: 'Sibling Offer (£8 for 2)',
+                    general: 'General Enquiry'
                 };
                 emailjs.send("service_a0h8z98", "template_7at96wm", {
                     from_name: msgData.name,
