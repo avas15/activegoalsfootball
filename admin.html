@@ -284,6 +284,7 @@
         <button class="tab active" data-tab="messages">Messages <span class="badge" id="unreadBadge" style="display:none">0</span></button>
         <button class="tab" data-tab="hero">Hero</button>
         <button class="tab" data-tab="about">About</button>
+        <button class="tab" data-tab="rehan">Rehan</button>
         <button class="tab" data-tab="timetable">Timetable</button>
         <button class="tab" data-tab="prices">Prices</button>
         <button class="tab" data-tab="why">Why Us</button>
@@ -416,6 +417,26 @@
         <div id="about-quals-list"></div>
         <button class="add-btn" onclick="addQualification()">+ Add Qualification</button>
         <button class="save-btn" id="save-about" onclick="saveSection('about')">Save About</button>
+    </div>
+
+    <!-- ===== REHAN PANEL ===== -->
+    <div class="panel" id="panel-rehan">
+        <h2 class="panel-title">Rehan / Assistant Coach</h2>
+        <div class="field">
+            <label>Name</label>
+            <input type="text" id="rehan-name" placeholder="Rehan">
+        </div>
+        <div class="field">
+            <label>Role</label>
+            <input type="text" id="rehan-role" placeholder="Assistant Coach">
+        </div>
+        <div class="section-divider">Bio Paragraphs</div>
+        <div id="rehan-bio-list"></div>
+        <button class="add-btn" onclick="addRehanBio()">+ Add Paragraph</button>
+        <div class="section-divider">Qualifications</div>
+        <div id="rehan-quals-list"></div>
+        <button class="add-btn" onclick="addRehanQual()">+ Add Qualification</button>
+        <button class="save-btn" id="save-rehan" onclick="saveSection('rehan')">Save Rehan</button>
     </div>
 
     <!-- ===== TIMETABLE PANEL ===== -->
@@ -699,6 +720,7 @@ async function loadAllContent() {
 
         populateHero();
         populateAbout();
+        populateRehan();
         populateTimetableText();
         populatePrices();
         populateWhy();
@@ -755,6 +777,14 @@ function populateAbout() {
     val('about-role', d.role);
     renderBioList(d.bio || []);
     renderQualsList(d.qualifications || []);
+}
+
+function populateRehan() {
+    const d = contentData.rehan || {};
+    val('rehan-name', d.name);
+    val('rehan-role', d.role);
+    renderRehanBioList(d.bio || []);
+    renderRehanQualsList(d.qualifications || []);
 }
 
 function populateTimetableText() {
@@ -857,6 +887,42 @@ function renderQualsList(items) {
 }
 function addQualification() { qualItems.push(''); renderQualsList(qualItems); }
 function removeQual(i) { qualItems.splice(i, 1); renderQualsList(qualItems); }
+
+// --- Rehan bio paragraphs ---
+let rehanBioItems = [];
+function renderRehanBioList(items) {
+    rehanBioItems = items.length ? [...items] : [''];
+    const list = document.getElementById('rehan-bio-list');
+    list.innerHTML = rehanBioItems.map((text, i) => `
+        <div class="repeat-item">
+            <button class="remove-btn" onclick="removeRehanBio(${i})">&times;</button>
+            <div class="field">
+                <label>Paragraph ${i + 1}</label>
+                <textarea id="rehan-bio-${i}" rows="3" oninput="rehanBioItems[${i}]=this.value">${text}</textarea>
+            </div>
+        </div>
+    `).join('');
+}
+function addRehanBio() { rehanBioItems.push(''); renderRehanBioList(rehanBioItems); }
+function removeRehanBio(i) { rehanBioItems.splice(i, 1); renderRehanBioList(rehanBioItems); }
+
+// --- Rehan qualifications ---
+let rehanQualItems = [];
+function renderRehanQualsList(items) {
+    rehanQualItems = items.length ? [...items] : [''];
+    const list = document.getElementById('rehan-quals-list');
+    list.innerHTML = rehanQualItems.map((text, i) => `
+        <div class="repeat-item">
+            <button class="remove-btn" onclick="removeRehanQual(${i})">&times;</button>
+            <div class="field">
+                <label>Qualification ${i + 1}</label>
+                <input type="text" id="rehan-qual-${i}" value="${text}" oninput="rehanQualItems[${i}]=this.value">
+            </div>
+        </div>
+    `).join('');
+}
+function addRehanQual() { rehanQualItems.push(''); renderRehanQualsList(rehanQualItems); }
+function removeRehanQual(i) { rehanQualItems.splice(i, 1); renderRehanQualsList(rehanQualItems); }
 
 // --- Sessions ---
 const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
@@ -1057,6 +1123,16 @@ async function saveSection(section) {
                     qualifications: qualItems.filter(q => q.trim())
                 };
                 await db.collection('content').doc('about').set(data);
+                break;
+
+            case 'rehan':
+                data = {
+                    name: document.getElementById('rehan-name').value,
+                    role: document.getElementById('rehan-role').value,
+                    bio: rehanBioItems.filter(b => b.trim()),
+                    qualifications: rehanQualItems.filter(q => q.trim())
+                };
+                await db.collection('content').doc('rehan').set(data);
                 break;
 
             case 'timetable':
