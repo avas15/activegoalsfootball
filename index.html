@@ -715,13 +715,7 @@
                                 if (a) { a.textContent = c.phoneDisplay; a.href = 'tel:' + (c.phone || ''); }
                             }
                         }
-                        if (c.email) {
-                            const items = sec.querySelectorAll('.contact-item');
-                            if (items[1]) {
-                                const a = items[1].querySelector('a');
-                                if (a) { a.textContent = c.email; a.href = 'mailto:' + c.email; }
-                            }
-                        }
+                        // WhatsApp item (items[1]) — not overridden by CMS email
                         if (c.location) {
                             const items = sec.querySelectorAll('.contact-item');
                             if (items[2]) {
@@ -751,7 +745,7 @@
                         if (fc) {
                             const links = fc.querySelectorAll('a');
                             if (links[0]) { links[0].textContent = f.phoneDisplay; links[0].href = 'tel:' + (f.phone || ''); }
-                            if (links[1] && f.email) { links[1].textContent = f.email; links[1].href = 'mailto:' + f.email; }
+                            // links[1] is now WhatsApp — not overridden by CMS email
                         }
                     }
                     if (f.copyright) { const c = el('.footer-bottom p'); if(c) c.innerHTML = f.copyright; }
