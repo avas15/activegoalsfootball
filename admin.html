@@ -497,6 +497,10 @@
             <label>Welcome Message</label>
             <input type="text" id="prices-noteWelcome" placeholder="Every child is welcome. No trials, no pressure — just football, fun and confidence building.">
         </div>
+        <div class="field">
+            <label>Limited Spaces Message</label>
+            <input type="text" id="prices-noteLimited" placeholder="Limited spaces available each session to keep groups small and focused.">
+        </div>
 
         <button class="save-btn" id="save-prices" onclick="saveSection('prices')">Save Prices</button>
     </div>
@@ -802,6 +806,7 @@ function populatePrices() {
     val('prices-freeBannerText', d.freeBannerText);
     val('prices-noteEquipment', d.noteEquipment);
     val('prices-noteWelcome', d.noteWelcome);
+    val('prices-noteLimited', d.noteLimited);
     renderPriceCards('park', d.park || []);
     renderExtras(d.extras || []);
 }
@@ -1168,7 +1173,8 @@ async function saveSection(section) {
                     extras: extraItems,
                     freeBannerText: document.getElementById('prices-freeBannerText').value,
                     noteEquipment: document.getElementById('prices-noteEquipment').value,
-                    noteWelcome: document.getElementById('prices-noteWelcome').value
+                    noteWelcome: document.getElementById('prices-noteWelcome').value,
+                    noteLimited: document.getElementById('prices-noteLimited').value
                 };
                 await db.collection('content').doc('prices').set(data);
                 break;

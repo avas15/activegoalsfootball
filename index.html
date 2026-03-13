@@ -230,10 +230,10 @@
             </div>
 
             <div class="price-notes-big animate-on-scroll" id="cms-price-notes">
-                <p id="cms-price-note1">All sessions include equipment. Players just need boots, shin pads, and water.</p>
+                <p id="cms-price-note1"><strong>All sessions include equipment. Players just need boots, shin pads, and water.</strong></p>
                 <p id="cms-price-note2"><strong>Every child is welcome. No trials, no pressure &mdash; just football, fun and confidence building.</strong></p>
                 <hr style="border: none; border-top: 2px solid var(--green-light); margin: 16px 0;">
-                <p><strong style="font-size: clamp(1.05rem, 2.2vw, 1.25rem); color: var(--green-dark);">Limited spaces available each session to keep groups small and focused.</strong></p>
+                <p id="cms-price-note3" style="font-size: clamp(1rem, 2vw, 1.1rem); color: var(--grey);">Limited spaces available each session to keep groups small and focused.</p>
             </div>
         </div>
     </section>
@@ -684,8 +684,9 @@
                 if (content.prices) {
                     const pr = content.prices;
                     if (pr.freeBannerText) { const fb = el('#cms-free-banner h3'); if(fb) fb.innerHTML = pr.freeBannerText; }
-                    if (pr.noteEquipment) { const n = el('#cms-price-note1'); if(n) n.textContent = pr.noteEquipment; }
+                    if (pr.noteEquipment) { const n = el('#cms-price-note1'); if(n) n.innerHTML = '<strong>' + pr.noteEquipment + '</strong>'; }
                     if (pr.noteWelcome) { const n = el('#cms-price-note2'); if(n) n.innerHTML = '<strong>' + pr.noteWelcome + '</strong>'; }
+                    if (pr.noteLimited) { const n = el('#cms-price-note3'); if(n) n.textContent = pr.noteLimited; }
                 }
 
                 // Testimonial
