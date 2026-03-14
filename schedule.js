@@ -21,7 +21,7 @@ const SCHEDULE = [
         location: "Local park in Luton (confirmed with parents)",
         type: "park",
         ageGroup: "Ages 5-11",
-        note: "Drop-in welcome - £5 per session"
+        note: "Registration required - £5 per session"
     },
     {
         day: "Wednesday",
@@ -29,7 +29,7 @@ const SCHEDULE = [
         location: "Local park in Luton (confirmed with parents)",
         type: "park",
         ageGroup: "Ages 5-11",
-        note: "Drop-in welcome - £5 per session"
+        note: "Registration required - £5 per session"
     },
     {
         day: "Saturday",

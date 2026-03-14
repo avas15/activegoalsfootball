@@ -965,7 +965,7 @@ function renderSessionsList() {
                 </div>
                 <div class="field">
                     <label>Note</label>
-                    <input type="text" value="${s.note || ''}" placeholder="Drop-in welcome" oninput="scheduleData[${i}].note=this.value">
+                    <input type="text" value="${s.note || ''}" placeholder="Registration required" oninput="scheduleData[${i}].note=this.value">
                 </div>
             </div>
         </div>
@@ -1511,7 +1511,7 @@ async function seedAllContent() {
         batch.set(db.collection('content').doc('timetable'), {
             sectionLabel: "When & Where",
             title: "Session Timetable",
-            subtitle: "Find a session near you. Drop-ins welcome \u2014 just turn up and play!"
+            subtitle: "Find a session near you. Players must register to attend."
         });
 
         batch.set(db.collection('content').doc('prices'), {
@@ -1519,7 +1519,7 @@ async function seedAllContent() {
             title: "Simple, Honest Prices",
             subtitle: "No hidden fees. No contracts. Just pay per session.",
             park: [
-                { label: "Drop-in", price: "\u00a35", detail: "per session", description: "Pay on the day. Just turn up!", popularTag: "" },
+                { label: "Per Session", price: "\u00a35", detail: "per session", description: "Register your child to secure a spot!", popularTag: "" },
                 { label: "2 Siblings", price: "\u00a38", detail: "for 2 siblings at the same session", description: "Bring the family \u2014 save together", popularTag: "Sibling Offer" }
             ],
             venue: [],
@@ -1577,8 +1577,8 @@ async function seedAllContent() {
         // Seed schedule
         const schedBatch = db.batch();
         const defaultSchedule = [
-            { day: "Monday", time: "4:30 PM - 6:00 PM", location: "Local park in Luton (confirmed with parents)", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome - \u00a35 per session", order: 1 },
-            { day: "Wednesday", time: "4:30 PM - 6:00 PM", location: "Local park in Luton (confirmed with parents)", type: "park", ageGroup: "Ages 5-11", note: "Drop-in welcome - \u00a35 per session", order: 2 },
+            { day: "Monday", time: "4:30 PM - 6:00 PM", location: "Local park in Luton (confirmed with parents)", type: "park", ageGroup: "Ages 5-11", note: "Registration required - \u00a35 per session", order: 1 },
+            { day: "Wednesday", time: "4:30 PM - 6:00 PM", location: "Local park in Luton (confirmed with parents)", type: "park", ageGroup: "Ages 5-11", note: "Registration required - \u00a35 per session", order: 2 },
             { day: "Saturday", time: "10:00 AM - 11:30 AM", location: "Local park in Luton (confirmed with parents)", type: "park", ageGroup: "All ages", note: "Family session - siblings welcome - \u00a35 per session", order: 3 }
         ];
         defaultSchedule.forEach(s => {
