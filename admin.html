@@ -290,6 +290,7 @@
         <button class="tab" data-tab="why">Why Us</button>
         <button class="tab" data-tab="testimonial">Testimonial</button>
         <button class="tab" data-tab="contact">Contact</button>
+        <button class="tab" data-tab="news">Latest News</button>
         <button class="tab" data-tab="footer">Footer</button>
     </div>
 
@@ -604,6 +605,17 @@
         <button class="save-btn" id="save-contact" onclick="saveSection('contact')">Save Contact</button>
     </div>
 
+    <!-- ===== LATEST NEWS PANEL ===== -->
+    <div class="panel" id="panel-news">
+        <h2 class="panel-title">Latest News</h2>
+        <p style="color:#666; margin-bottom:16px;">Set a headline that appears on the website in a highlighted news box. Leave blank to hide the news box.</p>
+        <div class="field">
+            <label>News Headline</label>
+            <input type="text" id="news-headline" placeholder="e.g. Sessions resume Monday 7th April — see you on the pitch!">
+        </div>
+        <button class="save-btn" id="save-news" onclick="saveSection('news')">Save News</button>
+    </div>
+
     <!-- ===== FOOTER PANEL ===== -->
     <div class="panel" id="panel-footer">
         <h2 class="panel-title">Footer</h2>
@@ -730,6 +742,7 @@ async function loadAllContent() {
         populateWhy();
         populateTestimonial();
         populateContact();
+        populateNews();
         populateFooter();
 
         // Load schedule
@@ -841,6 +854,11 @@ function populateContact() {
     val('contact-facebook', d.facebook);
     val('contact-tiktok', d.tiktok);
     val('contact-registrationUrl', d.registrationUrl);
+}
+
+function populateNews() {
+    const d = contentData.news || {};
+    val('news-headline', d.headline);
 }
 
 function populateFooter() {
@@ -1217,6 +1235,13 @@ async function saveSection(section) {
                 await db.collection('content').doc('contact').set(data);
                 break;
 
+            case 'news':
+                data = {
+                    headline: document.getElementById('news-headline').value
+                };
+                await db.collection('content').doc('news').set(data);
+                break;
+
             case 'footer':
                 data = {
                     description: document.getElementById('footer-description').value,
@@ -1562,6 +1587,10 @@ async function seedAllContent() {
             facebook: "https://www.facebook.com/ActiveGoalsFootball",
             tiktok: "https://www.tiktok.com/@activegoalsfootball",
             registrationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSctnibtnB_Trjqt1nLDvKodqDGojRXAle5e8wKnyQ5R9obGbw/viewform?usp=header"
+        });
+
+        batch.set(db.collection('content').doc('news'), {
+            headline: ""
         });
 
         batch.set(db.collection('content').doc('footer'), {

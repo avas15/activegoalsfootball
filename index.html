@@ -96,6 +96,21 @@
         </div>
     </section>
 
+    <!-- Latest News Box -->
+    <section class="latest-news-section" id="latest-news">
+        <div class="container">
+            <div class="latest-news-box animate-on-scroll" id="cms-news-box" style="display:none;">
+                <div class="news-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2z"/><line x1="5" y1="10" x2="13" y2="10"/><line x1="5" y1="14" x2="13" y2="14"/><line x1="5" y1="18" x2="10" y2="18"/></svg>
+                </div>
+                <div class="news-content">
+                    <span class="news-label">Latest News from the Coach</span>
+                    <p class="news-headline" id="cms-news-headline"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section class="section about" id="about">
         <div class="container">
@@ -191,7 +206,7 @@
             </div>
             <div class="timetable-note animate-on-scroll">
                 <p>&#128197; Timetable may change during school holidays. Follow us on social media for updates.</p>
-                <p>&#127775; <strong>First session is FREE</strong> &mdash; just turn up or <a href="#contact">message us</a> first!</p>
+                <p>&#127775; <strong>First session is FREE</strong> &mdash; <a href="#contact">message us</a> to confirm your place!</p>
             </div>
         </div>
     </section>
@@ -217,7 +232,7 @@
                         <div class="tier-card-label">Per Session</div>
                         <div class="tier-card-price">&pound;5</div>
                         <div class="tier-card-detail">per session</div>
-                        <p>Pay on the day. Just turn up!</p>
+                        <p>Pay on the day. <a href="#contact">Message to confirm your place</a>.</p>
                     </div>
                     <div class="tier-card popular-tier">
                         <div class="popular-tag">Sibling Offer</div>
@@ -609,6 +624,19 @@
                     if (h.imagePositionX !== undefined || h.imagePositionY !== undefined) {
                         const img = el('.hero-image img');
                         if (img) img.style.objectPosition = (h.imagePositionX ?? 20) + '% ' + (h.imagePositionY ?? 30) + '%';
+                    }
+                }
+
+                // Latest News
+                if (content.news) {
+                    const n = content.news;
+                    if (n.headline && n.headline.trim()) {
+                        const newsBox = el('#cms-news-box');
+                        const newsHeadline = el('#cms-news-headline');
+                        if (newsBox && newsHeadline) {
+                            newsHeadline.textContent = n.headline;
+                            newsBox.style.display = 'flex';
+                        }
                     }
                 }
 
