@@ -227,7 +227,7 @@
                         <p>Local parks in Luton &bull; Session location confirmed with parents before each session</p>
                     </div>
                 </div>
-                <div class="tier-cards">
+                <div class="tier-cards" id="cms-park-cards">
                     <div class="tier-card">
                         <div class="tier-card-label">Per Session</div>
                         <div class="tier-card-price">&pound;5</div>
@@ -716,6 +716,24 @@
                 // Prices notes
                 if (content.prices) {
                     const pr = content.prices;
+                    if (pr.sectionLabel) { const s = el('#prices .section-label'); if(s) s.textContent = pr.sectionLabel; }
+                    if (pr.title) { const s = el('#prices .section-title'); if(s) s.textContent = pr.title; }
+                    if (pr.subtitle) { const s = el('#prices .section-subtitle'); if(s) s.textContent = pr.subtitle; }
+                    if (Array.isArray(pr.park) && pr.park.length) {
+                        const wrap = el('#cms-park-cards');
+                        if (wrap) {
+                            wrap.innerHTML = pr.park.map(c => {
+                                const popular = c.popularTag ? '<div class="popular-tag">' + c.popularTag + '</div>' : '';
+                                const cls = c.popularTag ? 'tier-card popular-tier' : 'tier-card';
+                                return '<div class="' + cls + '">' + popular +
+                                    '<div class="tier-card-label">' + (c.label || '') + '</div>' +
+                                    '<div class="tier-card-price">' + (c.price || '') + '</div>' +
+                                    '<div class="tier-card-detail">' + (c.detail || '') + '</div>' +
+                                    (c.description ? '<p>' + c.description + '</p>' : '') +
+                                '</div>';
+                            }).join('');
+                        }
+                    }
                     if (pr.freeBannerText) { const fb = el('#cms-free-banner h3'); if(fb) fb.innerHTML = pr.freeBannerText; }
                     if (pr.noteEquipment) { const n = el('#cms-price-note1'); if(n) n.innerHTML = '<strong>' + pr.noteEquipment + '</strong>'; }
                     if (pr.noteWelcome) { const n = el('#cms-price-note2'); if(n) n.innerHTML = '<strong>' + pr.noteWelcome + '</strong>'; }
