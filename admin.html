@@ -280,6 +280,13 @@
         <button class="seed-btn" onclick="seedAllContent()">Initialize Content</button>
     </div>
 
+    <!-- Reset to latest defaults (always visible) -->
+    <div class="seed-banner" style="background:#fef3f3; border-color:#e57373;">
+        <h3 style="color:#c62828;">Reset site content to latest defaults</h3>
+        <p>This overwrites all website text (hero, about, timetable, prices, etc.) and clears the schedule, replacing it with the up-to-date Wigmore Primary School programme. Any manual edits you've made in the admin panel will be lost.</p>
+        <button class="seed-btn" style="background:#c62828;" onclick="resetAllContent()">Reset All Content to Latest Defaults</button>
+    </div>
+
     <div class="admin-tabs" id="adminTabs">
         <button class="tab active" data-tab="messages">Messages <span class="badge" id="unreadBadge" style="display:none">0</span></button>
         <button class="tab" data-tab="hero">Hero</button>
@@ -979,7 +986,7 @@ function renderSessionsList() {
                 </div>
                 <div class="field">
                     <label>Age Group</label>
-                    <input type="text" value="${s.ageGroup || ''}" placeholder="Ages 5-11" oninput="scheduleData[${i}].ageGroup=this.value">
+                    <input type="text" value="${s.ageGroup || ''}" placeholder="Ages 8-15" oninput="scheduleData[${i}].ageGroup=this.value">
                 </div>
                 <div class="field">
                     <label>Note</label>
@@ -990,7 +997,7 @@ function renderSessionsList() {
     `).join('');
 }
 function addSession() {
-    scheduleData.push({ day: 'Monday', time: '', location: '', type: 'park', ageGroup: 'Ages 5-11', note: '', order: scheduleData.length + 1 });
+    scheduleData.push({ day: 'Saturday', time: '', location: '', type: 'venue', ageGroup: 'Ages 8-15', note: '', order: scheduleData.length + 1 });
     renderSessionsList();
 }
 function removeSession(i) {
@@ -1015,7 +1022,7 @@ function renderPriceCards(tier, items) {
                 </div>
                 <div class="field">
                     <label>Price</label>
-                    <input type="text" value="${c.price || ''}" placeholder="£5" oninput="priceCards['${tier}'][${i}].price=this.value">
+                    <input type="text" value="${c.price || ''}" placeholder="£10" oninput="priceCards['${tier}'][${i}].price=this.value">
                 </div>
                 <div class="field">
                     <label>Detail</label>
@@ -1313,7 +1320,9 @@ function renderMessages() {
     list.innerHTML = filtered.map(m => {
         const time = m.timestamp ? timeAgo(m.timestamp.toDate()) : 'Just now';
         const sessionLabels = {
-            park: 'Park Sessions (£5)', sibling: 'Sibling Offer (£8 for 2)',
+            'first-free': 'First Session FREE',
+            'per-child': 'Per Child (£10)',
+            sibling: '2 Siblings (£18)',
             general: 'General Enquiry'
         };
         return `
@@ -1484,44 +1493,66 @@ function resetCropperPosition() {
 document.addEventListener('DOMContentLoaded', initCropper);
 
 // ============================================================
+// RESET CONTENT (wipe schedule + overwrite content with latest defaults)
+// ============================================================
+async function resetAllContent() {
+    if (!confirm('Reset ALL website content and the schedule to the latest defaults?\n\nThis will overwrite any manual edits you\'ve made in the admin panel.')) return;
+    if (!confirm('Last chance — really reset everything?')) return;
+
+    try {
+        // Wipe existing schedule docs
+        const schedSnap = await db.collection('schedule').get();
+        if (!schedSnap.empty) {
+            const wipeBatch = db.batch();
+            schedSnap.forEach(d => wipeBatch.delete(d.ref));
+            await wipeBatch.commit();
+        }
+    } catch(e) {
+        console.error('Schedule wipe failed:', e);
+        alert('Could not clear the old schedule. Check your connection and try again.');
+        return;
+    }
+
+    // Re-run the seed to write fresh content + schedule
+    await seedAllContent();
+}
+
+// ============================================================
 // SEED CONTENT (one-time initialization)
 // ============================================================
 async function seedAllContent() {
     const btn = document.querySelector('.seed-btn');
-    btn.disabled = true;
-    btn.textContent = 'Initializing...';
+    if (btn) { btn.disabled = true; btn.textContent = 'Initializing...'; }
 
     try {
         const batch = db.batch();
 
         batch.set(db.collection('content').doc('hero'), {
-            trustBadges: "FA TRAINED \u2022 DBS CHECKED \u2022 FULLY INSURED",
-            tagline: "Less Screentime. More Football. Active Goals Start Here.",
-            headingLine1: "Get Your Child Active",
-            headingHighlight: "Off the Screen",
-            headingLine3: "& Onto the Pitch",
-            subtitle: "Fun, safe and structured football coaching in Luton. Small group sessions from just \u00a35. No Contracts \u2014 Just Football.",
+            trustBadges: "FA Trained \u2022 DBS Checked \u2022 Fully Insured",
+            tagline: "Structured youth football coaching for ages 8\u201315 in Luton",
+            headingLine1: "Youth Football",
+            headingHighlight: "Coaching in Luton",
+            headingLine3: "Ages 8\u201315",
+            subtitle: "Structured youth football coaching in Luton for ages 8\u201315. Focused on confidence, development, fitness and getting children off screens. Saturdays at Wigmore Primary School. First session FREE.",
             btn1Text: "Get In Touch",
             btn2Text: "Register Your Child",
             btn2Url: "https://docs.google.com/forms/d/e/1FAIpQLSctnibtnB_Trjqt1nLDvKodqDGojRXAle5e8wKnyQ5R9obGbw/viewform?usp=header",
-            offerText: "\ud83c\udf1f First session FREE \u2014 every child is welcome, no trials, no pressure",
-            proof1Label: "FA Qualified Coach",
-            proof2Number: 100,
-            proof2Label: "Fully Compliant",
-            proof3Number: 0,
-            proof3Label: "Screen Time Needed",
+            offerText: "\ud83c\udf1f First session FREE \u2014 Saturdays 12:30pm\u20132:00pm, Wigmore Primary School, Luton",
+            proof1Label: "FA Trained Coaches",
+            proof2Label: "Enhanced DBS Checked",
+            proof3Label: "Safeguarding in Place",
             phone: "07455552786",
             phoneDisplay: "07455 552786"
         });
 
         batch.set(db.collection('content').doc('about'), {
-            sectionLabel: "Meet Your Coach",
+            sectionLabel: "Meet the Team",
             name: "Imran Ali",
-            role: "Founder & Head Coach",
+            role: "Founder & Head Coach \u2014 Active Goals Football",
             bio: [
-                "Welcome to Active Goals Football! I'm Imran, a passionate and dedicated football coach on a mission to <strong>get kids off screens, out on the pitch, and falling in love with the beautiful game</strong>.",
-                "I believe football has the power to <strong>unite communities</strong> and bring people together. Whether your child is a complete beginner or an aspiring player, I tailor every session to build skills, confidence, and a genuine love for the sport.",
-                "My coaching philosophy is simple: <strong>make it fun, make it active, and watch players grow</strong>."
+                "I'm Imran, founder and head coach of Active Goals Football. I run <strong>structured, development-focused coaching sessions for young players aged 8\u201315</strong> in Luton \u2014 helping them improve their technique, build confidence, and get active off their screens.",
+                "Every session is planned with clear progression in mind. Players develop fundamentals \u2014 passing, control, shooting, movement, and game understanding \u2014 in a <strong>safe, positive and encouraging environment</strong> where every child is supported to grow at their own pace.",
+                "My focus is simple: <strong>good coaching, steady development, and a positive experience</strong> for every young player who walks onto the pitch."
             ],
             qualifications: [
                 "FA Introduction to Coaching Football",
@@ -1533,37 +1564,49 @@ async function seedAllContent() {
             ]
         });
 
+        batch.set(db.collection('content').doc('rehan'), {
+            name: "Rehan",
+            role: "Assistant / Session Support",
+            bio: [
+                "Rehan supports sessions, helps with organisation, encourages players, and helps activities run smoothly so the group stays focused and positive throughout."
+            ],
+            qualifications: [
+                "Enhanced DBS Checked",
+                "EE Playmaker by England Football"
+            ]
+        });
+
         batch.set(db.collection('content').doc('timetable'), {
             sectionLabel: "When & Where",
             title: "Session Timetable",
-            subtitle: "Find a session near you. Players must register to attend."
+            subtitle: "Wigmore Primary School, Twyford Drive, Luton \u2014 Outdoor Field. Registration required before first session."
         });
 
         batch.set(db.collection('content').doc('prices'), {
-            sectionLabel: "Transparent Pricing",
-            title: "Simple, Honest Prices",
-            subtitle: "No hidden fees. No contracts. Just pay per session.",
+            sectionLabel: "Session Pricing",
+            title: "Simple Pay-Per-Session Pricing",
+            subtitle: "Simple pay-per-session pricing. No hidden fees.",
             park: [
-                { label: "Per Session", price: "\u00a35", detail: "per session", description: "Register your child to secure a spot!", popularTag: "" },
-                { label: "2 Siblings", price: "\u00a38", detail: "for 2 siblings at the same session", description: "Bring the family \u2014 save together", popularTag: "Sibling Offer" }
+                { label: "First Session", price: "FREE", detail: "ages 8\u201315", description: "Message to confirm your place before your first session.", popularTag: "Try Us Out" },
+                { label: "Per Child", price: "\u00a310", detail: "per session", description: "Pay per session \u2014 no contracts or signup fees.", popularTag: "" },
+                { label: "2 Siblings", price: "\u00a318", detail: "for 2 siblings at the same session", description: "Discounted rate when siblings attend together.", popularTag: "" }
             ],
             venue: [],
             premium: [],
-            extras: [
-                { title: "\ud83c\udf1f First Session FREE", description: "Come try us out \u2014 no commitment needed" },
-                { title: "\ud83d\ude4b Refer a Friend", description: "Both get \u00a31 off your next session" }
-            ]
+            noteEquipment: "All sessions include equipment. Players just need boots, shin pads, and water.",
+            noteWelcome: "Registration is required before the first session \u2014 message us to reserve a place.",
+            noteLimited: "Limited spaces available each session to keep groups small and focused."
         });
 
         batch.set(db.collection('content').doc('why'), {
             sectionLabel: "Why Parents Choose Us",
-            title: "Your Child Deserves Better<br>Than Another Hour on a Screen",
-            subtitle: "We don't just teach football \u2014 we build confident, active, and socially connected young people.",
+            title: "Structured Coaching<br>Built Around Young Players",
+            subtitle: "A focused programme designed to develop technique, fitness and confidence in a safe, positive environment.",
             cards: [
-                { title: "Screen Time \u2192 Active Time", description: "Swap the tablet for a football. Our sessions get children moving, laughing, and loving being outdoors. Parents tell us their kids can't wait for the next session." },
-                { title: "Real Friendships", description: "Football brings children together. Your child will make genuine friendships, learn teamwork, and feel part of a community \u2014 something no app can replace." },
-                { title: "Confidence That Lasts", description: "Every session is designed to celebrate small wins. Watch your child's confidence soar \u2014 not just on the pitch, but in the classroom and beyond." },
-                { title: "Safety You Can Trust", description: "Full compliance folder including public liability insurance, risk assessments, emergency procedures, and safeguarding policies. Your child's safety is our top priority." }
+                { title: "Structured Development", description: "Every session is planned and progressive \u2014 focused on technique, game understanding and fitness. Players see clear improvement week on week." },
+                { title: "Active, Off the Screen", description: "90 minutes of focused football gets your child moving, thinking, and enjoying being outdoors \u2014 a positive alternative to screen time." },
+                { title: "Confidence Building", description: "A positive, encouraging environment where effort is celebrated. Players grow in confidence on the pitch and carry it into school and everyday life." },
+                { title: "Safe & Safeguarded", description: "FA trained coaches, enhanced DBS checks, public liability insurance, and safeguarding procedures in place. Parents can trust their child is in safe hands." }
             ]
         });
 
@@ -1571,18 +1614,18 @@ async function seedAllContent() {
             quote: "Behind every great player is a coach who believed in them.",
             attribution: "Pelé",
             ctaText: "Book Your Child's First Free Session",
-            reassurance: "No commitment required \u2022 Pay per session \u2022 All abilities welcome"
+            reassurance: "Ages 8\u201315 \u2022 Saturdays at Wigmore Primary School \u2022 First session FREE"
         });
 
         batch.set(db.collection('content').doc('contact'), {
             sectionLabel: "Get Started Today",
             title: "Book a Session",
-            subtitle: "Register your child, call, email, or send a message \u2014 we'll get back to you within the hour",
+            subtitle: "Register your child, call, or send a message \u2014 we'll get back to you within the hour",
             phone: "07455552786",
             phoneDisplay: "07455 552786",
             email: "activegoalsfootball@gmail.com",
-            location: "Local parks in Luton",
-            locationDetail: "Session location confirmed with parents before each session",
+            location: "Wigmore Primary School, Twyford Drive, Luton",
+            locationDetail: "Outdoor Field \u2022 Saturdays 12:30pm\u20132:00pm",
             instagram: "https://www.instagram.com/activegoalsfootball",
             facebook: "https://www.facebook.com/ActiveGoalsFootball",
             tiktok: "https://www.tiktok.com/@activegoalsfootball",
@@ -1594,11 +1637,11 @@ async function seedAllContent() {
         });
 
         batch.set(db.collection('content').doc('footer'), {
-            description: "Getting kids off screens and onto the pitch.<br>Uniting communities through football in Luton.",
+            description: "Structured youth football coaching in Luton.<br>Ages 8\u201315 \u2022 Saturdays at Wigmore Primary School.",
             phone: "07455552786",
             phoneDisplay: "07455 552786",
             email: "activegoalsfootball@gmail.com",
-            copyright: "\u00a9 2026 Active Goals Football. All rights reserved. | FA Qualified | DBS Checked | Fully Insured"
+            copyright: "\u00a9 2026 Active Goals Football. All rights reserved. | FA Trained | DBS Checked | Fully Insured"
         });
 
         await batch.commit();
@@ -1606,9 +1649,7 @@ async function seedAllContent() {
         // Seed schedule
         const schedBatch = db.batch();
         const defaultSchedule = [
-            { day: "Monday", time: "4:30 PM - 6:00 PM", location: "Local park in Luton (confirmed with parents)", type: "park", ageGroup: "Ages 5-11", note: "Registration required - \u00a35 per session", order: 1 },
-            { day: "Wednesday", time: "4:30 PM - 6:00 PM", location: "Local park in Luton (confirmed with parents)", type: "park", ageGroup: "Ages 5-11", note: "Registration required - \u00a35 per session", order: 2 },
-            { day: "Saturday", time: "10:00 AM - 11:30 AM", location: "Local park in Luton (confirmed with parents)", type: "park", ageGroup: "All ages", note: "Family session - siblings welcome - \u00a35 per session", order: 3 }
+            { day: "Saturday", time: "12:30 PM - 2:00 PM", location: "Wigmore Primary School, Twyford Drive, Luton (Outdoor Field)", type: "venue", ageGroup: "Ages 8-15", note: "Registration required before first session", order: 1 }
         ];
         defaultSchedule.forEach(s => {
             schedBatch.set(db.collection('schedule').doc(), s);
@@ -1620,8 +1661,8 @@ async function seedAllContent() {
 
     } catch(e) {
         console.error('Seed failed:', e);
-        btn.textContent = 'Error - try again';
-        btn.disabled = false;
+        if (btn) { btn.textContent = 'Error - try again'; btn.disabled = false; }
+        alert('Reset failed: ' + (e.message || e));
     }
 }
 </script>

@@ -16,27 +16,11 @@
 
 const SCHEDULE = [
     {
-        day: "Monday",
-        time: "4:30 PM - 6:00 PM",
-        location: "Local park in Luton (confirmed with parents)",
-        type: "park",
-        ageGroup: "Ages 5-11",
-        note: "Registration required - £5 per session"
-    },
-    {
-        day: "Wednesday",
-        time: "4:30 PM - 6:00 PM",
-        location: "Local park in Luton (confirmed with parents)",
-        type: "park",
-        ageGroup: "Ages 5-11",
-        note: "Registration required - £5 per session"
-    },
-    {
         day: "Saturday",
-        time: "10:00 AM - 11:30 AM",
-        location: "Local park in Luton (confirmed with parents)",
-        type: "park",
-        ageGroup: "All ages",
-        note: "Family session - siblings welcome - £5 per session"
+        time: "12:30 PM - 2:00 PM",
+        location: "Wigmore Primary School, Twyford Drive, Luton (Outdoor Field)",
+        type: "venue",
+        ageGroup: "Ages 8-15",
+        note: "Registration required before first session"
     }
 ];
