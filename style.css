@@ -503,6 +503,15 @@ img { max-width: 100%; display: block; }
 }
 .about-image-placeholder svg { width: 80px; opacity: 0.4; margin-bottom: 12px; }
 .about-image-placeholder p { color: var(--green-main); font-weight: 600; font-size: 0.9rem; }
+.about-photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
 
 .about-badge {
     position: absolute;
@@ -1195,7 +1204,8 @@ img { max-width: 100%; display: block; }
     .about-grid-reverse { grid-template-columns: 1fr; }
     .about-grid-reverse .about-text { order: 1; }
     .about-grid-reverse .about-image { order: 2; }
-    .about-image-placeholder { max-width: 300px; margin: 0 auto; }
+    .about-image-placeholder,
+    .about-photo { max-width: 300px; margin: 0 auto; }
     .about-qualifications { grid-template-columns: 1fr; }
     .contact-grid { grid-template-columns: 1fr; gap: 32px; }
     .footer-content { grid-template-columns: 1fr; gap: 24px; text-align: center; }
