@@ -107,6 +107,7 @@ img { max-width: 100%; display: block; }
     display: flex;
     align-items: center;
     gap: 10px;
+    white-space: nowrap;
 }
 .logo-icon { font-size: 1.6rem; }
 .nav-logo-img { border-radius: 50%; object-fit: cover; width: 60px; height: 60px; }
@@ -1214,11 +1215,9 @@ img { max-width: 100%; display: block; }
     .proof-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-@media (max-width: 768px) {
+/* Nav collapses early: the full brand name + 7 links no longer fit side by side */
+@media (max-width: 1160px) {
     .nav-toggle { display: flex; }
-    .how-step-arrow { display: none; }
-    .how-steps { flex-direction: column; }
-    .how-step { max-width: 100%; }
     .nav-menu {
         position: fixed;
         top: 0;
@@ -1235,6 +1234,12 @@ img { max-width: 100%; display: block; }
     .nav-menu.active { right: 0; }
     .nav-menu .nav-link { color: var(--dark-grey); font-size: 1.05rem; }
     .nav-menu .nav-cta { color: var(--white) !important; text-align: center; }
+}
+
+@media (max-width: 768px) {
+    .how-step-arrow { display: none; }
+    .how-steps { flex-direction: column; }
+    .how-step { max-width: 100%; }
 
     .section { padding: 70px 0; }
     .hero-image { clip-path: polygon(65% 0, 100% 0, 100% 100%, 78% 100%); }
@@ -1252,6 +1257,8 @@ img { max-width: 100%; display: block; }
 }
 
 @media (max-width: 480px) {
+    .nav-logo { font-size: clamp(0.95rem, 4.2vw, 1.25rem); gap: 8px; }
+    .nav-logo-img { width: 46px; height: 46px; flex-shrink: 0; }
     .hero h1 { font-size: 2rem; }
     .hero { flex-direction: column; min-height: auto; }
     .hero-image {

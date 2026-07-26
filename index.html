@@ -18,7 +18,7 @@
         <div class="container nav-container">
             <a href="#" class="nav-logo">
                 <img src="newlogo.png" alt="Active Goals Football" class="nav-logo-img" width="60" height="60">
-                <span class="logo-active">Active</span><span class="logo-goals">Goals</span>
+                <span class="logo-active">Active Goals</span><span class="logo-goals"> Football</span>
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
                 <span></span>
@@ -40,7 +40,7 @@
     <!-- Hero Section -->
     <header class="hero" id="hero">
         <div class="hero-image">
-            <img src="boo.png" alt="Kids playing football at a coaching session" loading="eager">
+            <img src="hero-team.jpg" alt="Coach Imran high-fiving a young player during an Active Goals Football coaching session, with the group gathered round" loading="eager" style="object-position: 50% 15%;">
 
         </div>
         <div class="hero-bg"></div>
@@ -48,7 +48,7 @@
             <div class="hero-text">
                 <div class="hero-tag fade-in" id="cms-hero-trust">FA Trained &bull; DBS Checked &bull; Fully Insured</div>
                 <p class="hero-tagline fade-in" id="cms-hero-tagline">Structured youth football coaching for ages 8&ndash;15 in Luton</p>
-                <h1 class="fade-in fade-delay-1">Youth Football<br><span class="highlight">Coaching in Luton</span><br>Ages 8&ndash;15</h1>
+                <h1 class="fade-in fade-delay-1">Youth<br><span class="highlight">Football Coaching in Luton</span><br>Ages 8&ndash;15</h1>
                 <p class="hero-subtitle fade-in fade-delay-2">Structured youth football coaching in Luton for ages 8&ndash;15. Focused on confidence, development, fitness and getting children off screens. Saturdays at Wigmore Primary School. First session FREE.</p>
                 <div class="hero-actions fade-in fade-delay-3">
                     <a href="#contact" class="btn btn-primary btn-large" id="cms-hero-btn1">
@@ -437,7 +437,7 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <img src="newlogo.png" alt="Active Goals Football" class="footer-logo-img" width="60" height="60">
-                    <span class="logo-active">Active</span><span class="logo-goals">Goals</span>
+                    <span class="logo-active">Active Goals</span><span class="logo-goals"> Football</span>
                     <p id="cms-footer-desc">Structured youth football coaching in Luton.<br>Ages 8&ndash;15 &bull; Saturdays at Wigmore Primary School.</p>
                 </div>
                 <div class="footer-links">
@@ -607,10 +607,7 @@
                     const h = content.hero;
                     if (h.trustBadges) { const t = el('#cms-hero-trust'); if(t) t.textContent = h.trustBadges; }
                     if (h.tagline) { const t = el('#cms-hero-tagline'); if(t) t.textContent = h.tagline; }
-                    if (h.headingLine1) {
-                        const heading = el('.hero h1');
-                        if (heading) heading.innerHTML = h.headingLine1 + '<br><span class="highlight">' + (h.headingHighlight || '') + '</span><br>' + (h.headingLine3 || '');
-                    }
+                    // Hero heading is set in the HTML — not overridden by CMS
                     if (h.subtitle) { const s = el('.hero-subtitle'); if(s) s.textContent = h.subtitle; }
                     if (h.btn1Text) { const b = el('#cms-hero-btn1 span'); if(b) b.textContent = h.btn1Text; }
                     if (h.btn2Text) { const b = el('#cms-hero-btn2 span'); if(b) b.textContent = h.btn2Text; }
@@ -622,11 +619,7 @@
                     if (h.proof2Label) { const p = el('#cms-proof2'); if(p) p.textContent = h.proof2Label; }
                     if (h.proof3Number !== undefined) { const p = el('#cms-proof3-num'); if(p) p.setAttribute('data-count', h.proof3Number); }
                     if (h.proof3Label) { const p = el('#cms-proof3'); if(p) p.textContent = h.proof3Label; }
-                    // Apply hero image position from admin
-                    if (h.imagePositionX !== undefined || h.imagePositionY !== undefined) {
-                        const img = el('.hero-image img');
-                        if (img) img.style.objectPosition = (h.imagePositionX ?? 20) + '% ' + (h.imagePositionY ?? 30) + '%';
-                    }
+                    // Hero image crop is set in the HTML — not overridden by CMS
                 }
 
                 // Latest News
