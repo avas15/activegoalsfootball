@@ -1,0 +1,13 @@
+{
+  "name": "Active Goals Admin",
+  "short_name": "AGF Admin",
+  "start_url": "/admin.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1b5e20",
+  "icons": [
+    { "src": "newlogo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "newlogo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

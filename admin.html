@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Active Goals Admin</title>
+    <link rel="manifest" href="manifest.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -243,6 +244,60 @@
         }
         .cropper-hint { font-size: 0.75rem; color: #999; margin-top: 6px; }
 
+        /* ===== CRM ===== */
+        .crm-panel { max-width: 760px; }
+        .crm-toolbar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+        .crm-toolbar > * { flex:1 1 150px; }
+        .crm-card { background:#fff; border-radius:12px; padding:16px; margin-bottom:10px; box-shadow:0 2px 6px rgba(0,0,0,.06); }
+        .crm-card-header { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px; }
+        .crm-card-title { font-family:'Montserrat',sans-serif; font-weight:700; color:#1b5e20; }
+        .crm-meta { color:#666; font-size:.8rem; line-height:1.5; }
+        .crm-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+        .crm-actions button, .crm-small-btn { border:1px solid #ddd; background:#fff; border-radius:8px; padding:8px 12px; cursor:pointer; font-weight:600; }
+        .crm-actions button:hover, .crm-small-btn:hover { background:#f0f2f5; }
+        .crm-danger { color:#d32f2f; border-color:#f2b8b8 !important; }
+        .crm-success { color:#1b5e20; border-color:#9bd0a0 !important; }
+        .crm-editor { background:#f8f9fa; border:2px solid #e5e7eb; border-radius:12px; padding:16px; margin-bottom:16px; }
+        .crm-editor[hidden] { display:none; }
+        .crm-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .crm-grid .field { margin-bottom:6px; }
+        .crm-checks { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px; }
+        .crm-check { display:flex; gap:8px; align-items:flex-start; font-size:.8rem; color:#555; }
+        .crm-check input { width:18px; height:18px; flex:0 0 auto; }
+        .crm-toast { position:fixed; right:16px; bottom:16px; z-index:300; max-width:calc(100vw - 32px); background:#1b5e20; color:#fff; border-radius:10px; padding:12px 16px; box-shadow:0 8px 25px rgba(0,0,0,.22); font-weight:600; }
+        .crm-toast.error { background:#d32f2f; }
+        .crm-toast.pending { background:#D4A017; }
+        .week-nav { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:16px; }
+        .week-nav button { min-width:44px; min-height:44px; border:0; border-radius:10px; background:#e8f5e9; color:#1b5e20; font-size:1.1rem; cursor:pointer; }
+        .week-label { flex:1; text-align:center; font-family:'Montserrat',sans-serif; font-weight:700; color:#1b5e20; }
+        .roster-session { background:#fff; border-radius:12px; margin-bottom:14px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,.06); }
+        .roster-session-head { display:flex; justify-content:space-between; gap:10px; padding:14px 16px; background:#e8f5e9; color:#1b5e20; }
+        .roster-session-name { font-family:'Montserrat',sans-serif; font-weight:700; }
+        .roster-row { display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:54px; padding:8px 12px 8px 16px; border-top:1px solid #eee; }
+        .roster-row-name { flex:1; font-weight:600; }
+        .status-chip { min-width:84px; min-height:40px; border:0; border-radius:20px; cursor:pointer; font-weight:700; padding:8px 10px; }
+        .status-expected { background:#f0f2f5; color:#666; }
+        .status-present { background:#dff3e1; color:#1b5e20; }
+        .status-absent { background:#fee; color:#d32f2f; }
+        .status-late { background:#fff4cf; color:#8a6500; }
+        .crm-badge { display:inline-flex; align-items:center; justify-content:center; min-width:24px; padding:2px 7px; border-radius:20px; background:#e5e7eb; color:#555; font-size:.75rem; font-weight:700; }
+        .crm-badge.warn { background:#fee; color:#d32f2f; }
+        .crm-badge.award { background:#fff4cf; color:#8a6500; }
+        .tracker-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:12px; }
+        .tracker-stat { background:#f0f2f5; border-radius:8px; padding:8px; text-align:center; }
+        .tracker-stat strong { display:block; color:#1b5e20; font-size:1.1rem; }
+        .tracker-stat span { display:block; color:#666; font-size:.7rem; }
+        .crm-empty { text-align:center; color:#999; padding:30px 10px; }
+        .crm-inline { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+        .crm-inline > * { flex:1 1 140px; }
+        .crm-hidden { display:none !important; }
+        @media (max-width:500px) {
+            .crm-grid, .crm-checks { grid-template-columns:1fr; }
+            .crm-panel { padding-left:10px; padding-right:10px; }
+            .roster-session-head { flex-direction:column; gap:5px; }
+            .status-chip { min-width:76px; }
+        }
+
     </style>
 </head>
 <body>
@@ -288,7 +343,14 @@
     </div>
 
     <div class="admin-tabs" id="adminTabs">
-        <button class="tab active" data-tab="messages">Messages <span class="badge" id="unreadBadge" style="display:none">0</span></button>
+        <button class="tab active" data-tab="roster">Roster</button>
+        <button class="tab" data-tab="players">Players</button>
+        <button class="tab" data-tab="sessions">Sessions</button>
+        <button class="tab" data-tab="venues">Venues</button>
+        <button class="tab" data-tab="payments">Payments</button>
+        <button class="tab" data-tab="warnings">Warnings</button>
+        <button class="tab" data-tab="awards">Awards</button>
+        <button class="tab" data-tab="messages">Messages <span class="badge" id="unreadBadge" style="display:none">0</span></button>
         <button class="tab" data-tab="hero">Hero</button>
         <button class="tab" data-tab="about">About</button>
         <button class="tab" data-tab="rehan">Rehan</button>
@@ -301,8 +363,85 @@
         <button class="tab" data-tab="footer">Footer</button>
     </div>
 
+    <!-- ===== CRM PANELS ===== -->
+    <div class="panel active crm-panel" id="panel-roster">
+        <h2 class="panel-title">Weekly Roster</h2>
+        <div class="week-nav">
+            <button type="button" onclick="agfShiftWeek(-1)" aria-label="Previous week">&lsaquo;</button>
+            <div class="week-label" id="agf-week-label"></div>
+            <button type="button" onclick="agfShiftWeek(1)" aria-label="Next week">&rsaquo;</button>
+            <button type="button" onclick="agfTodayWeek()" aria-label="Current week">Today</button>
+        </div>
+        <div id="agf-roster-list"></div>
+    </div>
+
+    <div class="panel crm-panel" id="panel-players">
+        <h2 class="panel-title">Players</h2>
+        <div class="crm-toolbar">
+            <input id="agf-player-search" type="search" placeholder="Search players" oninput="agfRenderPlayers()">
+            <select id="agf-player-filter" onchange="agfRenderPlayers()"><option value="active">Active players</option><option value="left">Left players</option><option value="all">All players</option></select>
+            <button class="add-btn" type="button" onclick="agfOpenPlayerForm()">+ Add Player</button>
+        </div>
+        <div class="crm-editor" id="agf-player-editor" hidden>
+            <h3 class="section-divider" id="agf-player-editor-title">Add Player</h3>
+            <input id="agf-player-id" type="hidden">
+            <div class="crm-grid">
+                <div class="field"><label>Child Full Name</label><input id="agf-child-name"></div>
+                <div class="field"><label>Child Date of Birth</label><input id="agf-child-dob" type="date"></div>
+                <div class="field"><label>Child Age</label><input id="agf-child-age" type="number" min="0"></div>
+                <div class="field"><label>Child Gender</label><input id="agf-child-gender"></div>
+                <div class="field"><label>Child School</label><input id="agf-child-school"></div>
+                <div class="field"><label>Guardian Full Name</label><input id="agf-guardian-name"></div>
+                <div class="field"><label>Guardian Email</label><input id="agf-guardian-email" type="email"></div>
+                <div class="field"><label>Guardian Phone</label><input id="agf-guardian-phone" type="tel"></div>
+                <div class="field"><label>Emergency Contact Name</label><input id="agf-emergency-name"></div>
+                <div class="field"><label>Emergency Contact Number</label><input id="agf-emergency-phone" type="tel"></div>
+            </div>
+            <div class="field"><label>Medical Conditions / Allergies</label><textarea id="agf-medical-notes"></textarea></div>
+            <div class="field"><label>Notes</label><textarea id="agf-player-notes"></textarea></div>
+            <div class="section-divider">Consent recorded</div>
+            <div class="crm-checks">
+                <label class="crm-check"><input id="agf-consent-risk" type="checkbox"> Participation and risk</label>
+                <label class="crm-check"><input id="agf-consent-code" type="checkbox"> Code of conduct</label>
+                <label class="crm-check"><input id="agf-consent-medical" type="checkbox"> Emergency medical</label>
+                <label class="crm-check"><input id="agf-consent-photo" type="checkbox"> Photography and video</label>
+                <label class="crm-check"><input id="agf-consent-collection" type="checkbox"> Collection and supervision</label>
+                <label class="crm-check"><input id="agf-consent-end" type="checkbox"> End of session collection</label>
+                <label class="crm-check"><input id="agf-consent-declaration" type="checkbox"> Declaration</label>
+            </div>
+            <div class="crm-actions"><button class="save-btn" type="button" onclick="agfSavePlayer()">Save Player</button><button type="button" onclick="agfClosePlayerForm()">Cancel</button></div>
+        </div>
+        <div id="agf-players-list"></div>
+        <div class="section-divider">Retention review</div>
+        <div id="agf-retention-list"></div>
+    </div>
+
+    <div class="panel crm-panel" id="panel-sessions">
+        <h2 class="panel-title">Sessions</h2>
+        <button class="add-btn" type="button" onclick="agfOpenSessionForm()">+ Add Weekly Session</button>
+        <div class="crm-editor" id="agf-session-editor" hidden>
+            <h3 class="section-divider">Session details</h3><input id="agf-session-id" type="hidden">
+            <div class="crm-grid"><div class="field"><label>Name</label><input id="agf-session-name"></div><div class="field"><label>Day</label><select id="agf-session-day"></select></div><div class="field"><label>Start Time</label><input id="agf-session-time" placeholder="12:30 PM"></div><div class="field"><label>Duration (minutes)</label><input id="agf-session-duration" type="number" min="1" value="90"></div><div class="field"><label>Venue</label><select id="agf-session-venue"></select></div><div class="field"><label>Price per child</label><input id="agf-session-price" type="number" min="0" step="0.01" value="10"></div><div class="field"><label>Order</label><input id="agf-session-order" type="number" min="0" value="1"></div><label class="crm-check"><input id="agf-session-active" type="checkbox" checked> Active</label></div>
+            <div class="crm-actions"><button class="save-btn" type="button" onclick="agfSaveSession()">Save Session</button><button type="button" onclick="agfCloseSessionForm()">Cancel</button></div>
+        </div><div id="agf-sessions-list"></div>
+    </div>
+
+    <div class="panel crm-panel" id="panel-venues">
+        <h2 class="panel-title">Venues</h2><button class="add-btn" type="button" onclick="agfOpenVenueForm()">+ Add Venue</button>
+        <div class="crm-editor" id="agf-venue-editor" hidden><h3 class="section-divider">Venue details</h3><input id="agf-venue-id" type="hidden"><div class="field"><label>Name</label><input id="agf-venue-name"></div><div class="field"><label>Address</label><input id="agf-venue-address"></div><div class="field"><label>Notes</label><textarea id="agf-venue-notes"></textarea></div><label class="crm-check"><input id="agf-venue-active" type="checkbox" checked> Active</label><div class="crm-actions"><button class="save-btn" type="button" onclick="agfSaveVenue()">Save Venue</button><button type="button" onclick="agfCloseVenueForm()">Cancel</button></div></div><div id="agf-venues-list"></div>
+    </div>
+
+    <div class="panel crm-panel" id="panel-payments">
+        <h2 class="panel-title">Payments</h2><div class="crm-toolbar"><select id="agf-payment-range" onchange="agfRenderPayments()"><option value="all">All time</option><option value="month">This month</option><option value="quarter">Last 3 months</option></select><button class="crm-small-btn" type="button" onclick="agfExportData()">Export backup</button></div>
+        <div class="crm-editor"><h3 class="section-divider">Record payment or discount</h3><div class="crm-grid"><div class="field"><label>Player</label><select id="agf-payment-player"></select></div><div class="field"><label>Session (optional)</label><select id="agf-payment-session"></select></div><div class="field"><label>Amount</label><input id="agf-payment-amount" type="number" min="0" step="0.01"></div><div class="field"><label>Date</label><input id="agf-payment-date" type="date"></div><div class="field"><label>Type</label><select id="agf-payment-kind"><option value="payment">Payment received</option><option value="discount">Discount / adjustment</option></select></div><div class="field"><label>Method</label><select id="agf-payment-method"><option value="cash">Cash</option><option value="transfer">Bank transfer</option><option value="other">Other</option></select></div></div><div class="field"><label>Note</label><input id="agf-payment-note"></div><button class="save-btn" type="button" onclick="agfSavePayment()">Save Entry</button></div><div id="agf-payments-list"></div>
+    </div>
+
+    <div class="panel crm-panel" id="panel-warnings"><h2 class="panel-title">Warnings</h2><div class="crm-editor"><h3 class="section-divider">Add manual warning</h3><div class="crm-grid"><div class="field"><label>Player</label><select id="agf-warning-player"></select></div><div class="field"><label>Type</label><select id="agf-warning-type"><option value="behaviour">Behaviour</option><option value="payment">Payment</option></select></div></div><div class="field"><label>Note</label><textarea id="agf-warning-note"></textarea></div><button class="save-btn" type="button" onclick="agfSaveWarning()">Add Warning</button></div><div id="agf-warnings-list"></div></div>
+
+    <div class="panel crm-panel" id="panel-awards"><h2 class="panel-title">Awards</h2><div class="crm-editor"><h3 class="section-divider">Award a player</h3><div class="crm-grid"><div class="field"><label>Player</label><select id="agf-award-player"></select></div><div class="field"><label>Award name</label><input id="agf-award-label" placeholder="Great teamwork"></div></div><div class="field"><label>Note</label><textarea id="agf-award-note"></textarea></div><button class="save-btn" type="button" onclick="agfSaveAward()">Add Award</button></div><div id="agf-awards-list"></div></div>
+
     <!-- ===== MESSAGES PANEL ===== -->
-    <div class="panel active" id="panel-messages">
+    <div class="panel" id="panel-messages">
         <h2 class="panel-title">Messages</h2>
         <div class="msg-filters">
             <button class="msg-filter active" onclick="filterMessages('all', this)">All</button>
@@ -1666,5 +1805,7 @@ async function seedAllContent() {
     }
 }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="admin-crm.js"></script>
 </body>
 </html>
